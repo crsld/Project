@@ -5,329 +5,228 @@ import Navbar from '../components/Navbar.vue'
 import Footer from '../components/Footer.vue'
 
 const router = useRouter()
+const activeLesson = ref(null)
 
 const lessons = [
   {
     id: 1,
     number: '01',
-    title: 'Definition & Types of Wastewater',
-    duration: '45 min',
-    description: 'Blackwater, graywater, bilge water, ballast water — what each stream contains and why segregation matters.',
-    icon: '💧',
-    status: 'completed'
+    title: 'Definition of Wastewater',
+    content: {
+      intro: 'Wastewater is used water that originates from various sources, including:',
+      bullets: [
+        'Blackwater (Sewage)',
+        'Graywater (sinks, showers, and galleys)',
+        'Foodwaste (grease separators and decanters)',
+      ],
+      closing: 'Wastewater, called effluent, from these sources contains various contaminants including but not limited to organic matter, chemicals, pathogens and solid waste. As such, effluents must be treated before releasing back into the environment.'
+    }
   },
   {
     id: 2,
     number: '02',
-    title: 'Wastewater Collection & Monitoring',
-    duration: '60 min',
-    description: 'Gravity-fed and pumped collection networks, holding tanks, flow meters, sensors, and automated controls.',
-    icon: '⚙️',
-    status: 'in-progress'
+    title: 'Types of Wastewaters',
+    content: {
+      intro: 'Cruise ships produce several categories of wastewater, each with unique characteristics:',
+      bullets: [
+        'Blackwater: Sanitary sewage from toilets and medical facilities. Contains high concentrations of pathogens, nitrogen, phosphorus, and organic matter.',
+        'Graywater: Wastewater from sinks, showers, laundries, dishwashers, and galleys. Although less contaminated than blackwater, it contains detergents, food waste, and grease.',
+        'Bilge Water: Oily water that collects in the lowest part of the ship\'s hull, typically treated separately.',
+        'Ballast Water: Taken in or discharged to maintain vessel stability; often regulated to prevent invasive species transfer (not part of sewage but relevant to water discharge).',
+        'Other Waste Streams: Including condensate, pool water, and drain water from various systems.',
+      ],
+      closing: null
+    }
   },
   {
     id: 3,
     number: '03',
-    title: 'ScanShip AWP & Regulatory Compliance',
-    duration: '75 min',
-    description: 'The Moving Bed Biofilm Reactor (MBBR) system, MARPOL Annex IV, IMO Guidelines, and technology advancements.',
-    icon: '📋',
-    status: 'locked'
-  }
+    title: 'Wastewater Collection',
+    content: {
+      intro: 'Wastewater is collected through a network of gravity-fed and pumped systems. Blackwater and graywater are typically routed to holding tanks before entering treatment processes. Segregation of waste streams is critical to optimize treatment efficiency and prevent cross-contamination.',
+      bullets: [],
+      closing: 'Advanced onboard systems use flow meters, sensors, and automated controls to monitor flow rates, tank levels, and treatment performance in real time. Food digesters, decanters and dryers are also used to extract water content to further reduce carbon footprint in waste incineration and offshore offloading.'
+    }
+  },
+  {
+    id: 4,
+    number: '04',
+    title: 'ScanShip Advance Wastewater Technology',
+    content: {
+      intro: 'The Scanship Advance Wastewater Plant (AWP) is a Moving Bed Biofilm Reactor (MBBR) system combined with chemical treatment that cleans wastewater in accordance to international and national standards before discharging to the marine environment.',
+      bullets: [],
+      closing: null
+    }
+  },
+  {
+    id: 5,
+    number: '05',
+    title: 'Regulatory Framework',
+    content: {
+      intro: 'Cruise ship wastewater systems must comply with multiple international and national regulations, including:',
+      bullets: [
+        'MARPOL Annex IV: International Convention for the Prevention of Pollution from Ships, governing sewage discharge from ships.',
+        'IMO Guidelines: Provide performance standards for sewage treatment plants.',
+        'U.S. EPA Vessel General Permit (VGP): Requires specific effluent limits and best management practices (BMPs) for vessels operating in U.S. waters.',
+        'Alaska Cruise Ship Regulations: Enforce stricter discharge standards due to the sensitivity of marine ecosystems.',
+      ],
+      closing: 'Discharges are often restricted to certain distances from shore (e.g., >12 nautical miles) and may be prohibited in protected zones or no-discharge areas.'
+    }
+  },
+  {
+    id: 6,
+    number: '06',
+    title: 'Technology Advancements',
+    content: {
+      intro: 'Multiple advancements have been made on Scanship\'s AWP. Efforts to produce smaller, more energy-efficient, circular economy-designed equipment have established Scanship systems as a cruise-leading sustainable solution to waste management.',
+      bullets: [],
+      closing: 'This document contains further information regarding leading technological advancements from our newly installed systems.'
+    }
+  },
 ]
-
-const activeLesson = ref(null)
 </script>
 
 <template>
   <div class="min-h-screen bg-[#040f1e] text-white font-['DM_Sans']">
     <Navbar />
 
-    <!-- ── HERO BANNER ── -->
-    <section class="pt-24 pb-0">
-      <div class="relative overflow-hidden bg-gradient-to-br from-[#f59e0b] via-[#d97706] to-[#b45309]" style="min-height:220px">
-        <!-- Background texture -->
-        <div class="absolute inset-0 opacity-10"
-          style="background-image: radial-gradient(circle at 20% 50%, white 1px, transparent 1px), radial-gradient(circle at 80% 20%, white 1px, transparent 1px); background-size: 60px 60px;">
+    <!-- HERO BANNER -->
+    <section class="pt-20 pb-0"> <!-- Changed pt-24 to pt-0 -->
+        <div class="relative overflow-hidden bg-gradient-to-br from-[#f59e0b] via-[#d97706] to-[#b45309]" style="min-height:160px"> 
+            <div class="relative z-10 max-w-[600px] mx-auto px-8 py-10 text-center"> 
+            <h1 class="font-['Bricolage_Grotesque'] text-[clamp(2rem,5vw,2.8rem)] font-extrabold text-white leading-tight">
+                Module 1: Introduction to Wastewater Systems
+            </h1>
+            <p class="text-white/70 text-[0.9rem] mt-2">World leading solutions for cleaner oceans</p>
+            </div>
         </div>
-        <!-- Decorative circles -->
-        <div class="absolute -right-16 -top-16 w-64 h-64 rounded-full border-2 border-white/20"></div>
-        <div class="absolute right-24 bottom-0 w-32 h-32 rounded-full border border-white/10"></div>
-        <div class="absolute left-1/2 top-0 w-48 h-48 rounded-full border border-white/10 -translate-x-1/2"></div>
+        </section>
 
-        <div class="relative z-10 max-w-[900px] mx-auto px-8 py-16 text-center">
-          <!-- Back button -->
-          <button @click="router.push('/dashboard')"
-            class="inline-flex items-center gap-2 text-white/70 hover:text-white text-[0.8rem] font-semibold mb-6 transition-colors cursor-pointer">
-            ← Back to All Modules
-          </button>
-          <div class="inline-block text-[0.65rem] font-bold px-3 py-1.5 rounded-full bg-white/20 border border-white/30 text-white mb-4 tracking-[0.15em] uppercase">
-            Foundation Module
-          </div>
-          <h1 class="font-['Bricolage_Grotesque'] text-[clamp(2rem,5vw,3.2rem)] font-extrabold text-white leading-tight">
-            Introduction to Wastewater Systems
-          </h1>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── CONTENT ── -->
+    <!-- MAIN CONTENT -->
     <section class="max-w-[900px] mx-auto px-8 py-12">
 
-      <!-- Meta row -->
-      <div class="flex flex-wrap items-center gap-6 pb-8 mb-8 border-b border-white/[0.08]">
-        <div>
-          <p class="text-[0.65rem] font-bold tracking-[0.15em] text-white/40 uppercase mb-1">Competency Category</p>
-          <span class="inline-block text-[0.75rem] font-semibold px-3 py-1 rounded-full bg-[#f59e0b]/15 border border-[#f59e0b]/30 text-[#f59e0b]">
-            Foundation
-          </span>
-        </div>
-        <div class="w-px h-8 bg-white/[0.08] hidden md:block"></div>
-        <div>
-          <p class="text-[0.65rem] font-bold tracking-[0.15em] text-white/40 uppercase mb-1">Total Duration</p>
-          <p class="text-[0.9rem] font-semibold text-white">4 Hours</p>
-        </div>
-        <div class="w-px h-8 bg-white/[0.08] hidden md:block"></div>
-        <div>
-          <p class="text-[0.65rem] font-bold tracking-[0.15em] text-white/40 uppercase mb-1">Lessons</p>
-          <p class="text-[0.9rem] font-semibold text-white">3 Lessons</p>
-        </div>
-        <div class="w-px h-8 bg-white/[0.08] hidden md:block"></div>
-        <div>
-          <p class="text-[0.65rem] font-bold tracking-[0.15em] text-white/40 uppercase mb-1">Learners</p>
-          <p class="text-[0.9rem] font-semibold text-white">12,500+</p>
-        </div>
-      </div>
-
-      <!-- Grid: main content + sidebar -->
+      <!-- Two column grid -->
       <div class="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-12">
 
-        <!-- LEFT COLUMN -->
+        <!-- LEFT -->
         <div>
-
-          <!-- Learning Tools -->
+          <!-- Overview -->
           <div class="mb-8">
-            <h2 class="font-['Bricolage_Grotesque'] text-[1.1rem] font-extrabold text-[#4da8f0] mb-3">
-              Learning Tools
-            </h2>
+            <h2 class="font-['Bricolage_Grotesque'] text-[1.1rem] font-extrabold text-[#4da8f0] mb-3">Overview</h2>
+            <p class="text-[0.9rem] text-white/60 leading-relaxed mb-3">
+              Cruise vessels generally produce significant amounts of wastewater from various onboard sources. This includes blackwater (sewage), graywater (from sinks, showers and galleys, as well as bilge and ballast water). To accommodate the large number of passengers and crew members, an advance wastewater system is required to protect the marine environment, maintain public health standards, and comply with international maritime standards.
+            </p>
             <p class="text-[0.9rem] text-white/60 leading-relaxed">
-              Computer or tablet with internet access. Access to ScanShip system documentation and regulatory references (MARPOL Annex IV, IMO Guidelines).
+              This document provides an introduction of advanced wastewater systems provided by Scanship specific to cruise vessels with detailing the types of wastewaters handled, system components, treatment processes and regulatory frameworks outlined in this document.
             </p>
           </div>
 
           <div class="h-px bg-white/[0.06] mb-8"></div>
 
-          <!-- Focus of Lesson -->
+          <!-- Contents -->
           <div class="mb-8">
-            <h2 class="font-['Bricolage_Grotesque'] text-[1.1rem] font-extrabold text-[#4da8f0] mb-3">
-              Focus of Lesson
-            </h2>
-            <p class="text-[0.9rem] text-white/60 leading-relaxed">
-              Establish foundational knowledge of maritime wastewater management by defining wastewater types (blackwater, graywater, bilge water), exploring onboard collection systems, and introducing the ScanShip Advanced Wastewater Plant (AWP). Learners will understand regulatory compliance under MARPOL Annex IV and IMO standards as essential operational requirements for cruise vessels.
-            </p>
+            <h2 class="font-['Bricolage_Grotesque'] text-[1.1rem] font-extrabold text-[#4da8f0] mb-4">Contents</h2>
+            <div>
+              <div v-for="(item, i) in [
+                'Definition of Wastewater',
+                'Types of Wastewaters',
+                'Wastewater Collection',
+                'ScanShip Advance Wastewater Technology',
+                'Regulatory Framework',
+                'Technology Advancements'
+              ]" :key="i" class="flex items-center gap-4 py-3 border-b border-white/[0.05]">
+                <span class="text-[0.75rem] font-black text-[#f59e0b] w-4 shrink-0">{{ i + 1 }}</span>
+                <span class="text-[0.88rem] text-white/60">{{ item }}</span>
+              </div>
+            </div>
           </div>
 
           <div class="h-px bg-white/[0.06] mb-8"></div>
 
           <!-- Prior Knowledge -->
           <div class="mb-8">
-            <h2 class="font-['Bricolage_Grotesque'] text-[1.1rem] font-extrabold text-[#4da8f0] mb-3">
-              Prior Knowledge
-            </h2>
+            <h2 class="font-['Bricolage_Grotesque'] text-[1.1rem] font-extrabold text-[#4da8f0] mb-3">Prior Knowledge</h2>
             <p class="text-[0.9rem] text-white/60 leading-relaxed">
               Basic familiarity with shipboard operations and general environmental concepts. No advanced engineering background is required.
             </p>
           </div>
-
-          <div class="h-px bg-white/[0.06] mb-8"></div>
-
-          <!-- Duration breakdown -->
-          <div class="mb-8">
-            <h2 class="font-['Bricolage_Grotesque'] text-[1.1rem] font-extrabold text-[#4da8f0] mb-4">
-              Duration
-            </h2>
-            <div class="space-y-3">
-              <div class="flex items-center justify-between py-3 border-b border-white/[0.05]">
-                <span class="text-[0.85rem] text-white/60">Total Duration</span>
-                <span class="text-[0.85rem] font-semibold text-white">4 Hours</span>
-              </div>
-              <div class="flex items-center justify-between py-3 border-b border-white/[0.05]">
-                <span class="text-[0.85rem] text-white/60">Lesson 1 — Definition & Types</span>
-                <span class="text-[0.85rem] font-semibold text-white">45 min</span>
-              </div>
-              <div class="flex items-center justify-between py-3 border-b border-white/[0.05]">
-                <span class="text-[0.85rem] text-white/60">Lesson 2 — Collection & Monitoring</span>
-                <span class="text-[0.85rem] font-semibold text-white">60 min</span>
-              </div>
-              <div class="flex items-center justify-between py-3 border-b border-white/[0.05]">
-                <span class="text-[0.85rem] text-white/60">Lesson 3 — AWP & Compliance</span>
-                <span class="text-[0.85rem] font-semibold text-white">75 min</span>
-              </div>
-              <div class="flex items-center justify-between py-3">
-                <span class="text-[0.85rem] text-white/60">Assessment & Review</span>
-                <span class="text-[0.85rem] font-semibold text-white">60 min</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="h-px bg-white/[0.06] mb-8"></div>
-
-          <!-- Key Topics -->
-          <div class="mb-8">
-            <h2 class="font-['Bricolage_Grotesque'] text-[1.1rem] font-extrabold text-[#4da8f0] mb-4">
-              Key Topics Covered
-            </h2>
-            <ul class="space-y-3">
-              <li v-for="topic in [
-                'Definition of wastewater and effluent categories',
-                'Blackwater, graywater, bilge water, and ballast water characteristics',
-                'Gravity-fed and pumped collection network design',
-                'Real-time monitoring: flow meters, sensors, automated controls',
-                'ScanShip AWP — Moving Bed Biofilm Reactor (MBBR) technology',
-                'MARPOL Annex IV compliance and discharge restrictions',
-                'IMO performance standards for sewage treatment plants',
-                'Technology advancements in circular economy waste design'
-              ]" :key="topic"
-                class="flex items-start gap-3 text-[0.85rem] text-white/60">
-                <span class="mt-1 w-4 h-4 rounded-full bg-[#f59e0b]/20 border border-[#f59e0b]/40 flex items-center justify-center shrink-0">
-                  <span class="w-1.5 h-1.5 rounded-full bg-[#f59e0b]"></span>
-                </span>
-                {{ topic }}
-              </li>
-            </ul>
-          </div>
-
         </div>
 
         <!-- RIGHT SIDEBAR -->
         <div class="space-y-5">
 
-          <!-- Progress card -->
-          <div class="rounded-[16px] border border-white/[0.1] bg-white/[0.04] p-6">
-            <p class="text-[0.65rem] font-bold tracking-[0.15em] text-white/40 uppercase mb-4">Your Progress</p>
-            <div class="flex items-end justify-between mb-3">
-              <span class="font-['Bricolage_Grotesque'] text-[2.2rem] font-black text-[#f59e0b]">78%</span>
-              <span class="text-[0.75rem] text-white/40 mb-1">1 of 3 complete</span>
+          <!-- Module Info -->
+          <div class="rounded-[16px] border border-white/[0.1] bg-white/[0.04] p-6 space-y-3">
+            <p class="text-[0.65rem] font-bold tracking-[0.15em] text-white/40 uppercase mb-1">Module Info</p>
+            <div class="flex items-start justify-between text-[0.82rem] gap-2">
+              <span class="text-white/50 shrink-0">Created by</span>
+              <span class="font-semibold text-white text-right">Ian Estanislao<br><span class="text-white/40 font-normal text-[0.75rem]">Service Manager</span></span>
             </div>
-            <div class="h-2.5 bg-white/[0.06] rounded-full overflow-hidden mb-5">
-              <div class="h-full rounded-full bg-gradient-to-r from-[#f59e0b] to-[#d97706]" style="width:78%"></div>
+            <div class="h-px bg-white/[0.05]"></div>
+            <div class="flex items-start justify-between text-[0.82rem] gap-2">
+              <span class="text-white/50 shrink-0">Approved by</span>
+              <span class="font-semibold text-white text-right">Micheal Taylor<br><span class="text-white/40 font-normal text-[0.75rem]">Vice President</span></span>
             </div>
-            <button class="w-full py-3 rounded-[10px] text-[0.85rem] font-bold bg-[#f59e0b] hover:bg-[#d97706] text-white transition-all cursor-pointer">
-              Continue Learning →
-            </button>
-          </div>
-
-          <!-- Module info card -->
-          <div class="rounded-[16px] border border-white/[0.1] bg-white/[0.04] p-6 space-y-4">
-            <p class="text-[0.65rem] font-bold tracking-[0.15em] text-white/40 uppercase">Module Info</p>
-            <div class="flex items-center justify-between text-[0.82rem]">
-              <span class="text-white/50">Category</span>
-              <span class="font-semibold text-white">Foundation</span>
-            </div>
+            <div class="h-px bg-white/[0.05]"></div>
             <div class="flex items-center justify-between text-[0.82rem]">
               <span class="text-white/50">Regulation</span>
               <span class="font-semibold text-white">MARPOL Annex IV</span>
             </div>
             <div class="flex items-center justify-between text-[0.82rem]">
-              <span class="text-white/50">Certificate</span>
-              <span class="font-semibold text-[#10b981]">Yes, on completion</span>
+              <span class="text-white/50">Doc Rev</span>
+              <span class="font-semibold text-white">2025</span>
             </div>
-            <div class="flex items-center justify-between text-[0.82rem]">
-              <span class="text-white/50">Created by</span>
-              <span class="font-semibold text-white">Ian Estanislao</span>
-            </div>
-            <div class="flex items-center justify-between text-[0.82rem]">
-              <span class="text-white/50">Approved by</span>
-              <span class="font-semibold text-white">Micheal Taylor</span>
-            </div>
-          </div>
-
-          <!-- About ScanShip teaser -->
-          <div class="rounded-[16px] border border-[#4da8f0]/20 bg-[#4da8f0]/[0.04] p-5">
-            <p class="text-[0.65rem] font-bold tracking-[0.15em] text-[#4da8f0] uppercase mb-2">About ScanShip</p>
-            <p class="text-[0.8rem] text-white/50 leading-relaxed">
-              World-leading solutions for cleaner oceans. ScanShip AWP combines MBBR biological treatment with chemical processing for full MARPOL compliance.
-            </p>
           </div>
         </div>
-
       </div>
 
-      <!-- ── LESSONS LIST ── -->
+      <!-- LESSONS LIST -->
       <div class="mt-16">
         <div class="mb-8">
-          <p class="text-[0.7rem] font-bold tracking-[0.2em] text-[#4da8f0] uppercase mb-2">Course Content</p>
-          <h2 class="font-['Bricolage_Grotesque'] text-[1.8rem] font-extrabold text-white">
-            Module Lessons
-          </h2>
+          <p class="text-[0.7rem] font-bold tracking-[0.2em] text-[#4da8f0] uppercase mb-2">Technical Content</p>
+          <h2 class="font-['Bricolage_Grotesque'] text-[1.8rem] font-extrabold text-white">Module Lessons</h2>
         </div>
 
         <div class="space-y-4">
           <div v-for="lesson in lessons" :key="lesson.id"
             @click="activeLesson = activeLesson === lesson.id ? null : lesson.id"
-            class="rounded-[14px] border transition-all duration-300 cursor-pointer overflow-hidden"
-            :class="[
-              lesson.status === 'locked'
-                ? 'border-white/[0.06] bg-white/[0.02] opacity-60'
-                : 'border-white/[0.1] bg-white/[0.04] hover:border-white/[0.15] hover:bg-white/[0.06]',
-              activeLesson === lesson.id ? 'border-[#f59e0b]/30' : ''
-            ]">
+            class="rounded-[14px] border border-white/[0.1] bg-white/[0.04] hover:border-white/[0.18] hover:bg-white/[0.06] transition-all duration-300 overflow-hidden cursor-pointer"
+            :class="activeLesson === lesson.id ? 'border-[#f59e0b]/40 bg-[#f59e0b]/[0.03]' : ''">
 
-            <!-- Lesson header -->
-            <div class="flex items-center gap-5 p-5">
-              <!-- Number -->
-              <div class="shrink-0 w-12 h-12 rounded-[10px] flex items-center justify-center font-['Bricolage_Grotesque'] text-[1rem] font-black"
-                :class="lesson.status === 'completed' ? 'bg-[#10b981]/15 text-[#10b981]' : lesson.status === 'in-progress' ? 'bg-[#f59e0b]/15 text-[#f59e0b]' : 'bg-white/[0.05] text-white/30'">
-                <span v-if="lesson.status === 'completed'">✓</span>
-                <span v-else>{{ lesson.number }}</span>
+            <div class="flex items-center gap-4 p-5">
+              <!-- Uniform Number Circle -->
+              <div class="shrink-0 w-11 h-11 rounded-[10px] flex items-center justify-center font-['Bricolage_Grotesque'] text-[0.95rem] font-black bg-white/[0.04] text-white/60">
+                <span>{{ lesson.number }}</span>
               </div>
 
-              <!-- Info -->
               <div class="flex-1 min-w-0">
-                <div class="flex items-center gap-2 mb-0.5">
-                  <h3 class="font-['Bricolage_Grotesque'] text-[1rem] font-bold text-white truncate">
-                    {{ lesson.title }}
-                  </h3>
-                  <span v-if="lesson.status === 'completed'"
-                    class="shrink-0 text-[0.6rem] font-bold px-2 py-0.5 rounded-full bg-[#10b981]/15 border border-[#10b981]/30 text-[#10b981]">
-                    Completed
-                  </span>
-                  <span v-else-if="lesson.status === 'in-progress'"
-                    class="shrink-0 text-[0.6rem] font-bold px-2 py-0.5 rounded-full bg-[#f59e0b]/15 border border-[#f59e0b]/30 text-[#f59e0b]">
-                    In Progress
-                  </span>
-                  <span v-else
-                    class="shrink-0 text-[0.6rem] font-bold px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/[0.1] text-white/30">
-                    🔒 Locked
-                  </span>
-                </div>
-                <p class="text-[0.78rem] text-white/40">{{ lesson.duration }}</p>
+                <h3 class="font-['Bricolage_Grotesque'] text-[0.95rem] font-bold text-white">{{ lesson.title }}</h3>
+                <p class="text-[0.75rem] text-white/35">{{ lesson.duration }}</p>
               </div>
 
-              <!-- Chevron -->
-              <div class="shrink-0 text-white/30 transition-transform duration-200"
-                :class="activeLesson === lesson.id ? 'rotate-180' : ''">
-                ▼
-              </div>
+              <div class="shrink-0 text-white/25 text-[0.65rem] transition-transform duration-200"
+                :class="activeLesson === lesson.id ? 'rotate-180' : ''">▼</div>
             </div>
 
             <!-- Expanded content -->
             <Transition name="expand">
-              <div v-if="activeLesson === lesson.id" class="px-5 pb-5 border-t border-white/[0.06]">
-                <p class="text-[0.85rem] text-white/50 leading-relaxed mt-4 mb-4">
-                  {{ lesson.description }}
-                </p>
-                <button v-if="lesson.status !== 'locked'"
-                  class="py-2.5 px-6 rounded-[10px] text-[0.82rem] font-bold transition-all cursor-pointer"
-                  :class="lesson.status === 'completed' ? 'bg-white/[0.06] text-white/60 hover:bg-white/[0.1]' : 'bg-[#f59e0b] text-white hover:bg-[#d97706]'">
-                  {{ lesson.status === 'completed' ? 'Review Lesson' : 'Start Lesson →' }}
-                </button>
+              <div v-if="activeLesson === lesson.id" class="px-5 pb-6 border-t border-white/[0.06]">
+                <div class="pt-5 space-y-4">
+                  <p class="text-[0.88rem] text-white/65 leading-relaxed">{{ lesson.content.intro }}</p>
+                  <ul v-if="lesson.content.bullets.length > 0" class="space-y-2.5 pl-1">
+                    <li v-for="(bullet, i) in lesson.content.bullets" :key="i"
+                      class="flex items-start gap-3 text-[0.85rem] text-white/60 leading-relaxed">
+                      <span class="mt-[7px] w-1.5 h-1.5 rounded-full bg-[#f59e0b] shrink-0"></span>
+                      <span>{{ bullet }}</span>
+                    </li>
+                  </ul>
+                  <p v-if="lesson.content.closing" class="text-[0.88rem] text-white/65 leading-relaxed">{{ lesson.content.closing }}</p>
+                </div>
               </div>
             </Transition>
           </div>
         </div>
       </div>
-
     </section>
 
     <Footer />
@@ -337,21 +236,16 @@ const activeLesson = ref(null)
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=DM+Sans:wght@300;400;500&display=swap');
 
-.expand-enter-active,
-.expand-leave-active {
-  transition: all 0.25s ease;
+.expand-enter-active, .expand-leave-active {
+  transition: all 0.3s ease;
   overflow: hidden;
 }
-
-.expand-enter-from,
-.expand-leave-to {
+.expand-enter-from, .expand-leave-to {
   opacity: 0;
   max-height: 0;
 }
-
-.expand-enter-to,
-.expand-leave-from {
+.expand-enter-to, .expand-leave-from {
   opacity: 1;
-  max-height: 300px;
+  max-height: 1000px;
 }
 </style>

@@ -21,6 +21,7 @@ const handleSignOut = async () => {
   router.push('/')
 }
 
+// Close dropdown when clicking outside
 onMounted(() => {
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.profile-dropdown')) showDropdown.value = false
@@ -29,11 +30,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <nav class="fixed top-0 left-0 right-0 z-[100] bg-white border-b border-[#040f1e]/20 shadow-[0_20px_40px_rgba(0,0,0,0.1)]">
-    <div class="max-w-[1400px] mx-auto px-16 h-20 flex items-center justify-between">
+  <nav class="fixed top-0 left-0 right-0 z-[100] bg-white border-b border-[#040f1e]/20 shadow-[0_10px_30px_rgba(0,0,0,0.05)]">
+    <div class="max-w-[1400px] mx-auto px-8 lg:px-16 h-20 flex items-center justify-between">
 
-      <!-- Logo -->
-      <a href="#" class="flex items-center gap-3 no-underline" @click.prevent="router.push('/')">
+      <!-- Logo (Goes to Landing if out, Dashboard if in) -->
+      <a href="#" class="flex items-center gap-3 no-underline" @click.prevent="user ? router.push('/dashboard') : router.push('/')">
         <img :src="Logo" alt="ScanShip" class="h-10 w-10 rounded-full object-contain" />
         <span class="font-['Bricolage_Grotesque'] text-2xl font-bold tracking-tight text-[#040f1e]">ScanShip</span>
       </a>
@@ -44,21 +45,30 @@ onMounted(() => {
         <a href="#modules" class="font-['DM_Sans'] font-medium text-base no-underline text-[#040f1e] hover:text-[#0066cc] transition-colors">Modules</a>
         <button
           @click="emit('open-auth')"
-          class="font-['DM_Sans'] font-medium text-base text-[#023047] bg-[#9ddbff] px-8 py-2 rounded-lg hover:text-[#023047] hover:border-[#9ddbff] transition-all cursor-pointer">
+          class="font-['DM_Sans'] font-medium text-base text-[#023047] bg-[#9ddbff] px-8 py-2 rounded-lg hover:brightness-95 transition-all cursor-pointer border-none">
           Sign In
         </button>
       </div>
 
       <!-- ── AUTHENTICATED ── -->
       <div v-else class="flex items-center gap-8">
-        <a href="#home" class="font-['DM_Sans'] font-medium text-base no-underline text-[#040f1e] hover:text-[#0066cc] transition-colors">Home</a>
-        <a href="#all-modules" class="font-['DM_Sans'] font-medium text-base no-underline text-[#040f1e] hover:text-[#0066cc] transition-colors">Modules</a>
+        <!-- Changed these to use router.push for the dashboard -->
+        <a href="#" 
+           @click.prevent="router.push('/dashboard')" 
+           class="font-['DM_Sans'] font-medium text-base no-underline text-[#040f1e] hover:text-[#4da8f0] transition-colors">
+           Home
+        </a>
+        <a href="#" 
+           @click.prevent="router.push('/dashboard')" 
+           class="font-['DM_Sans'] font-medium text-base no-underline text-[#040f1e] hover:text-[#4da8f0] transition-colors">
+           Modules
+        </a>
 
         <!-- Profile dropdown -->
         <div class="relative profile-dropdown ml-3">
           <button @click.stop="showDropdown = !showDropdown"
             class="flex items-center gap-2 pl-3 pr-2.5 py-2 rounded-[10px] border border-[#040f1e]/15 bg-[#040f1e]/5 hover:bg-[#040f1e]/10 hover:border-[#040f1e]/25 transition-all cursor-pointer">
-            <!-- Avatar -->
+            
             <div class="w-7 h-7 rounded-full bg-[#4da8f0]/30 border border-[#4da8f0]/40 flex items-center justify-center text-[0.7rem] font-bold text-[#4da8f0]">
               {{ user?.displayName?.charAt(0).toUpperCase() ?? user?.email?.charAt(0).toUpperCase() ?? 'U' }}
             </div>
@@ -71,13 +81,12 @@ onMounted(() => {
             </svg>
           </button>
 
-          <!-- Dropdown -->
+          <!-- Dropdown Menu -->
           <Transition name="drop">
             <div v-if="showDropdown"
-              class="absolute right-0 top-[calc(100%+10px)] w-[210px] rounded-[14px] border border-[#040f1e]/10 overflow-hidden"
+              class="absolute right-0 top-[calc(100%+10px)] w-[210px] rounded-[14px] border border-[#040f1e]/10 shadow-xl overflow-hidden"
               style="background:rgba(255,255,255,0.98);backdrop-filter:blur(20px)">
 
-              <!-- User info -->
               <div class="px-4 py-3.5 border-b border-[#040f1e]/[0.07]">
                 <p class="text-[0.78rem] font-semibold text-[#040f1e] truncate">
                   {{ user?.displayName ?? user?.email?.split('@')[0] }}
@@ -90,13 +99,13 @@ onMounted(() => {
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                   <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
                 </svg>
-                Profile
+                Profile Settings
               </button>
 
               <div class="border-t border-[#040f1e]/[0.07] mt-1"></div>
 
               <button @click="handleSignOut"
-                class="w-full flex items-center gap-2.5 px-4 py-3 text-[0.875rem] font-['DM_Sans'] text-red-400/70 hover:text-red-400 hover:bg-red-400/[0.06] transition-all cursor-pointer border-none bg-transparent text-left">
+                class="w-full flex items-center gap-2.5 px-4 py-3 text-[0.875rem] font-['DM_Sans'] text-red-500/80 hover:text-red-500 hover:bg-red-500/[0.06] transition-all cursor-pointer border-none bg-transparent text-left">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                   <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
                   <polyline points="16 17 21 12 16 7"/>
@@ -104,12 +113,10 @@ onMounted(() => {
                 </svg>
                 Sign Out
               </button>
-
             </div>
           </Transition>
         </div>
       </div>
-
     </div>
   </nav>
 </template>

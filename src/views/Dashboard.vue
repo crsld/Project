@@ -56,11 +56,8 @@ const modules = [
     id: 1,
     route: '/dashboard/module/1',
     name: 'Intro to Wastewater Systems',
-    category: 'Foundation',
     price: '$29/mo',
     status: 'unlocked',
-    progress: 78,
-    duration: '4 Hours',
     lessonCount: 3,
     learnersCount: '12,500+',
     description: 'An introduction to maritime wastewater management systems, regulatory frameworks, and shipboard treatment principles.',
@@ -73,11 +70,8 @@ const modules = [
     id: 2,
     route: null,
     name: 'Pre-treatment Operations',
-    category: 'Operations',
     price: '$29/mo',
     status: 'unlocked',
-    progress: 45,
-    duration: '5 Hours',
     lessonCount: 4,
     learnersCount: '8,200+',
     description: 'Covers the initial screening and comminution steps that prepare raw wastewater before biological or chemical treatment.',
@@ -90,11 +84,8 @@ const modules = [
     id: 3,
     route: null,
     name: 'Mixing & Bioreactor',
-    category: 'Advanced',
     price: '$49/mo',
     status: 'locked',
-    progress: 0,
-    duration: '6 Hours',
     lessonCount: 5,
     learnersCount: '5,100+',
     description: 'Biological treatment using activated sludge, MBBR, and sequencing batch reactor technologies for organic matter removal.',
@@ -107,11 +98,8 @@ const modules = [
     id: 4,
     route: null,
     name: 'Flocculation Unit',
-    category: 'Advanced',
     price: '$49/mo',
     status: 'locked',
-    progress: 0,
-    duration: '5 Hours',
     lessonCount: 4,
     learnersCount: '4,800+',
     description: 'Physical-chemical treatment using flocculation and sedimentation to remove suspended solids and colloidal matter.',
@@ -119,40 +107,6 @@ const modules = [
     gradientFrom: '#8b5cf6',
     gradientTo: '#7c3aed',
     thumbnail: 'https://images.unsplash.com/photo-1564419320461-6870880221ad?w=600&q=80',
-  },
-  {
-    id: 5,
-    route: null,
-    name: 'Polymer Unit',
-    category: 'Advanced',
-    price: '$39/mo',
-    status: 'locked',
-    progress: 0,
-    duration: '4 Hours',
-    lessonCount: 3,
-    learnersCount: '3,500+',
-    description: 'Chemical conditioning using polymer dosing systems for sludge dewatering and solids separation enhancement.',
-    color: '#ec4899',
-    gradientFrom: '#ec4899',
-    gradientTo: '#db2777',
-    thumbnail: 'https://images.unsplash.com/photo-1581093458791-9d15b4f8f8d4?w=600&q=80',
-  },
-  {
-    id: 6,
-    route: null,
-    name: 'Dissolved Air Flotation',
-    category: 'Operations',
-    price: '$39/mo',
-    status: 'locked',
-    progress: 0,
-    duration: '5 Hours',
-    lessonCount: 4,
-    learnersCount: '3,200+',
-    description: 'Treatment process using pressurized air bubbles to separate suspended solids from wastewater.',
-    color: '#06b6d4',
-    gradientFrom: '#06b6d4',
-    gradientTo: '#0891b2',
-    thumbnail: 'https://images.unsplash.com/photo-1559825481-12a05cc00344?w=600&q=80',
   },
 ]
 
@@ -189,7 +143,7 @@ const handleSeeDetails = (mod) => {
       </div>
     </section>
 
-    <!-- ── FEATURED VIDEOS SECTION ── -->
+   <!-- ── FEATURED VIDEOS SECTION ── -->
     <section id="featured-videos" class="px-8 py-16 bg-[#040f1e] border-b border-white/[0.05]">
       <div class="max-w-[900px] mx-auto">
         <div class="mb-12 text-center">
@@ -202,12 +156,12 @@ const handleSeeDetails = (mod) => {
           </p>
         </div>
 
-        <!-- Main Featured Video -->
+        <!-- Main Featured Video (Current Layout) -->
         <div class="mb-12">
           <div class="group rounded-[18px] overflow-hidden border border-white/[0.1] bg-white/[0.02] hover:border-white/[0.15] hover:bg-white/[0.05] transition-all duration-300">
-            <div class="relative w-full pt-[56.25%] bg-black rounded-[18px] overflow-hidden">
-              <iframe class="absolute top-0 left-0 w-full h-full rounded-[18px]"
-                src="https://www.youtube.com/embed/Dzg0nwCpY8c?autoplay=0&controls=1&modestbranding=1"
+            <div class="relative w-full pt-[56.25%] bg-black rounded-t-[18px] overflow-hidden">
+              <iframe class="absolute top-0 left-0 w-full h-full"
+                :src="`https://www.youtube.com/embed/${videos[0].youtubeId}`"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen>
               </iframe>
@@ -215,32 +169,47 @@ const handleSeeDetails = (mod) => {
             <div class="bg-gradient-to-t from-black/80 to-transparent p-6">
               <p class="text-[0.65rem] font-bold tracking-[0.1em] text-white/60 uppercase mb-2">Featured Video</p>
               <h3 class="font-['Bricolage_Grotesque'] text-[1.5rem] font-extrabold text-white leading-snug">
-                Wastewater Systems Overview
+                {{ videos[0].title }}
               </h3>
-              <p class="text-[0.9rem] text-white/70 mt-2">Discover the ScanShip platform and maritime waste management innovation</p>
+              <p class="text-[0.9rem] text-white/70 mt-2">{{ videos[0].description }}</p>
             </div>
           </div>
         </div>
 
-        <!-- More Videos -->
-        <div class="space-y-5">
+        <!-- More Videos (Now styled like the Main Featured Video) -->
+        <div class="space-y-8">
           <h3 class="font-['Bricolage_Grotesque'] text-[1.2rem] font-extrabold text-white mb-6">More Videos</h3>
-          <div v-for="video in videos.slice(1)" :key="video.id"
-            @click="selectedVideo = video.id"
-            class="group cursor-pointer rounded-[14px] overflow-hidden border border-white/[0.1] bg-white/[0.02] hover:border-white/[0.15] hover:bg-white/[0.05] transition-all duration-300">
-            <div class="relative w-full pt-[33.33%] overflow-hidden">
-              <img :src="video.thumbnail" :alt="video.title"
-                class="absolute top-0 left-0 w-full h-full object-cover opacity-60 group-hover:opacity-75 transition-opacity duration-300" />
-              <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-all duration-300">
-                <div class="w-14 h-14 rounded-full bg-[#4da8f0] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
-                    <polygon points="5 3 19 12 5 21 5 3"/>
-                  </svg>
+          
+          <!-- Grid for the other 3 videos -->
+          <div class="grid grid-cols-1 gap-8">
+            <div v-for="video in videos.slice(1)" :key="video.id"
+              @click="selectedVideo = video.id"
+              class="group cursor-pointer rounded-[18px] overflow-hidden border border-white/[0.1] bg-white/[0.02] hover:border-white/[0.15] hover:bg-white/[0.05] transition-all duration-300">
+              
+              <!-- Video Frame Area -->
+              <div class="relative w-full pt-[56.25%] overflow-hidden bg-black">
+                <img :src="`https://img.youtube.com/vi/${video.youtubeId}/maxresdefault.jpg`" :alt="video.title"
+                  class="absolute top-0 left-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-all duration-500 group-hover:scale-105" />
+                
+                <!-- Center Play Button Overlay -->
+                <div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/40 transition-all duration-300">
+                  <div class="w-16 h-16 rounded-full bg-[#4da8f0] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                      <polygon points="5 3 19 12 5 21 5 3"/>
+                    </svg>
+                  </div>
                 </div>
               </div>
-              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                <h4 class="font-['Bricolage_Grotesque'] text-[1rem] font-extrabold text-white mb-1">{{ video.title }}</h4>
-                <p class="text-[0.8rem] text-white/70">{{ video.description }}</p>
+
+              <!-- Content Area (Matches the Featured style) -->
+              <div class="bg-gradient-to-t from-black/80 to-transparent p-6">
+                <p class="text-[0.65rem] font-bold tracking-[0.15em] text-[#4da8f0] uppercase mb-2">Technical Insight</p>
+                <h4 class="font-['Bricolage_Grotesque'] text-[1.3rem] font-extrabold text-white leading-tight">
+                  {{ video.title }}
+                </h4>
+                <p class="text-[0.88rem] text-white/60 mt-2 leading-relaxed">
+                  {{ video.description }}
+                </p>
               </div>
             </div>
           </div>
@@ -280,7 +249,7 @@ const handleSeeDetails = (mod) => {
             Our Most Popular <span class="text-[#4da8f0]">Modules</span>
           </h2>
           <p class="text-white/50 text-[0.95rem] max-w-[500px] mx-auto">
-            Industry-leading maritime wastewater training built for compliance and operational excellence.
+            Industry leading maritime wastewater training built for compliance and operational excellence.
           </p>
         </div>
 
@@ -383,40 +352,6 @@ const handleSeeDetails = (mod) => {
 
       </div>
     </section>
-
-    <!-- ── STATS SECTION ── -->
-    <section class="px-8 py-16 bg-gradient-to-b from-[#040f1e] to-[#0a1527] border-t border-white/[0.05]">
-      <div class="max-w-[1200px] mx-auto">
-        <div class="text-center mb-12">
-          <p class="text-[0.7rem] font-bold tracking-[0.2em] text-[#4da8f0] uppercase mb-3">Impact</p>
-          <h2 class="font-['Bricolage_Grotesque'] text-[clamp(1.8rem,3vw,2.6rem)] font-extrabold text-white mb-3">
-            Our Global Learning Community
-          </h2>
-          <p class="text-white/50 text-[0.95rem] max-w-[500px] mx-auto">
-            Empowering maritime professionals worldwide with essential wastewater management knowledge
-          </p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="p-8 rounded-[16px] border border-white/[0.1] bg-white/[0.03] text-center hover:bg-white/[0.05] transition-all">
-            <div class="font-['Bricolage_Grotesque'] text-[2.8rem] font-black text-[#4da8f0] mb-2">
-              {{ totalLearners.toLocaleString() }}+
-            </div>
-            <p class="text-white/50 text-[0.9rem]">Total Learners Worldwide</p>
-          </div>
-          <div class="p-8 rounded-[16px] border border-white/[0.1] bg-white/[0.03] text-center hover:bg-white/[0.05] transition-all">
-            <div class="font-['Bricolage_Grotesque'] text-[2.8rem] font-black text-[#10b981] mb-2">
-              {{ totalModules }}
-            </div>
-            <p class="text-white/50 text-[0.9rem]">Professional Modules</p>
-          </div>
-          <div class="p-8 rounded-[16px] border border-white/[0.1] bg-white/[0.03] text-center hover:bg-white/[0.05] transition-all">
-            <div class="font-['Bricolage_Grotesque'] text-[2.8rem] font-black text-[#f59e0b] mb-2">100%</div>
-            <p class="text-white/50 text-[0.9rem]">Industry Relevant Content</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <Footer />
   </div>
 </template>
