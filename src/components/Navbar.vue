@@ -1,33 +1,42 @@
 <script setup>
 import Logo from '../assets/Company_Logo.png'
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+// Dahil tinanggal ang firebase, i-set muna natin ang user sa null
+// para ipakita ang "About" at "Modules" links lang.
+const user = ref(null) 
+const showDropdown = ref(false)
+
+const handleSignOut = () => {
+  // Simple sign out logic: i-clear ang localStorage at ibalik sa Landing Page
+  localStorage.removeItem('user')
+  user.value = null
+  router.push('/')
+}
 </script>
 
 <template>
   <nav class="fixed top-0 left-0 right-0 z-[100] bg-white border-b border-[#040f1e]/20 shadow-[0_10px_30px_rgba(0,0,0,0.05)]">
     <div class="max-w-[1400px] mx-auto px-8 lg:px-16 h-20 flex items-center justify-between">
 
-      <!-- Logo (Goes to Landing if out, Dashboard if in) -->
+      <!-- Logo -->
       <a href="#" class="flex items-center gap-3 no-underline" @click.prevent="user ? router.push('/dashboard') : router.push('/')">
         <img :src="Logo" alt="Scanship" class="h-10 w-10 rounded-full object-contain" />
         <span class="font-['Bricolage_Grotesque'] text-2xl font-bold tracking-tight text-[#040f1e]">Scanship</span>
       </a>
 
-      <!-- ── UNAUTHENTICATED ── -->
+      <!-- ── GUEST VIEW (Kapag hindi nakalog-in) ── -->
       <div v-if="!user" class="flex items-center gap-8">
         <a href="#about" class="font-['DM_Sans'] font-medium text-base no-underline text-[#040f1e] hover:text-[#0066cc] transition-colors">About</a>
         <a href="#modules" class="font-['DM_Sans'] font-medium text-base no-underline text-[#040f1e] hover:text-[#0066cc] transition-colors">Modules</a>
-        <button
-          @click="emit('open-auth')"
-          class="font-['DM_Sans'] font-medium text-base text-[#023047] bg-[#9ddbff] px-8 py-2 rounded-lg hover:brightness-95 transition-all cursor-pointer border-none">
-          Sign In
-        </button>
+        <!-- TINANGGAL ANG SIGN IN BUTTON DITO -->
       </div>
 
-      <!-- ── AUTHENTICATED ── -->
+      <!-- ── AUTHENTICATED VIEW (Kapag nakalog-in) ── -->
       <div v-else class="flex items-center gap-8">
-        <!-- Changed these to use router.push for the dashboard -->
         <a href="#" 
            @click.prevent="router.push('/dashboard')" 
            class="font-['DM_Sans'] font-medium text-base no-underline text-[#040f1e] hover:text-[#4da8f0] transition-colors">

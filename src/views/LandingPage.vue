@@ -60,23 +60,14 @@ onMounted(() => {
       <div class="relative max-w-3xl mx-auto w-full">
         <h1 class="font-sans-serif text-[clamp(3.6rem,5.5vw,4.2rem)] font-black leading-[1.08] tracking-[0.08em] mb-6 text-white">
           Unlimited access to Maritime System modules,
-          <span class="text-[#9ddbff]">Anytime.</span>
+          <span class="text-[#9ddbff]">anytime.</span>
         </h1>
 
         <p class="text-[0.98rem] text-white/70 leading-[1.75] mb-8 max-w-[600px] mx-auto">
           Scanship gives your fleet instant access to a comprehensive library of maritime system modules from navigation and cargo management to safety compliance. 
           Subscribe once, deploy everywhere.
         </p>
-
-        <div class="flex justify-center gap-2 max-w-[480px] mx-auto mb-6">
-          <button
-            @click="showAuth = true"
-            class="px-5 py-3 bg-white text-black font-bold text-[0.9rem] rounded-[10px] hover:bg-[#9ddbff] transition-colors whitespace-nowrap cursor-pointer">
-            Sign In →
-          </button>
         </div>
-        <p class="text-[0.78rem] text-white/25">Ready to subscribe? Enter your email to create an account.</p>
-      </div>
     </section>
 
     <!-- ── ABOUT ── -->
