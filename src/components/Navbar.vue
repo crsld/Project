@@ -1,14 +1,45 @@
 <script setup>
 import Logo from '../assets/Company_Logo.png'
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
 const router = useRouter()
+const route = useRoute()
 
 // Dahil tinanggal ang firebase, i-set muna natin ang user sa null
-// para ipakita ang "About" at "Modules" links lang.
-const user = ref(null) 
+// para ipakita ang "Home", "About" at "Modules" links lang.
+const user = ref(null)
 const showDropdown = ref(false)
+
+// ── Scroll-retract state ──
+const retracted = ref(false)
+const lastScrollY = ref(0)
+const SCROLL_THRESHOLD = 80 // px scrolled before we even consider retracting
+
+const handleScroll = () => {
+  const currentY = window.scrollY
+
+  if (currentY <= SCROLL_THRESHOLD) {
+    // Near the very top: always expanded
+    retracted.value = false
+  } else if (currentY > lastScrollY.value) {
+    // Scrolling down -> retract
+    retracted.value = true
+  } else if (currentY < lastScrollY.value) {
+    // Scrolling up -> expand
+    retracted.value = false
+  }
+
+  lastScrollY.value = currentY
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll, { passive: true })
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 
 const handleSignOut = () => {
   // Simple sign out logic: i-clear ang localStorage at ibalik sa Landing Page
@@ -16,34 +47,143 @@ const handleSignOut = () => {
   user.value = null
   router.push('/')
 }
+
+// ── Navigation helpers ──
+
+// "Home" should always bring the user to the Dashboard page ('/dashboard')
+// scrolled all the way to the top, never resuming a previous scroll position.
+const goHome = async () => {
+  showDropdown.value = false
+
+  if (route.path === '/dashboard') {
+    // Already on the page: just snap to top, no smooth-scroll carry-over.
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  } else {
+    await router.push('/dashboard')
+    await nextTick()
+    // Ensure a fresh load always starts at the top of the page.
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }
+}
+
+// Logo / "Scanship" wordmark should always bring the user to the Landing page ('/').
+const goToLanding = async () => {
+  showDropdown.value = false
+
+  if (route.path === '/') {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  } else {
+    await router.push('/')
+    await nextTick()
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }
+}
+
+// "About" / "Modules" should land on the Landing page (route '/') and
+// smoothly scroll to the matching section, whether we're already there or not.
+const goToSection = async (sectionId) => {
+  showDropdown.value = false
+
+  const scrollToEl = () => {
+    const el = document.getElementById(sectionId)
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }
+
+  if (route.path === '/') {
+    scrollToEl()
+  } else {
+    await router.push('/')
+    // Wait for the Landing page DOM to mount before scrolling to the section.
+    await nextTick()
+    setTimeout(scrollToEl, 50)
+  }
+}
 </script>
 
 <template>
-  <nav class="fixed top-0 left-0 right-0 z-[100] bg-white border-b border-[#040f1e]/20 shadow-[0_10px_30px_rgba(0,0,0,0.05)]">
-    <div class="max-w-[1400px] mx-auto px-8 lg:px-16 h-20 flex items-center justify-between">
+  <nav
+    class="fixed top-0 left-0 right-0 z-[100] border-b shadow-[0_10px_30px_rgba(0,0,0,0.05)] transition-all duration-500 ease-in-out"
+    :class="retracted ? 'border-transparent' : 'bg-white border-[#040f1e]/20'"
+    :style="retracted ? 'background-color: rgba(4, 15, 30, 0.75); backdrop-filter: blur(10px);' : ''"
+  >
+    <div
+      class="max-w-[1400px] mx-auto px-8 lg:px-16 flex items-center justify-between relative transition-all duration-500 ease-in-out"
+      :class="retracted ? 'h-12' : 'h-20'"
+    >
 
-      <!-- Logo -->
-      <a href="#" class="flex items-center gap-3 no-underline" @click.prevent="user ? router.push('/dashboard') : router.push('/')">
-        <img :src="Logo" alt="Scanship" class="h-10 w-10 rounded-full object-contain" />
-        <span class="font-['Bricolage_Grotesque'] text-2xl font-bold tracking-tight text-[#040f1e]">Scanship</span>
-      </a>
+      <!-- Logo + Wordmark wrapper: keeps them side-by-side in expanded mode -->
+      <div class="flex items-center gap-3 transition-all duration-500 ease-in-out" :class="retracted ? 'absolute inset-0' : ''">
+
+        <!-- Logo: position snaps instantly (always centered), only opacity fades during the transition -->
+        <a
+          href="#"
+          class="flex items-center no-underline transition-opacity duration-500 ease-in-out"
+          :class="retracted ? 'absolute left-1/2 -translate-x-1/2' : ''"
+          @click.prevent="goToLanding"
+        >
+          <img
+            :src="Logo"
+            alt="Scanship"
+            class="object-contain rounded-full transition-all duration-500 ease-in-out"
+            :class="retracted ? 'h-7 w-7' : 'h-10 w-10'"
+          />
+        </a>
+
+        <!-- Wordmark: animates to the far left during retracted mode -->
+        <a
+          href="#"
+          class="flex items-center no-underline transition-all duration-500 ease-in-out"
+          :class="retracted ? 'absolute left-0' : ''"
+          @click.prevent="goToLanding"
+        >
+          <span
+            class="font-['Bricolage_Grotesque'] font-bold tracking-tight transition-all duration-500 ease-in-out"
+            :class="retracted ? 'text-lg text-white' : 'text-2xl text-[#040f1e]'"
+          >
+            Scanship
+          </span>
+        </a>
+      </div>
 
       <!-- ── GUEST VIEW (Kapag hindi nakalog-in) ── -->
-      <div v-if="!user" class="flex items-center gap-8">
-        <a href="#about" class="font-['DM_Sans'] font-medium text-base no-underline text-[#040f1e] hover:text-[#0066cc] transition-colors">About</a>
-        <a href="#modules" class="font-['DM_Sans'] font-medium text-base no-underline text-[#040f1e] hover:text-[#0066cc] transition-colors">Modules</a>
+      <div
+        v-if="!user"
+        class="flex items-center gap-8 transition-opacity duration-400 ease-in-out"
+        :class="retracted ? 'opacity-0 pointer-events-none' : 'opacity-100'"
+      >
+        <a href="#"
+           @click.prevent="goHome"
+           class="font-['DM_Sans'] font-medium text-base no-underline text-[#040f1e] hover:text-[#0066cc] transition-colors">
+           Home
+        </a>
+        <a href="#"
+           @click.prevent="goToSection('about')"
+           class="font-['DM_Sans'] font-medium text-base no-underline text-[#040f1e] hover:text-[#0066cc] transition-colors">
+           About
+        </a>
+        <a href="#"
+           @click.prevent="goToSection('modules')"
+           class="font-['DM_Sans'] font-medium text-base no-underline text-[#040f1e] hover:text-[#0066cc] transition-colors">
+           Modules
+        </a>
         <!-- TINANGGAL ANG SIGN IN BUTTON DITO -->
       </div>
 
       <!-- ── AUTHENTICATED VIEW (Kapag nakalog-in) ── -->
-      <div v-else class="flex items-center gap-8">
-        <a href="#" 
-           @click.prevent="router.push('/dashboard')" 
+      <div
+        v-else
+        class="flex items-center gap-8 transition-opacity duration-400 ease-in-out"
+        :class="retracted ? 'opacity-0 pointer-events-none' : 'opacity-100'"
+      >
+        <a href="#"
+           @click.prevent="goHome"
            class="font-['DM_Sans'] font-medium text-base no-underline text-[#040f1e] hover:text-[#4da8f0] transition-colors">
            Home
         </a>
-        <a href="#" 
-           @click.prevent="router.push('/dashboard')" 
+        <a href="#"
+           @click.prevent="router.push('/dashboard')"
            class="font-['DM_Sans'] font-medium text-base no-underline text-[#040f1e] hover:text-[#4da8f0] transition-colors">
            Modules
         </a>

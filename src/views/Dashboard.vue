@@ -45,10 +45,6 @@ const modules = [
     id: 1,
     route: '/dashboard/module/1',
     name: 'Intro to Wastewater Systems',
-    price: '$29/mo',
-    status: 'unlocked',
-    lessonCount: 3,
-    learnersCount: '12,500+',
     description: 'An introduction to maritime wastewater management systems, regulatory frameworks, and shipboard treatment principles.',
     color: '#f59e0b',
     gradientFrom: '#f59e0b',
@@ -59,49 +55,14 @@ const modules = [
     id: 2,
     route: null,
     name: 'Pre-treatment Operations',
-    price: '$29/mo',
-    status: 'unlocked',
-    lessonCount: 4,
-    learnersCount: '8,200+',
     description: 'Covers the initial screening and comminution steps that prepare raw wastewater before biological or chemical treatment.',
     color: '#4da8f0',
     gradientFrom: '#4da8f0',
     gradientTo: '#3b82f6',
     thumbnail: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=600&q=80',
   },
-  {
-    id: 3,
-    route: null,
-    name: 'Mixing & Bioreactor',
-    price: '$49/mo',
-    status: 'locked',
-    lessonCount: 5,
-    learnersCount: '5,100+',
-    description: 'Biological treatment using activated sludge, MBBR, and sequencing batch reactor technologies for organic matter removal.',
-    color: '#10b981',
-    gradientFrom: '#10b981',
-    gradientTo: '#059669',
-    thumbnail: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=600&q=80',
-  },
-  {
-    id: 4,
-    route: null,
-    name: 'Flocculation Unit',
-    price: '$49/mo',
-    status: 'locked',
-    lessonCount: 4,
-    learnersCount: '4,800+',
-    description: 'Physical-chemical treatment using flocculation and sedimentation to remove suspended solids and colloidal matter.',
-    color: '#8b5cf6',
-    gradientFrom: '#8b5cf6',
-    gradientTo: '#7c3aed',
-    thumbnail: 'https://images.unsplash.com/photo-1564419320461-6870880221ad?w=600&q=80',
-  },
 ]
 
-const totalLearners = computed(() =>
-  modules.reduce((sum, m) => sum + parseInt(m.learnersCount.replace(/[^\d]/g, '')), 0)
-)
 const totalModules = computed(() => modules.length)
 
 const handleSeeDetails = (mod) => {
@@ -120,7 +81,7 @@ const handleSeeDetails = (mod) => {
       <div class="max-w-[1200px] mx-auto">
         <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div class="max-w-[600px]">
-            <p class="text-[0.7rem] font-bold tracking-[0.2em] text-[#4da8f0] uppercase mb-3">Welcome Back</p>
+            <p class="text-[0.7rem] font-bold tracking-[0.2em] text-[#b5f4ff] uppercase mb-3">Welcome Back</p>
             <h1 class="font-['Bricolage_Grotesque'] text-[clamp(2.2rem,5vw,3.6rem)] font-extrabold text-white leading-[1.1] mb-3">
               Maritime System Mastery
             </h1>
@@ -136,7 +97,7 @@ const handleSeeDetails = (mod) => {
     <section id="featured-videos" class="px-8 py-16 bg-[#040f1e] border-b border-white/[0.05]">
       <div class="max-w-[900px] mx-auto">
         <div class="mb-12 text-center">
-          <p class="text-[0.7rem] font-bold tracking-[0.2em] text-[#4da8f0] uppercase mb-3">Learn More</p>
+          <p class="text-[0.7rem] font-bold tracking-[0.2em] text-[#b5f4ff] uppercase mb-3">Learn More</p>
           <h2 class="font-['Bricolage_Grotesque'] text-[clamp(1.8rem,3vw,2.6rem)] font-extrabold text-white mb-3">
             About ScanShip
           </h2>
@@ -192,7 +153,6 @@ const handleSeeDetails = (mod) => {
 
               <!-- Content Area (Matches the Featured style) -->
               <div class="bg-gradient-to-t from-black/80 to-transparent p-6">
-                <p class="text-[0.65rem] font-bold tracking-[0.15em] text-[#4da8f0] uppercase mb-2">Technical Insight</p>
                 <h4 class="font-['Bricolage_Grotesque'] text-[1.3rem] font-extrabold text-white leading-tight">
                   {{ video.title }}
                 </h4>
@@ -233,9 +193,9 @@ const handleSeeDetails = (mod) => {
 
         <!-- Section Header -->
         <div class="text-center mb-12">
-          <p class="text-[0.7rem] font-bold tracking-[0.2em] text-[#4da8f0] uppercase mb-3">Our Courses</p>
+          <p class="text-[0.7rem] font-bold tracking-[0.2em] text-[#b5f4ff] uppercase mb-3">Our Courses</p>
           <h2 class="font-['Bricolage_Grotesque'] text-[clamp(1.8rem,3vw,2.6rem)] font-extrabold text-white mb-3">
-            Our Most Popular <span class="text-[#4da8f0]">Modules</span>
+            Our Most Popular <span class="text-[#b5f4ff]">Modules</span>
           </h2>
           <p class="text-white/50 text-[0.95rem] max-w-[500px] mx-auto">
             Industry leading maritime wastewater training built for compliance and operational excellence.
@@ -257,72 +217,16 @@ const handleSeeDetails = (mod) => {
                 :style="`background: linear-gradient(to bottom, ${mod.gradientFrom}30, rgba(4,15,30,0.6))`">
               </div>
 
-              <!-- Status badges -->
-              <div class="absolute top-3 left-3 flex gap-2 flex-wrap">
-                <span class="text-[0.6rem] font-bold px-2.5 py-1 rounded-full"
-                  :style="`background:${mod.color}25;border:1px solid ${mod.color}50;color:${mod.color}`">
-                  {{ mod.category }}
-                </span>
-                <span v-if="mod.status === 'unlocked'"
-                  class="text-[0.6rem] font-bold px-2.5 py-1 rounded-full bg-[#10b981]/20 border border-[#10b981]/40 text-[#10b981]">
-                  ● Unlocked
-                </span>
-                <span v-else
-                  class="text-[0.6rem] font-bold px-2.5 py-1 rounded-full bg-black/40 border border-white/20 text-white/50">
-                  🔒 Locked
-                </span>
-              </div>
-
-              <!-- Duration badge top-right -->
-              <div class="absolute top-3 right-3">
-                <span class="flex items-center gap-1 text-[0.6rem] font-bold px-2.5 py-1 rounded-full bg-black/50 border border-white/10 text-white/70">
-                  ● {{ mod.duration }}
-                </span>
-              </div>
             </div>
 
             <!-- Card Body -->
             <div class="p-5 flex flex-col flex-1">
-
-              <!-- Category pill below image (matches reference style) -->
-              <div class="flex items-center justify-between mb-3">
-                <span class="text-[0.7rem] font-bold px-2.5 py-1 rounded-full"
-                  :style="`background:${mod.color}15;color:${mod.color}`">
-                  {{ mod.category }}
-                </span>
-                <span class="flex items-center gap-1 text-[0.7rem] text-white/40">
-                  ⏱ {{ mod.duration }}
-                </span>
-              </div>
-
               <!-- Title -->
               <h3 class="font-['Bricolage_Grotesque'] text-[1rem] font-extrabold text-white leading-snug mb-2 line-clamp-2">
                 {{ mod.name }}
               </h3>
 
-              <!-- Stats row -->
-              <div class="flex items-center gap-4 mb-4 mt-auto pt-3 border-t border-white/[0.05]">
-                <span class="flex items-center gap-1 text-[0.72rem] text-white/50">
-                  📚 {{ mod.lessonCount }} Modules
-                </span>
-                <span class="flex items-center gap-1 text-[0.72rem] text-white/50">
-                  👥 {{ mod.learnersCount }} Learners
-                </span>
-              </div>
-
-              <!-- Progress bar (unlocked only) -->
-              <div v-if="mod.status === 'unlocked'" class="mb-4">
-                <div class="flex items-center justify-between mb-1.5">
-                  <span class="text-[0.65rem] text-white/40">Progress</span>
-                  <span class="text-[0.7rem] font-semibold" :style="`color:${mod.color}`">{{ mod.progress }}%</span>
-                </div>
-                <div class="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
-                  <div class="h-full rounded-full transition-all duration-500"
-                    :style="`width:${mod.progress}%;background:${mod.color}`">
-                  </div>
-                </div>
-              </div>
-
+  
               <!-- See Details Button -->
               <button
                 @click="handleSeeDetails(mod)"

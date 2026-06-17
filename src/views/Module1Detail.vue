@@ -4,6 +4,9 @@ import { useRouter } from 'vue-router'
 import Navbar from '../components/Navbar.vue'
 import Footer from '../components/Footer.vue'
 
+// I-import ang background image
+import BG_PerModule from '../assets/BG_PerModule.jpg'
+
 const router = useRouter()
 const activeLesson = ref(null)
 
@@ -51,7 +54,7 @@ const lessons = [
   {
     id: 4,
     number: '04',
-    title: 'ScanShip Advance Wastewater Technology',
+    title: 'Scanship Advance Wastewater Technology',
     content: {
       intro: 'The Scanship Advance Wastewater Plant (AWP) is a Moving Bed Biofilm Reactor (MBBR) system combined with chemical treatment that cleans wastewater in accordance to international and national standards before discharging to the marine environment.',
       bullets: [],
@@ -90,20 +93,41 @@ const lessons = [
   <div class="min-h-screen bg-[#040f1e] text-white font-['DM_Sans']">
     <Navbar />
 
-    <!-- HERO BANNER -->
-    <section class="pt-20 pb-0"> <!-- Changed pt-24 to pt-0 -->
-        <div class="relative overflow-hidden bg-gradient-to-br from-[#f59e0b] via-[#d97706] to-[#b45309]" style="min-height:160px"> 
-            <div class="relative z-10 max-w-[600px] mx-auto px-8 py-10 text-center"> 
-            <h1 class="font-['Bricolage_Grotesque'] text-[clamp(2rem,5vw,2.8rem)] font-extrabold text-white leading-tight">
-                Module 1: Introduction to Wastewater Systems
+<!-- HERO BANNER -->
+<section class="pt-20 pb-0">
+    <div 
+      class="relative overflow-hidden flex items-center justify-center" 
+      :style="{ 
+        backgroundImage: `url(${BG_PerModule})`, 
+        backgroundPosition: 'center center', 
+        backgroundSize: 'cover', 
+        backgroundRepeat: 'no-repeat',
+        minHeight: '500px' 
+      }" 
+    >
+        <!-- Dark Overlay -->
+        <div class="absolute inset-0 bg-[#040f1e]/50"></div>
+
+        <!-- 1. CENTERED CONTENT (Main Title) -->
+        <div class="relative z-10 w-full max-w-[1000px] mx-auto px-8 text-center"> 
+            <h1 class="font-['Bricolage_Grotesque'] text-[clamp(2.5rem,7vw,4.2rem)] font-extrabold text-white leading-[1.1] drop-shadow-2xl">
+                Module 1: Introduction to <br class="hidden md:block"> Wastewater Systems
             </h1>
-            <p class="text-white/70 text-[0.9rem] mt-2">World leading solutions for cleaner oceans</p>
-            </div>
         </div>
-        </section>
+
+        <!-- 2. BOTTOM CONTENT (Subtitle at the Footer of the Image) -->
+        <div class="absolute bottom-4 left-0 right-0 z-10 text-center px-8">
+            <p class="text-white text-[0.9rem] md:text-[1.1rem] font-medium tracking-[0.2em] uppercase drop-shadow-md">
+                World leading solutions for cleaner oceans
+            </p>
+            <!-- Optional: A small accent line -->
+            <div class="bg-[#4da8f0] mx-auto mt-2 opacity-60"></div>
+        </div>
+    </div>
+</section>
 
     <!-- MAIN CONTENT -->
-    <section class="max-w-[900px] mx-auto px-8 py-12">
+    <section class="max-w-[1000px] mx-auto px-8 py-10 lg:px-0">
 
       <!-- Two column grid -->
       <div class="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-12">
@@ -112,41 +136,39 @@ const lessons = [
         <div>
           <!-- Overview -->
           <div class="mb-8">
-            <h2 class="font-['Bricolage_Grotesque'] text-[1.1rem] font-extrabold text-[#4da8f0] mb-3">Overview</h2>
-            <p class="text-[0.9rem] text-white/60 leading-relaxed mb-3">
+            <h2 class="font-['Bricolage_Grotesque'] text-[1.1rem] font-extrabold text-[#b5f4ff] mb-3">Overview</h2>
+            <p class="text-[0.9rem] text-white leading-relaxed mb-3">
               Cruise vessels generally produce significant amounts of wastewater from various onboard sources. This includes blackwater (sewage), graywater (from sinks, showers and galleys, as well as bilge and ballast water). To accommodate the large number of passengers and crew members, an advance wastewater system is required to protect the marine environment, maintain public health standards, and comply with international maritime standards.
             </p>
-            <p class="text-[0.9rem] text-white/60 leading-relaxed">
+            <p class="text-[0.9rem] text-white leading-relaxed">
               This document provides an introduction of advanced wastewater systems provided by Scanship specific to cruise vessels with detailing the types of wastewaters handled, system components, treatment processes and regulatory frameworks outlined in this document.
             </p>
           </div>
 
-          <div class="h-px bg-white/[0.06] mb-8"></div>
 
           <!-- Contents -->
           <div class="mb-8">
-            <h2 class="font-['Bricolage_Grotesque'] text-[1.1rem] font-extrabold text-[#4da8f0] mb-4">Contents</h2>
+            <h2 class="font-['Bricolage_Grotesque'] text-[1.1rem] font-extrabold text-[#b5f4ff] mb-4">Contents</h2>
             <div>
               <div v-for="(item, i) in [
                 'Definition of Wastewater',
                 'Types of Wastewaters',
                 'Wastewater Collection',
-                'ScanShip Advance Wastewater Technology',
+                'Scanship Advance Wastewater Technology',
                 'Regulatory Framework',
                 'Technology Advancements'
-              ]" :key="i" class="flex items-center gap-4 py-3 border-b border-white/[0.05]">
-                <span class="text-[0.75rem] font-black text-[#f59e0b] w-4 shrink-0">{{ i + 1 }}</span>
-                <span class="text-[0.88rem] text-white/60">{{ item }}</span>
+              ]" :key="i" class="flex items-center gap-4 py-3 border-b border-white/50">
+                <span class="text-[0.75rem] font-black text-[#b5f4ff] w-4 shrink-0">{{ i + 1 }}</span>
+                <span class="text-[0.88rem] text-white">{{ item }}</span>
               </div>
             </div>
           </div>
 
-          <div class="h-px bg-white/[0.06] mb-8"></div>
 
           <!-- Prior Knowledge -->
           <div class="mb-8">
-            <h2 class="font-['Bricolage_Grotesque'] text-[1.1rem] font-extrabold text-[#4da8f0] mb-3">Prior Knowledge</h2>
-            <p class="text-[0.9rem] text-white/60 leading-relaxed">
+            <h2 class="font-['Bricolage_Grotesque'] text-[1.1rem] font-extrabold text-[#b5f4ff] mb-3">Prior Knowledge</h2>
+            <p class="text-[0.9rem] text-white leading-relaxed">
               Basic familiarity with shipboard operations and general environmental concepts. No advanced engineering background is required.
             </p>
           </div>
@@ -156,24 +178,24 @@ const lessons = [
         <div class="space-y-5">
 
           <!-- Module Info -->
-          <div class="rounded-[16px] border border-white/[0.1] bg-white/[0.04] p-6 space-y-3">
-            <p class="text-[0.65rem] font-bold tracking-[0.15em] text-white/40 uppercase mb-1">Module Info</p>
+          <div class="rounded-[20px] border border-white bg-[#00364D] p-8 space-y-3">
+            <p class="text-[0.65rem] font-bold tracking-[0.15em] text-white uppercase mb-1">Module Info</p>
             <div class="flex items-start justify-between text-[0.82rem] gap-2">
-              <span class="text-white/50 shrink-0">Created by</span>
+              <span class="text-white shrink-0">Created by</span>
               <span class="font-semibold text-white text-right">Ian Estanislao<br><span class="text-white/40 font-normal text-[0.75rem]">Service Manager</span></span>
             </div>
-            <div class="h-px bg-white/[0.05]"></div>
+            <div class="h-px bg-white"></div>
             <div class="flex items-start justify-between text-[0.82rem] gap-2">
-              <span class="text-white/50 shrink-0">Approved by</span>
+              <span class="text-white shrink-0">Approved by</span>
               <span class="font-semibold text-white text-right">Micheal Taylor<br><span class="text-white/40 font-normal text-[0.75rem]">Vice President</span></span>
             </div>
-            <div class="h-px bg-white/[0.05]"></div>
+            <div class="h-px bg-white"></div>
             <div class="flex items-center justify-between text-[0.82rem]">
-              <span class="text-white/50">Regulation</span>
+              <span class="text-white">Regulation</span>
               <span class="font-semibold text-white">MARPOL Annex IV</span>
             </div>
             <div class="flex items-center justify-between text-[0.82rem]">
-              <span class="text-white/50">Doc Rev</span>
+              <span class="text-white">Doc Rev</span>
               <span class="font-semibold text-white">2025</span>
             </div>
           </div>
@@ -181,30 +203,30 @@ const lessons = [
       </div>
 
       <!-- LESSONS LIST -->
-      <div class="mt-16">
+      <div class="mt-8">
         <div class="mb-8">
-          <p class="text-[0.7rem] font-bold tracking-[0.2em] text-[#4da8f0] uppercase mb-2">Technical Content</p>
+          <p class="text-[0.7rem] font-bold tracking-[0.2em] text-[#b5f4ff] uppercase mb-2">Technical Content</p>
           <h2 class="font-['Bricolage_Grotesque'] text-[1.8rem] font-extrabold text-white">Module Lessons</h2>
         </div>
 
         <div class="space-y-4">
           <div v-for="lesson in lessons" :key="lesson.id"
             @click="activeLesson = activeLesson === lesson.id ? null : lesson.id"
-            class="rounded-[14px] border border-white/[0.1] bg-white/[0.04] hover:border-white/[0.18] hover:bg-white/[0.06] transition-all duration-300 overflow-hidden cursor-pointer"
-            :class="activeLesson === lesson.id ? 'border-[#f59e0b]/40 bg-[#f59e0b]/[0.03]' : ''">
+            class="rounded-[14px] border border-white bg-[#00364D] transition-all duration-300 overflow-hidden cursor-pointer"
+            :class="activeLesson === lesson.id ? 'border-[#f59e0b] bg-[#00364D]' : ''">
 
             <div class="flex items-center gap-4 p-5">
               <!-- Uniform Number Circle -->
-              <div class="shrink-0 w-11 h-11 rounded-[10px] flex items-center justify-center font-['Bricolage_Grotesque'] text-[0.95rem] font-black bg-white/[0.04] text-white/60">
+              <div class="shrink-0 w-11 h-11 rounded-[10px] flex items-center justify-center font-['Bricolage_Grotesque'] text-[0.95rem] font-black bg-[#00364D] text-white">
                 <span>{{ lesson.number }}</span>
               </div>
 
               <div class="flex-1 min-w-0">
                 <h3 class="font-['Bricolage_Grotesque'] text-[0.95rem] font-bold text-white">{{ lesson.title }}</h3>
-                <p class="text-[0.75rem] text-white/35">{{ lesson.duration }}</p>
+                <p class="text-[0.75rem] text-white">{{ lesson.duration }}</p>
               </div>
 
-              <div class="shrink-0 text-white/25 text-[0.65rem] transition-transform duration-200"
+              <div class="shrink-0 text-white text-[0.65rem] transition-transform duration-200"
                 :class="activeLesson === lesson.id ? 'rotate-180' : ''">▼</div>
             </div>
 
@@ -212,15 +234,15 @@ const lessons = [
             <Transition name="expand">
               <div v-if="activeLesson === lesson.id" class="px-5 pb-6 border-t border-white/[0.06]">
                 <div class="pt-5 space-y-4">
-                  <p class="text-[0.88rem] text-white/65 leading-relaxed">{{ lesson.content.intro }}</p>
+                  <p class="text-[0.88rem] text-white leading-relaxed">{{ lesson.content.intro }}</p>
                   <ul v-if="lesson.content.bullets.length > 0" class="space-y-2.5 pl-1">
                     <li v-for="(bullet, i) in lesson.content.bullets" :key="i"
-                      class="flex items-start gap-3 text-[0.85rem] text-white/60 leading-relaxed">
-                      <span class="mt-[7px] w-1.5 h-1.5 rounded-full bg-[#f59e0b] shrink-0"></span>
+                      class="flex items-start gap-3 text-[0.85rem] text-white leading-relaxed">
+                      <span class="mt-[7px] w-1.5 h-1.5 rounded-full bg-white shrink-0"></span>
                       <span>{{ bullet }}</span>
                     </li>
                   </ul>
-                  <p v-if="lesson.content.closing" class="text-[0.88rem] text-white/65 leading-relaxed">{{ lesson.content.closing }}</p>
+                  <p v-if="lesson.content.closing" class="text-[0.88rem] text-white leading-relaxed">{{ lesson.content.closing }}</p>
                 </div>
               </div>
             </Transition>

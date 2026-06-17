@@ -73,12 +73,12 @@ onMounted(() => {
     <!-- ── ABOUT ── -->
     <section id="about" class="pt-28 pb-8 px-8 bg-[#040f1e] text-center">
       <div class="max-w-[1100px] mx-auto">
-        <p class="text-[0.68rem] font-bold tracking-[0.2em] text-white/35 mb-4 uppercase">About ScanShip</p>
+        <p class="text-[0.68rem] font-bold tracking-[0.2em] text-white/35 mb-4 uppercase">About Scanship</p>
         <h2 class="font-sans text-[clamp(1.8rem,3vw,2.8rem)] font-extrabold text-white mb-5">
           The technology behind cleaner oceans
         </h2>
         <p class=" max-w-[580px] mx-auto mb-10 text-white/45 leading-[1.8] text-[0.95rem]">
-          ScanShip delivers world-leading wastewater and waste management systems to the maritime industry. For over 20 years, our modular technology has helped cruise operators reduce emissions, meet compliance, and convert waste into energy, all from one platform.
+          Scanship delivers world-leading wastewater and waste management systems to the maritime industry. For over 20 years, our modular technology has helped cruise operators reduce emissions, meet compliance, and convert waste into energy, all from one platform.
         </p>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-[860px] mx-auto">
           <div
