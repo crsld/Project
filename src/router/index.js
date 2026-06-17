@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { auth } from '../firebase'
-import { onAuthStateChanged } from 'firebase/auth'
+
 
 const routes = [
   { path: '/',                   component: () => import('../views/LandingPage.vue') },

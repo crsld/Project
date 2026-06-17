@@ -1,8 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { auth } from '../firebase.js'
-import { onAuthStateChanged, signOut } from 'firebase/auth'
 import Navbar from '../components/Navbar.vue'
 import Footer from '../components/Footer.vue'
 
@@ -41,15 +39,6 @@ const videos = [
   }
 ]
 
-onAuthStateChanged(auth, (u) => {
-  if (u) user.value = u
-  else router.push('/')
-})
-
-const handleSignOut = async () => {
-  await signOut(auth)
-  router.push('/')
-}
 
 const modules = [
   {

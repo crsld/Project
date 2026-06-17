@@ -1,53 +1,6 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { auth } from '../firebase.js'
-import { onAuthStateChanged, signOut, updatePassword, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth'
-
-const router = useRouter()
-const user = ref(null)
-const activeSection = ref('overview')
-
-const showPasswordModal = ref(false)
-const currentPassword = ref('')
-const newPassword = ref('')
-const confirmPassword = ref('')
-const passwordError = ref('')
-const passwordSuccess = ref('')
-
-onAuthStateChanged(auth, (u) => {
-  if (u) user.value = u
-  else router.push('/')
-})
-
-const handleSignOut = async () => {
-  await signOut(auth)
-  router.push('/')
-}
-
-const handleUpdatePassword = async () => {
-  passwordError.value = ''
-  passwordSuccess.value = ''
-  if (newPassword.value !== confirmPassword.value) {
-    passwordError.value = 'New passwords do not match.'
-    return
-  }
-  if (newPassword.value.length < 6) {
-    passwordError.value = 'Password must be at least 6 characters.'
-    return
-  }
-  try {
-    const credential = EmailAuthProvider.credential(user.value.email, currentPassword.value)
-    await reauthenticateWithCredential(user.value, credential)
-    await updatePassword(user.value, newPassword.value)
-    passwordSuccess.value = 'Password updated successfully.'
-    currentPassword.value = ''
-    newPassword.value = ''
-    confirmPassword.value = ''
-  } catch (err) {
-    passwordError.value = err.message
-  }
-}
 
 const navItems = [
   { key: 'overview',   label: 'Overview',   icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>' },

@@ -2,31 +2,6 @@
 import Logo from '../assets/Company_Logo.png'
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { auth } from '../firebase.js'
-import { onAuthStateChanged, signOut } from 'firebase/auth'
-
-const emit = defineEmits(['open-auth'])
-
-const router = useRouter()
-const user = ref(null)
-const showDropdown = ref(false)
-
-onAuthStateChanged(auth, (u) => {
-  user.value = u ?? null
-})
-
-const handleSignOut = async () => {
-  await signOut(auth)
-  showDropdown.value = false
-  router.push('/')
-}
-
-// Close dropdown when clicking outside
-onMounted(() => {
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.profile-dropdown')) showDropdown.value = false
-  })
-})
 </script>
 
 <template>
@@ -35,8 +10,8 @@ onMounted(() => {
 
       <!-- Logo (Goes to Landing if out, Dashboard if in) -->
       <a href="#" class="flex items-center gap-3 no-underline" @click.prevent="user ? router.push('/dashboard') : router.push('/')">
-        <img :src="Logo" alt="ScanShip" class="h-10 w-10 rounded-full object-contain" />
-        <span class="font-['Bricolage_Grotesque'] text-2xl font-bold tracking-tight text-[#040f1e]">ScanShip</span>
+        <img :src="Logo" alt="Scanship" class="h-10 w-10 rounded-full object-contain" />
+        <span class="font-['Bricolage_Grotesque'] text-2xl font-bold tracking-tight text-[#040f1e]">Scanship</span>
       </a>
 
       <!-- ── UNAUTHENTICATED ── -->
