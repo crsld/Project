@@ -5,6 +5,14 @@ import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import ScrollStack, { ScrollStackItem } from '../components/ScrollStack.vue'
 
+// Initialize router and state
+const router = useRouter()
+const showAuth = ref(false)
+
+// Function to navigate to Dashboard
+const goToDashboard = () => {
+  router.push('/dashboard')
+}
 
 const modules = [
   { id:1,  name:'Intro to Wastewater Systems', label:'Module 1', badge:'Foundation',   badgeColor:'rgba(255,255,255,0.8)', badgeBorder:'rgba(255,255,255,0.2)', badgeBg:'rgba(255,255,255,0.06)', icon:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>' },
@@ -111,7 +119,7 @@ onMounted(() => {
     </div>
   </div>
 
-  <!-- Stack viewport (The Scrolling Area) -->
+  <!-- Stack viewport -->
   <div class="w-[800px] mx-auto h-[600px] overflow-hidden relative [&_*]:![scrollbar-width:none] [&_*]:![-ms-overflow-style:none]">
     <ScrollStack
       :item-distance="80" 
@@ -158,8 +166,9 @@ onMounted(() => {
               <span class="w-2 h-2 rounded-full bg-[#10b981] shrink-0"></span>
               <span class="text-[0.78rem] text-white/38">Available to subscribe</span>
             </div>
+            <!-- REVISED: Individual card arrow now goes to Dashboard -->
             <button
-              @click="showAuth = true"
+              @click="goToDashboard"
               class="w-10 h-10 rounded-full border border-white/18 bg-transparent text-white/45 flex items-center justify-center cursor-pointer text-base hover:border-white/50 hover:text-white hover:bg-white/[0.06] transition-all duration-250">
               →
             </button>
@@ -171,8 +180,9 @@ onMounted(() => {
 
   <!-- Button Container -->
   <div class="mt-8">
+    <!-- REVISED: "View more modules" now goes to Dashboard -->
     <button 
-      @click="showAuth = true"
+      @click="goToDashboard"
       class="inline-flex items-center gap-3 px-8 py-3.5 border border-white/10 rounded-[14px] text-white/90 bg-white/5 hover:bg-white/10 hover:border-white/30 transition-all cursor-pointer group"
     >
       <span class="font-bold text-[1rem]">View more modules</span>
@@ -187,7 +197,6 @@ onMounted(() => {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
 
-/* Reveal animation */
 .reveal {
   opacity: 0;
   transform: translateY(22px);
@@ -195,21 +204,15 @@ onMounted(() => {
   transition-delay: var(--delay, 0ms);
 }
 .reveal.is-visible { opacity: 1; transform: translateY(0); }
-.reveal-delay-1 { --delay: 100ms; }
-.reveal-delay-2 { --delay: 200ms; }
 
-/* Scrollbar hide for stack */
 :deep(.scroll-stack-container),
 :deep(.scroll-stack-inner) {
   scrollbar-width: none !important;
   -ms-overflow-style: none !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
 }
 :deep(.scroll-stack-container)::-webkit-scrollbar,
 :deep(.scroll-stack-inner)::-webkit-scrollbar { display: none !important; }
 
-/* Card styles */
 :deep(.module-stack-card) {
   background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%) !important;
   border: 1px solid rgba(255,255,255,0.08) !important;
@@ -232,7 +235,6 @@ onMounted(() => {
   border-color: rgba(16,185,129,0.12) !important;
 }
 
-/* Modal fade */
 .fade-enter-active, .fade-leave-active { transition: opacity 0.22s ease; }
 .fade-enter-from, .fade-leave-to { opacity: 0; }
 </style>
