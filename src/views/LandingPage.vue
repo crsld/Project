@@ -123,17 +123,14 @@ onMounted(() => {
     <section id="about" class="py-24 px-8 bg-[#040f1e]">
       <div class="max-w-[1000px] mx-auto">
         <div class="text-center mb-16">
-          <p class="text-[0.7rem] font-bold tracking-[0.2em] text-[#b5f4ff] uppercase mb-3">About Scanship</p>
-          <h2 class="font-['Bricolage_Grotesque'] text-[clamp(2rem,4vw,3rem)] font-extrabold text-white mb-4">
-            About ScanShip
-          </h2>
-          <p class="text-white/50 text-[1rem] max-w-[550px] mx-auto">
-            Discover how ScanShip is revolutionizing maritime wastewater management with cutting-edge technology.
+          <p class="text-[1.4rem] font-bold tracking-[0.2em] text-[#b5f4ff] uppercase mb-3">About Scanship</p>
+          <p class="text-white text-[1rem] max-w-[900px] mx-auto">
+            Discover how Scanship is revolutionizing maritime wastewater management with cutting-edge technology.
           </p>
         </div>
 
         <!-- Featured Video -->
-        <div class="reveal mb-12 group cursor-pointer" @click="selectedVideo = videos[0].id">
+        <div class="reveal mb-10 group cursor-pointer" @click="selectedVideo = videos[0].id">
           <div class="relative aspect-video rounded-[24px] overflow-hidden border border-white/[0.1] bg-black shadow-2xl">
             <img :src="`https://img.youtube.com/vi/${videos[0].youtubeId}/maxresdefault.jpg`" class="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" />
             <div class="absolute inset-0 flex items-center justify-center">
