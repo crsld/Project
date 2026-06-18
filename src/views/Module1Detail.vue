@@ -203,46 +203,77 @@ const lessons = [
       </div>
 
       <!-- LESSONS LIST -->
-      <div class="mt-8">
-        <div class="mb-8">
-          <p class="text-[0.7rem] font-bold tracking-[0.2em] text-[#b5f4ff] uppercase mb-2">Technical Content</p>
-          <h2 class="font-['Bricolage_Grotesque'] text-[1.8rem] font-extrabold text-white">Module Lessons</h2>
+      <!-- LESSONS LIST -->
+      <div class="mt-16">
+        <div class="mb-10 text-center lg:text-left">
+          <p class="text-[0.7rem] font-bold tracking-[0.3em] text-[#4da8f0] uppercase mb-3">Technical Deep-Dive</p>
+          <h2 class="font-['Bricolage_Grotesque'] text-[2.2rem] font-extrabold text-white leading-tight">Module Lessons</h2>
         </div>
 
         <div class="space-y-4">
           <div v-for="lesson in lessons" :key="lesson.id"
             @click="activeLesson = activeLesson === lesson.id ? null : lesson.id"
-            class="rounded-[14px] border border-white bg-[#00364D] transition-all duration-300 overflow-hidden cursor-pointer"
-            :class="activeLesson === lesson.id ? 'border-[#f59e0b] bg-[#00364D]' : ''">
+            class="group relative rounded-[20px] border transition-all duration-500 overflow-hidden cursor-pointer"
+            :class="[
+              activeLesson === lesson.id 
+              ? 'border-[#4da8f0]/60 bg-gradient-to-b from-[#00364D] to-[#011c29] shadow-[0_10px_30px_rgba(0,0,0,0.3)]' 
+              : 'border-white/10 bg-white/[0.03] hover:border-white/30 hover:bg-white/[0.06] hover:-translate-y-1'
+            ]">
+            
+            <!-- Glow Effect on Hover (Hidden by default) -->
+            <div class="absolute inset-0 bg-gradient-to-r from-[#4da8f0]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-            <div class="flex items-center gap-4 p-5">
-              <!-- Uniform Number Circle -->
-              <div class="shrink-0 w-11 h-11 rounded-[10px] flex items-center justify-center font-['Bricolage_Grotesque'] text-[0.95rem] font-black bg-[#00364D] text-white">
-                <span>{{ lesson.number }}</span>
+            <div class="relative flex items-center gap-5 p-6 md:p-7">
+              <!-- Animated Number Badge -->
+              <div class="shrink-0 w-12 h-12 rounded-[12px] flex items-center justify-center font-['Bricolage_Grotesque'] text-[1rem] font-black transition-all duration-500"
+                :class="activeLesson === lesson.id ? 'bg-[#4da8f0] text-white shadow-[0_0_15px_rgba(77,168,240,0.5)]' : 'bg-white/10 text-white/50 group-hover:text-white'">
+                {{ lesson.number }}
               </div>
 
               <div class="flex-1 min-w-0">
-                <h3 class="font-['Bricolage_Grotesque'] text-[0.95rem] font-bold text-white">{{ lesson.title }}</h3>
-                <p class="text-[0.75rem] text-white">{{ lesson.duration }}</p>
+                <h3 class="font-['Bricolage_Grotesque'] text-[1.05rem] md:text-[1.15rem] font-bold text-white transition-colors duration-300"
+                  :class="activeLesson === lesson.id ? 'text-[#4da8f0]' : 'group-hover:text-white'">
+                  {{ lesson.title }}
+                </h3>
+                <div class="flex items-center gap-3 mt-1">
+                   <span class="text-[0.65rem] font-bold tracking-wider uppercase text-white/30">Lesson Contents</span>
+                   <div class="h-px w-8 bg-white/10"></div>
+                </div>
               </div>
 
-              <div class="shrink-0 text-white text-[0.65rem] transition-transform duration-200"
-                :class="activeLesson === lesson.id ? 'rotate-180' : ''">▼</div>
+              <!-- Modern SVG Chevron -->
+              <div class="shrink-0 w-8 h-8 rounded-full border border-white/10 flex items-center justify-center transition-all duration-500"
+                :class="activeLesson === lesson.id ? 'rotate-180 bg-[#4da8f0] border-[#4da8f0]' : 'bg-white/5'">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
             </div>
 
-            <!-- Expanded content -->
+            <!-- Expanded content with Slide-down logic -->
             <Transition name="expand">
-              <div v-if="activeLesson === lesson.id" class="px-5 pb-6 border-t border-white/[0.06]">
-                <div class="pt-5 space-y-4">
-                  <p class="text-[0.88rem] text-white leading-relaxed">{{ lesson.content.intro }}</p>
-                  <ul v-if="lesson.content.bullets.length > 0" class="space-y-2.5 pl-1">
+              <div v-if="activeLesson === lesson.id" class="relative px-6 pb-8 md:px-24">
+                <div class="pt-2 space-y-5 border-t border-white/10">
+                  <div class="mt-6">
+                    <p class="text-[0.95rem] text-white/80 leading-relaxed italic border-l-2 border-[#4da8f0] pl-4">
+                      {{ lesson.content.intro }}
+                    </p>
+                  </div>
+                  
+                  <ul v-if="lesson.content.bullets.length > 0" class="space-y-4">
                     <li v-for="(bullet, i) in lesson.content.bullets" :key="i"
-                      class="flex items-start gap-3 text-[0.85rem] text-white leading-relaxed">
-                      <span class="mt-[7px] w-1.5 h-1.5 rounded-full bg-white shrink-0"></span>
-                      <span>{{ bullet }}</span>
+                      class="flex items-start gap-4 text-[0.9rem] text-white/70 leading-relaxed group/item">
+                      <div class="mt-1.5 w-2 h-2 rounded-full bg-[#4da8f0]/40 group-hover/item:bg-[#4da8f0] transition-colors shrink-0 shadow-[0_0_8px_rgba(77,168,240,0)] group-hover/item:shadow-[0_0_8px_rgba(77,168,240,0.6)]"></div>
+                      <span class="transition-colors group-hover/item:text-white">{{ bullet }}</span>
                     </li>
                   </ul>
-                  <p v-if="lesson.content.closing" class="text-[0.88rem] text-white leading-relaxed">{{ lesson.content.closing }}</p>
+
+                  <div v-if="lesson.content.closing" class="bg-white/5 rounded-xl p-5 border border-white/5">
+                    <p class="text-[0.88rem] text-white/60 leading-relaxed">
+                      <strong class="text-white block mb-1 font-['Bricolage_Grotesque']">Summary:</strong>
+                      {{ lesson.content.closing }}
+                    </p>
+                  </div>
                 </div>
               </div>
             </Transition>
@@ -270,4 +301,26 @@ const lessons = [
   opacity: 1;
   max-height: 1000px;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=DM+Sans:wght@300;400;500&display=swap');
+
+/* Smooth Lesson Expansion */
+.expand-enter-active, .expand-leave-active {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  max-height: 2000px; /* High value to allow full expansion */
+}
+
+.expand-enter-from, .expand-leave-to {
+  opacity: 0;
+  max-height: 0;
+  transform: translateY(-10px);
+}
+
+/* Ensure images and containers don't overflow during transition */
+.expand-leave-from, .expand-enter-to {
+  opacity: 1;
+  max-height: 2000px;
+  transform: translateY(0);
+}
+
 </style>
