@@ -132,7 +132,7 @@ onMounted(() => {
         <!-- Featured Video -->
         <div class="reveal mb-10 group cursor-pointer" @click="selectedVideo = videos[0].id">
           <div class="relative aspect-video rounded-[24px] overflow-hidden border border-white/[0.1] bg-black shadow-2xl">
-            <img :src="`https://img.youtube.com/vi/${videos[0].youtubeId}/maxresdefault.jpg`" class="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" />
+            <img :src="`https://img.youtube.com/vi/${videos[0].youtubeId}/hqdefault.jpg`" class="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" />
             <div class="absolute inset-0 flex items-center justify-center">
                <div class="w-20 h-20 rounded-full bg-[#4da8f0] flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
                 <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
