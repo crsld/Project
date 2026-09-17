@@ -33,9 +33,9 @@ const quickLinks = [
 
 <template>
   <div class="min-h-screen bg-[#040f1e] text-white font-['DM_Sans']">
-    <div class="pt-16 max-w-250 mx-auto px-4 pb-10 flex gap-8">
-    
-      <aside class="w-50 shrink-0 pt-4">
+    <div class="pt-16 max-w-250 mx-auto px-4 pb-10 flex flex-col sm:flex-row gap-8">
+
+      <aside class="w-full sm:w-50 shrink-0 pt-4">
         <button @click="router.push('/dashboard')"
           class="flex items-center gap-2 text-[0.82rem] text-white hover:text-white/80 transition-colors cursor-pointer border-none bg-transparent mb-6 px-0">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>

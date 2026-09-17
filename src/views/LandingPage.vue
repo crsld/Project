@@ -100,7 +100,7 @@ onMounted(() => {
     <!-- ── 1. HERO SECTION (HOME) ── -->
     <section id="home" class="min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 relative overflow-hidden bg-[#040f1e]">
       <div class="relative max-w-4xl mx-auto w-full reveal">
-        <h1 class="font-['Bricolage_Grotesque'] text-[clamp(3.5rem,6vw,4.5rem)] font-black leading-[1.05] tracking-tight mb-8 text-white">
+        <h1 class="font-['Bricolage_Grotesque'] text-[clamp(2.4rem,8vw,4.5rem)] font-black leading-[1.05] tracking-tight mb-8 text-white">
           Unlimited access to Maritime System modules,
           <span class="text-[#9ddbff]">anytime.</span>
         </h1>
@@ -138,9 +138,9 @@ onMounted(() => {
                 <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
               </div>
             </div>
-            <div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black to-transparent">
-              <h3 class="text-2xl font-bold text-white">{{ videos[0].title }}</h3>
-              <p class="text-white/70">{{ videos[0].description }}</p>
+            <div class="absolute bottom-0 left-0 right-0 p-5 sm:p-8 bg-gradient-to-t from-black to-transparent">
+              <h3 class="text-lg sm:text-2xl font-bold text-white">{{ videos[0].title }}</h3>
+              <p class="text-sm sm:text-base text-white/70">{{ videos[0].description }}</p>
             </div>
           </div>
         </div>
