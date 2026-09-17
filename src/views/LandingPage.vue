@@ -93,14 +93,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="font-['DM_Sans'] bg-[#040f1e] text-white selection:bg-[#4da8f0]/30">
+  <div class="font-['Trebuchet_MS'] bg-[#040f1e] text-white selection:bg-[#4da8f0]/30">
     <!-- Pass prop to navbar to handle scrolling instead of routing if needed -->
     <Navbar @open-auth="showAuth = true" />
 
     <!-- ── 1. HERO SECTION (HOME) ── -->
     <section id="home" class="min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 relative overflow-hidden bg-[#040f1e]">
       <div class="relative max-w-4xl mx-auto w-full reveal">
-        <h1 class="font-['Bricolage_Grotesque'] text-[clamp(2.4rem,8vw,4.5rem)] font-black leading-[1.05] tracking-tight mb-8 text-white">
+        <h1 class="font-['Trebuchet_MS'] text-[clamp(2.4rem,8vw,4.5rem)] font-black leading-[1.05] tracking-tight mb-8 text-white">
           Unlimited access to Maritime System modules,
           <span class="text-[#9ddbff]">anytime.</span>
         </h1>
@@ -171,7 +171,7 @@ onMounted(() => {
       <div class="max-w-[1200px] mx-auto">
         <div class="text-center mb-16">
           <p class="text-[0.7rem] font-bold tracking-[0.2em] text-[#b5f4ff] uppercase mb-3">Our Courses</p>
-          <h2 class="font-['Bricolage_Grotesque'] text-[clamp(2rem,4vw,3rem)] font-extrabold text-white mb-4">
+          <h2 class="font-['Trebuchet_MS'] text-[clamp(2rem,4vw,3rem)] font-extrabold text-white mb-4">
             Our Most Popular <span class="text-[#b5f4ff]">Modules</span>
           </h2>
           <p class="text-white text-[1rem] max-w-[800px] mx-auto">

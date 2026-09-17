@@ -32,7 +32,7 @@ const quickLinks = [
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#040f1e] text-white font-['DM_Sans']">
+  <div class="min-h-screen bg-[#040f1e] text-white font-['Trebuchet_MS']">
     <div class="pt-16 max-w-250 mx-auto px-4 pb-10 flex flex-col sm:flex-row gap-8">
 
       <aside class="w-full sm:w-50 shrink-0 pt-4">
@@ -159,17 +159,17 @@ const quickLinks = [
               <div>
                 <label class="text-[0.72rem] text-white/35 mb-1 block">Current password</label>
                 <input v-model="currentPassword" type="password" placeholder="••••••••"
-                  class="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-white text-[0.88rem] outline-none focus:border-white/30 transition-colors placeholder:text-white/20 font-['DM_Sans']"/>
+                  class="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-white text-[0.88rem] outline-none focus:border-white/30 transition-colors placeholder:text-white/20 font-['Trebuchet_MS']"/>
               </div>
               <div>
                 <label class="text-[0.72rem] text-white/35 mb-1 block">New password</label>
                 <input v-model="newPassword" type="password" placeholder="••••••••"
-                  class="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-white text-[0.88rem] outline-none focus:border-white/30 transition-colors placeholder:text-white/20 font-['DM_Sans']"/>
+                  class="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-white text-[0.88rem] outline-none focus:border-white/30 transition-colors placeholder:text-white/20 font-['Trebuchet_MS']"/>
               </div>
               <div>
                 <label class="text-[0.72rem] text-white/35 mb-1 block">Confirm new password</label>
                 <input v-model="confirmPassword" type="password" placeholder="••••••••"
-                  class="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-white text-[0.88rem] outline-none focus:border-white/30 transition-colors placeholder:text-white/20 font-['DM_Sans']"/>
+                  class="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-white text-[0.88rem] outline-none focus:border-white/30 transition-colors placeholder:text-white/20 font-['Trebuchet_MS']"/>
               </div>
               <p v-if="passwordError" class="text-[0.78rem] text-red-400">{{ passwordError }}</p>
               <p v-if="passwordSuccess" class="text-[0.78rem] text-[#10b981]">{{ passwordSuccess }}</p>

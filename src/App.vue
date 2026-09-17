@@ -1,5 +1,5 @@
 <template>
-  <div class="font-['DM_Sans'] bg-[#061120] text-white min-h-screen">
+  <div class="font-['Trebuchet_MS'] bg-[#061120] text-white min-h-screen">
     <router-view />
   </div>
 </template>
