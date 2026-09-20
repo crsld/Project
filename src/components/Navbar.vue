@@ -1,7 +1,8 @@
 <script setup>
 import Logo from '../assets/Company_Logo.png'
-import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { logOut, currentUser } from '../auth'
 
 const router = useRouter()
 const route = useRoute()
@@ -33,17 +34,43 @@ const handleScroll = () => {
 }
 
 
+// ── User menu ──
+const userMenuOpen = ref(false)
+const userMenuRef = ref(null)
+const userName = computed(() => currentUser.value?.name || currentUser.value?.email || 'Account')
+const userInitial = computed(() => userName.value.trim().charAt(0).toUpperCase())
+
+const handleClickOutside = (e) => {
+  if (userMenuRef.value && !userMenuRef.value.contains(e.target)) {
+    userMenuOpen.value = false
+  }
+}
+const handleKeydown = (e) => {
+  if (e.key === 'Escape') userMenuOpen.value = false
+}
+
 onMounted(() => {
   window.addEventListener('scroll', handleScroll, { passive: true })
+  document.addEventListener('click', handleClickOutside)
+  document.addEventListener('keydown', handleKeydown)
 })
 
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  document.removeEventListener('click', handleClickOutside)
+  document.removeEventListener('keydown', handleKeydown)
 })
 
 
 // ── Navigation helpers ──
+
+const handleLogout = async () => {
+  mobileMenuOpen.value = false
+  userMenuOpen.value = false
+  logOut()
+  await router.replace('/login')
+}
 
 const goHome = async () => {
   showDropdown.value = false
@@ -115,6 +142,35 @@ const goToSection = async (sectionId) => {
         </a>
       </div>
 
+      <!-- Signed-in user (desktop) -->
+      <div ref="userMenuRef" class="relative hidden md:block">
+        <button type="button" @click="userMenuOpen = !userMenuOpen"
+          aria-haspopup="menu" :aria-expanded="userMenuOpen"
+          class="flex items-center gap-2 pl-2 pr-4 py-1.5 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-full cursor-pointer transition-all">
+          <span class="w-7 h-7 rounded-full bg-[#4da8f0] flex items-center justify-center text-xs font-black">{{ userInitial }}</span>
+          <span class="font-['Trebuchet_MS'] font-medium text-sm max-w-[160px] truncate">{{ userName }}</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+            class="transition-transform duration-200" :class="userMenuOpen ? 'rotate-180' : ''">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+
+        <Transition name="user-menu">
+          <div v-if="userMenuOpen" role="menu"
+            class="absolute right-0 mt-3 w-56 rounded-2xl border border-white/10 bg-[#040f1e]/95 backdrop-blur-md shadow-2xl overflow-hidden">
+            <div class="px-4 py-3 border-b border-white/10">
+              <p class="text-[0.65rem] font-bold tracking-[0.15em] text-[#b5f4ff] uppercase mb-1">Signed in as</p>
+              <p class="text-sm text-white truncate">{{ currentUser?.email }}</p>
+            </div>
+            <button type="button" role="menuitem" @click="handleLogout"
+              class="w-full flex items-center gap-3 px-4 py-3 text-left text-sm font-medium text-white hover:bg-white/10 hover:text-[#4da8f0] bg-transparent border-none cursor-pointer transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              Log Out
+            </button>
+          </div>
+        </Transition>
+      </div>
+
       <!-- Mobile Menu Toggle -->
       <button
         type="button"
@@ -148,9 +204,19 @@ const goToSection = async (sectionId) => {
             About
           </a>
           <a href="#" @click.prevent="goToSection('modules')"
-             class="font-['Trebuchet_MS'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200 py-3">
+             class="font-['Trebuchet_MS'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200 py-3 border-b border-white/5">
             Modules
           </a>
+          <div class="flex items-center justify-between gap-3 py-3">
+            <span class="flex items-center gap-2 min-w-0">
+              <span class="w-7 h-7 shrink-0 rounded-full bg-[#4da8f0] flex items-center justify-center text-xs font-black">{{ userInitial }}</span>
+              <span class="font-['Trebuchet_MS'] font-medium text-sm text-white truncate">{{ userName }}</span>
+            </span>
+            <a href="#" @click.prevent="handleLogout"
+               class="shrink-0 font-['Trebuchet_MS'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200">
+              Log Out
+            </a>
+          </div>
         </div>
       </div>
     </Transition>
@@ -185,6 +251,15 @@ const goToSection = async (sectionId) => {
   transform: translateY(-2rem);
 }
 
+/* User dropdown transition */
+.user-menu-enter-active, .user-menu-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.user-menu-enter-from, .user-menu-leave-to {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
 /* Mobile menu slide-down transition */
 .mobile-menu-enter-active, .mobile-menu-leave-active {
   transition: all 0.25s ease;
@@ -196,6 +271,6 @@ const goToSection = async (sectionId) => {
 }
 .mobile-menu-enter-to, .mobile-menu-leave-from {
   opacity: 1;
-  max-height: 220px;
+  max-height: 280px;
 }
 </style>
