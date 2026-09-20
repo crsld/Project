@@ -68,7 +68,7 @@ onUnmounted(() => {
 const handleLogout = async () => {
   mobileMenuOpen.value = false
   userMenuOpen.value = false
-  logOut()
+  await logOut()
   await router.replace('/login')
 }
 

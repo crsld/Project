@@ -12,6 +12,7 @@ const email = ref('')
 const password = ref('')
 const confirm = ref('')
 const error = ref('')
+const info = ref('')
 const loading = ref(false)
 
 const passwordProblem = computed(() => {
@@ -31,10 +32,17 @@ const canSubmit = computed(() =>
 const submit = async () => {
   if (!canSubmit.value) return
   error.value = ''
+  info.value = ''
   loading.value = true
   try {
-    await signUp({ name: name.value, email: email.value, password: password.value })
-    router.replace(postAuthPath(route.query.redirect))
+    const result = await signUp({ name: name.value, email: email.value, password: password.value })
+    if (result.needsConfirmation) {
+      info.value = 'Account created! Check your email and click the confirmation link, then log in.'
+      password.value = ''
+      confirm.value = ''
+    } else {
+      router.replace(postAuthPath(route.query.redirect))
+    }
   } catch (e) {
     error.value = e.message
   } finally {
@@ -73,6 +81,8 @@ const submit = async () => {
       </div>
 
       <p v-if="error" role="alert" class="text-sm text-red-300 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3">{{ error }}</p>
+
+      <p v-if="info" role="status" class="text-sm text-emerald-300 bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-4 py-3">{{ info }}</p>
 
       <button type="submit" :disabled="!canSubmit"
         class="w-full py-4 bg-[#4da8f0] hover:bg-[#3b97e0] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#4da8f0] text-white rounded-full font-bold transition-all cursor-pointer border-none">

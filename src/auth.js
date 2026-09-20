@@ -1,43 +1,13 @@
-// Frontend-only demo auth. Accounts live in this browser's localStorage, so this
-// is NOT real security. Replace the bodies of signUp/logIn/logOut with API calls
-// to a backend (HttpOnly session cookie or JWT) before going to production.
+// Sign-up, log-in and sessions are handled by Supabase Auth (email + password).
+// Passwords are hashed and checked on Supabase's servers; the session is stored in the
+// browser and refreshed automatically. The QR gate below is separate and client-side only.
 import { ref } from 'vue'
 import { MODULE_ROUTES } from './modules.js'
-
-const USERS_KEY = 'scanship_users'
-const SESSION_KEY = 'scanship_session'
-
-const readJSON = (key, fallback) => {
-  try {
-    return JSON.parse(localStorage.getItem(key)) ?? fallback
-  } catch {
-    return fallback
-  }
-}
-
-const writeJSON = (key, value) => {
-  try {
-    localStorage.setItem(key, JSON.stringify(value))
-  } catch {
-    throw new Error('Unable to save data. Please enable browser storage.')
-  }
-}
-
-const toHex = (buf) => [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('')
-
-const hashPassword = async (password, saltHex) => {
-  const salt = saltHex
-    ? new Uint8Array(saltHex.match(/../g).map(h => parseInt(h, 16)))
-    : crypto.getRandomValues(new Uint8Array(16))
-  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveBits'])
-  const bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' }, key, 256)
-  return { salt: toHex(salt), hash: toHex(bits) }
-}
+import { supabase } from './supabase.js'
 
 // ── QR gate ──
 // Visitors must scan/upload a valid Scanship QR code before reaching log in / sign up.
-// Recognised once per browser session (sessionStorage). Like the rest of this file this
-// is a client-side check only. Adjust isValidScanshipQr to match your real QR payload.
+// Recognised once per browser session (sessionStorage). This check is client-side only.
 const QR_KEY = 'scanship_qr_verified'
 
 const readQr = () => {
@@ -74,9 +44,8 @@ export const qrTarget = ref(readQrTarget())
 
 // Each station QR encodes a link to the site: https://<site>/access?code=SCANSHIP-MODULE-<n>
 // where <n> is the module to open after log in (e.g. SCANSHIP-MODULE-1 for Station 1).
-// Any other SCANSHIP-<ID> code is accepted too and just opens the site (no specific module).
-// so a normal phone camera opens the website directly. The raw code ("SCANSHIP-<ID>")
-// is accepted too. It uses a dash (not a colon) so cameras treat it as plain text.
+// Any other SCANSHIP-<ID> code (raw, or as a link) is accepted too and just opens the site.
+// The dash (not a colon) keeps phone cameras from treating the code as a broken link.
 const CODE_RE = /^SCANSHIP-[A-Z0-9_-]+$/i
 
 // Pulls the code out of either a link or a raw code; returns '' when there is none.
@@ -142,43 +111,100 @@ export const postAuthPath = (redirect) => {
   return typeof redirect === 'string' && redirect.startsWith('/') && !redirect.startsWith('//') ? redirect : '/'
 }
 
-export const currentUser = ref(readJSON(SESSION_KEY, null))
+// ── Auth (Supabase) ──
+const toUser = (user) => (user
+  ? { id: user.id, name: (user.user_metadata?.name || '').trim() || user.email, email: user.email }
+  : null)
+
+export const currentUser = ref(null)
 
 export const isAuthenticated = () => !!currentUser.value
 
-export const signUp = async ({ name, email, password }) => {
-  const users = readJSON(USERS_KEY, [])
-  const normalized = email.trim().toLowerCase()
-  if (users.some(u => u.email === normalized)) {
-    throw new Error('An account with this email already exists.')
-  }
-  const { salt, hash } = await hashPassword(password)
-  users.push({ name: name.trim(), email: normalized, salt, hash })
-  writeJSON(USERS_KEY, users)
-  startSession({ name: name.trim(), email: normalized })
-}
-
-export const logIn = async ({ email, password }) => {
-  const users = readJSON(USERS_KEY, [])
-  const user = users.find(u => u.email === email.trim().toLowerCase())
-  // Same message for unknown email and wrong password to avoid account enumeration.
-  const invalid = new Error('Invalid email or password.')
-  if (!user) throw invalid
-  const { hash } = await hashPassword(password, user.salt)
-  if (hash !== user.hash) throw invalid
-  startSession({ name: user.name, email: user.email })
-}
-
-export const logOut = () => {
-  currentUser.value = null
+// Resolves once any saved session has been restored. main.js waits for this before the first
+// route check, so a signed-in user is not bounced to the log in page on refresh.
+export const authReady = (async () => {
+  // Remove data left by the old browser-only demo login.
   try {
-    localStorage.removeItem(SESSION_KEY)
+    localStorage.removeItem('scanship_users')
+    localStorage.removeItem('scanship_session')
   } catch {
     // ignore
   }
+  if (!supabase) return
+  try {
+    const { data } = await supabase.auth.getSession()
+    currentUser.value = toUser(data.session?.user)
+  } catch {
+    currentUser.value = null
+  }
+  // Keeps currentUser in sync: sign in/out (also from another tab), token refresh, expiry.
+  supabase.auth.onAuthStateChange((_event, session) => {
+    currentUser.value = toUser(session?.user)
+  })
+})()
+
+const requireClient = () => {
+  if (!supabase) throw new Error('Sign-in is temporarily unavailable. Please try again later.')
+  return supabase
 }
 
-const startSession = (user) => {
-  currentUser.value = user
-  writeJSON(SESSION_KEY, user)
+const friendlyError = (error) => {
+  const message = (error?.message || '').toLowerCase()
+  if (message.includes('invalid login credentials')) return 'Invalid email or password.'
+  if (message.includes('email not confirmed')) return 'Please confirm your email first. Check your inbox for the confirmation link.'
+  if (error?.code === 'user_already_exists' || message.includes('already registered')) return 'An account with this email already exists.'
+  if (error?.status === 429 || message.includes('rate limit')) return 'Too many attempts. Please wait a moment and try again.'
+  if (message.includes('password')) return error.message // e.g. weak password
+  if (message.includes('fetch') || message.includes('network')) return 'Network problem. Check your connection and try again.'
+  return 'Something went wrong. Please try again.'
+}
+
+// Resolves with { needsConfirmation }. When email confirmation is on in Supabase, the user
+// must click the link in their inbox before they can log in.
+export const signUp = async ({ name, email, password }) => {
+  const client = requireClient()
+  // After confirming, bring the user back through their station QR so the module still opens.
+  const redirectTo = qrVerified.value
+    ? `${window.location.origin}/access?code=${encodeURIComponent(qrVerified.value)}`
+    : window.location.origin
+
+  const { data, error } = await client.auth.signUp({
+    email: email.trim().toLowerCase(),
+    password,
+    options: { data: { name: name.trim() }, emailRedirectTo: redirectTo }
+  })
+  if (error) throw new Error(friendlyError(error))
+
+  // With confirmation on, an already-registered email returns a user with no identities instead of an error.
+  if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+    throw new Error('An account with this email already exists.')
+  }
+
+  if (data.session) {
+    currentUser.value = toUser(data.session.user)
+    return { needsConfirmation: false }
+  }
+  return { needsConfirmation: true }
+}
+
+export const logIn = async ({ email, password }) => {
+  const client = requireClient()
+  const { data, error } = await client.auth.signInWithPassword({
+    email: email.trim().toLowerCase(),
+    password
+  })
+  if (error) throw new Error(friendlyError(error))
+  currentUser.value = toUser(data.user)
+}
+
+export const logOut = async () => {
+  currentUser.value = null
+  if (!supabase) return
+  try {
+    const { error } = await supabase.auth.signOut()
+    // If the server could not be reached, still end the session in this browser.
+    if (error) await supabase.auth.signOut({ scope: 'local' })
+  } catch {
+    // ignore: the user is already signed out locally
+  }
 }
