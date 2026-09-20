@@ -10,6 +10,9 @@ const route = useRoute()
 const email = ref('')
 const password = ref('')
 const error = ref('')
+const notice = route.query.invalid
+  ? "That QR link isn't valid, but you can still log in."
+  : ''
 const loading = ref(false)
 
 const submit = async () => {
@@ -40,6 +43,8 @@ const submit = async () => {
         <input id="password" v-model="password" type="password" required autocomplete="current-password" placeholder="••••••••"
           class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 outline-none transition-all focus:border-[#4da8f0] focus:bg-white/[0.07]" />
       </div>
+
+      <p v-if="notice" role="status" class="text-sm text-amber-200 bg-amber-500/10 border border-amber-500/20 rounded-xl px-4 py-3">{{ notice }}</p>
 
       <p v-if="error" role="alert" class="text-sm text-red-300 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3">{{ error }}</p>
 

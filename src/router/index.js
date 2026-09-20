@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { isAuthenticated, isQrVerified, acceptQr, takeQrTarget } from '../auth'
+import { isAuthenticated, acceptQr, takeQrTarget } from '../auth'
 
 const routes = [
   {
@@ -19,7 +19,7 @@ const routes = [
     path: '/access',
     name: 'Access',
     redirect: (to) => {
-      if (!acceptQr(String(to.query.code || ''))) return { path: '/scan', query: { invalid: '1' } }
+      if (!acceptQr(String(to.query.code || ''))) return { path: '/login', query: { invalid: '1' } }
       if (isAuthenticated()) return { path: takeQrTarget() || '/', query: {} }
       return { path: '/login', query: {} } // also drops ?code= from the address bar
     }
@@ -55,21 +55,21 @@ const router = createRouter({
   }
 })
 
-// Flow: scan/upload QR -> log in / sign up -> site.
-// Signed-in users skip straight to the site. Everyone else must pass the QR step first.
+// Two ways in, which do not interfere with each other:
+//   Website link:   any page -> log in / sign up -> landing page (or the deep link they opened)
+//   Station QR:     /access?code=SCANSHIP-MODULE-<n> -> log in / sign up -> that module
+// Signed-in users skip log in and go straight to the page they asked for.
 router.beforeEach((to) => {
   if (isAuthenticated()) {
     return to.meta.guestOnly ? { path: '/' } : true
   }
 
-  if (to.name === 'Scan') return true
+  // Log in / sign up (and the optional /scan page) are open to signed-out visitors.
+  if (to.meta.guestOnly) return true
 
-  const isAuthPage = to.name === 'Login' || to.name === 'SignUp'
-  const query = !isAuthPage && to.fullPath !== '/' ? { redirect: to.fullPath } : {}
-
-  if (!isQrVerified()) return { path: '/scan', query }
-  if (isAuthPage) return true
-  return { path: '/login', query }
+  // A normal visit: drop any module left over from an earlier QR scan so it cannot hijack this one.
+  takeQrTarget()
+  return { path: '/login', query: to.fullPath !== '/' ? { redirect: to.fullPath } : {} }
 })
 
 export default router

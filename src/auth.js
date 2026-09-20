@@ -163,8 +163,9 @@ const friendlyError = (error) => {
 // must click the link in their inbox before they can log in.
 export const signUp = async ({ name, email, password }) => {
   const client = requireClient()
-  // After confirming, bring the user back through their station QR so the module still opens.
-  const redirectTo = qrVerified.value
+  // Signed up after scanning a station QR: bring the user back through it so the module still opens.
+  // A normal website visit has no pending module, so the link just returns to the site.
+  const redirectTo = qrTarget.value && qrVerified.value
     ? `${window.location.origin}/access?code=${encodeURIComponent(qrVerified.value)}`
     : window.location.origin
 
