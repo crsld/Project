@@ -2,7 +2,9 @@ import { createClient } from '@supabase/supabase-js'
 
 // Set these in .env (local) and in Vercel → Project → Settings → Environment Variables.
 // The anon key is designed to be public: access is controlled by Supabase Auth and Row Level Security.
-const url = import.meta.env.VITE_SUPABASE_URL
+// The project URL is public (every browser request to Supabase shows it), so a default is safe here.
+// VITE_SUPABASE_URL overrides it, e.g. to point at a different Supabase project.
+const url = import.meta.env.VITE_SUPABASE_URL || 'https://skkpxlscwplzesgdbvqh.supabase.co'
 const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
 export const supabaseConfigured = Boolean(url && anonKey)
