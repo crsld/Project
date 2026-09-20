@@ -1,10 +1,11 @@
 <script setup>
 import AuthLayout from '../components/AuthLayout.vue'
 import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
-import { signUp } from '../auth'
+import { useRouter, useRoute } from 'vue-router'
+import { signUp, postAuthPath } from '../auth'
 
 const router = useRouter()
+const route = useRoute()
 
 const name = ref('')
 const email = ref('')
@@ -33,7 +34,7 @@ const submit = async () => {
   loading.value = true
   try {
     await signUp({ name: name.value, email: email.value, password: password.value })
-    router.replace('/')
+    router.replace(postAuthPath(route.query.redirect))
   } catch (e) {
     error.value = e.message
   } finally {

@@ -2,7 +2,7 @@
 import AuthLayout from '../components/AuthLayout.vue'
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { logIn } from '../auth'
+import { logIn, postAuthPath } from '../auth'
 
 const router = useRouter()
 const route = useRoute()
@@ -17,10 +17,7 @@ const submit = async () => {
   loading.value = true
   try {
     await logIn({ email: email.value, password: password.value })
-    const redirect = typeof route.query.redirect === 'string' && route.query.redirect.startsWith('/') && !route.query.redirect.startsWith('//')
-      ? route.query.redirect
-      : '/'
-    router.replace(redirect)
+    router.replace(postAuthPath(route.query.redirect))
   } catch (e) {
     error.value = e.message
   } finally {

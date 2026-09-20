@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { isAuthenticated, isQrVerified, acceptQr } from '../auth'
+import { isAuthenticated, isQrVerified, acceptQr, takeQrTarget } from '../auth'
 
 const routes = [
   {
@@ -13,12 +13,16 @@ const routes = [
     component: () => import('../views/Module1Detail.vue')
   },
   {
-    // Target of the QR code link. Validates the code, then continues to log in / sign up.
+    // Target of a station QR link. Validates the code, then:
+    //  - signed in: opens the scanned module right away
+    //  - signed out: goes to log in / sign up (the module opens after that)
     path: '/access',
     name: 'Access',
-    redirect: (to) => (acceptQr(String(to.query.code || ''))
-      ? { path: '/login', query: {} } // drop ?code= from the address bar
-      : { path: '/scan', query: { invalid: '1' } })
+    redirect: (to) => {
+      if (!acceptQr(String(to.query.code || ''))) return { path: '/scan', query: { invalid: '1' } }
+      if (isAuthenticated()) return { path: takeQrTarget() || '/', query: {} }
+      return { path: '/login', query: {} } // also drops ?code= from the address bar
+    }
   },
   {
     path: '/scan',
