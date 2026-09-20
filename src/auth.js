@@ -33,6 +33,39 @@ const hashPassword = async (password, saltHex) => {
   return { salt: toHex(salt), hash: toHex(bits) }
 }
 
+// ── QR gate ──
+// Visitors must scan/upload a valid Scanship QR code before reaching log in / sign up.
+// Recognised once per browser session (sessionStorage). Like the rest of this file this
+// is a client-side check only. Adjust isValidScanshipQr to match your real QR payload.
+const QR_KEY = 'scanship_qr_verified'
+
+const readQr = () => {
+  try {
+    return sessionStorage.getItem(QR_KEY)
+  } catch {
+    return null
+  }
+}
+
+export const qrVerified = ref(readQr())
+
+// Expected payload, e.g. "SCANSHIP:AWP-0142"
+export const isValidScanshipQr = (text) => /^SCANSHIP:[A-Z0-9_-]+$/i.test((text || '').trim())
+
+export const acceptQr = (text) => {
+  if (!isValidScanshipQr(text)) return false
+  const value = text.trim()
+  qrVerified.value = value
+  try {
+    sessionStorage.setItem(QR_KEY, value)
+  } catch {
+    // ignore: stays verified in memory for this page load
+  }
+  return true
+}
+
+export const isQrVerified = () => !!qrVerified.value
+
 export const currentUser = ref(readJSON(SESSION_KEY, null))
 
 export const isAuthenticated = () => !!currentUser.value

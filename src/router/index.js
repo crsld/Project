@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { isAuthenticated } from '../auth'
+import { isAuthenticated, isQrVerified } from '../auth'
 
 const routes = [
   {
@@ -11,6 +11,12 @@ const routes = [
     path: '/module/1',
     name: 'Module1Detail',
     component: () => import('../views/Module1Detail.vue')
+  },
+  {
+    path: '/scan',
+    name: 'Scan',
+    component: () => import('../views/ScanPage.vue'),
+    meta: { guestOnly: true }
   },
   {
     path: '/login',
@@ -37,14 +43,21 @@ const router = createRouter({
   }
 })
 
-// Everything except the guest-only pages (login/signup) requires a session.
+// Flow: scan/upload QR -> log in / sign up -> site.
+// Signed-in users skip straight to the site. Everyone else must pass the QR step first.
 router.beforeEach((to) => {
-  if (to.meta.guestOnly) {
-    return isAuthenticated() ? { path: '/' } : true
+  if (isAuthenticated()) {
+    return to.meta.guestOnly ? { path: '/' } : true
   }
-  if (!isAuthenticated()) {
-    return { path: '/login', query: to.fullPath !== '/' ? { redirect: to.fullPath } : {} }
-  }
+
+  if (to.name === 'Scan') return true
+
+  const isAuthPage = to.name === 'Login' || to.name === 'SignUp'
+  const query = !isAuthPage && to.fullPath !== '/' ? { redirect: to.fullPath } : {}
+
+  if (!isQrVerified()) return { path: '/scan', query }
+  if (isAuthPage) return true
+  return { path: '/login', query }
 })
 
 export default router
