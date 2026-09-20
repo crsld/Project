@@ -49,12 +49,30 @@ const readQr = () => {
 
 export const qrVerified = ref(readQr())
 
-// Expected payload, e.g. "SCANSHIP:AWP-0142"
-export const isValidScanshipQr = (text) => /^SCANSHIP:[A-Z0-9_-]+$/i.test((text || '').trim())
+// The QR encodes a link to the site: https://<site>/access?code=SCANSHIP-<ID>
+// so a normal phone camera opens the website directly. The raw code ("SCANSHIP-<ID>")
+// is accepted too. It uses a dash (not a colon) so cameras treat it as plain text.
+const CODE_RE = /^SCANSHIP-[A-Z0-9_-]+$/i
+
+// Pulls the code out of either a link or a raw code; returns '' when there is none.
+export const extractQrCode = (text) => {
+  const value = (text || '').trim()
+  if (/^https?:\/\//i.test(value)) {
+    try {
+      const url = new URL(value)
+      return url.pathname.replace(/\/+$/, '') === '/access' ? (url.searchParams.get('code') || '').trim() : ''
+    } catch {
+      return ''
+    }
+  }
+  return value
+}
+
+export const isValidScanshipQr = (text) => CODE_RE.test(extractQrCode(text))
 
 export const acceptQr = (text) => {
   if (!isValidScanshipQr(text)) return false
-  const value = text.trim()
+  const value = extractQrCode(text)
   qrVerified.value = value
   try {
     sessionStorage.setItem(QR_KEY, value)

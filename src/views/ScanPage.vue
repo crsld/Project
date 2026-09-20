@@ -11,7 +11,9 @@ const route = useRoute()
 const videoEl = ref(null)
 const fileInput = ref(null)
 const status = ref('idle') // idle | starting | scanning | checking | success
-const error = ref('')
+const error = ref(route.query.invalid
+  ? "That QR link isn't valid. Please scan or upload a valid Scanship QR code."
+  : '')
 
 let stream = null
 let rafId = 0
