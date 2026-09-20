@@ -25,6 +25,19 @@ const routes = [
     }
   },
   {
+    path: '/forgot-password',
+    name: 'ForgotPassword',
+    component: () => import('../views/ForgotPasswordPage.vue'),
+    meta: { guestOnly: true }
+  },
+  {
+    // Opened from the reset email. Must work signed in (recovery session) and signed out (expired link).
+    path: '/reset-password',
+    name: 'ResetPassword',
+    component: () => import('../views/ResetPasswordPage.vue'),
+    meta: { public: true }
+  },
+  {
     path: '/scan',
     name: 'Scan',
     component: () => import('../views/ScanPage.vue'),
@@ -60,6 +73,8 @@ const router = createRouter({
 //   Station QR:     /access?code=SCANSHIP-MODULE-<n> -> log in / sign up -> that module
 // Signed-in users skip log in and go straight to the page they asked for.
 router.beforeEach((to) => {
+  if (to.meta.public) return true
+
   if (isAuthenticated()) {
     return to.meta.guestOnly ? { path: '/' } : true
   }

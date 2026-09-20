@@ -120,6 +120,9 @@ export const currentUser = ref(null)
 
 export const isAuthenticated = () => !!currentUser.value
 
+// True when the user arrived from a password-reset email link (they must set a new password).
+export const recoveryPending = ref(false)
+
 // Resolves once any saved session has been restored. main.js waits for this before the first
 // route check, so a signed-in user is not bounced to the log in page on refresh.
 export const authReady = (async () => {
@@ -131,16 +134,20 @@ export const authReady = (async () => {
     // ignore
   }
   if (!supabase) return
+
+  // Subscribe before anything is awaited: a reset link is processed while the client starts up.
+  // Keeps currentUser in sync: sign in/out (also from another tab), token refresh, expiry.
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'PASSWORD_RECOVERY') recoveryPending.value = true
+    currentUser.value = toUser(session?.user)
+  })
+
   try {
     const { data } = await supabase.auth.getSession()
     currentUser.value = toUser(data.session?.user)
   } catch {
     currentUser.value = null
   }
-  // Keeps currentUser in sync: sign in/out (also from another tab), token refresh, expiry.
-  supabase.auth.onAuthStateChange((_event, session) => {
-    currentUser.value = toUser(session?.user)
-  })
 })()
 
 const requireClient = () => {
@@ -154,8 +161,11 @@ const friendlyError = (error) => {
   if (message.includes('email not confirmed')) return 'Please confirm your email first. Check your inbox for the confirmation link.'
   if (error?.code === 'user_already_exists' || message.includes('already registered')) return 'An account with this email already exists.'
   if (error?.status === 429 || message.includes('rate limit')) return 'Too many attempts. Please wait a moment and try again.'
+  if (error?.code === 'signup_disabled' || message.includes('signups not allowed')) return 'New sign-ups are turned off right now. Please contact the administrator.'
+  if (message.includes('session missing') || message.includes('expired')) return 'This reset link has expired. Please request a new one.'
   if (message.includes('password')) return error.message // e.g. weak password
   if (message.includes('fetch') || message.includes('network')) return 'Network problem. Check your connection and try again.'
+  console.error('Unexpected auth error:', error) // shown in the browser console (F12) to help debugging
   return 'Something went wrong. Please try again.'
 }
 
@@ -195,6 +205,25 @@ export const logIn = async ({ email, password }) => {
     password
   })
   if (error) throw new Error(friendlyError(error))
+  currentUser.value = toUser(data.user)
+}
+
+// Emails a password-reset link. Supabase answers the same whether or not the account exists,
+// so this never reveals who has an account.
+export const requestPasswordReset = async (email) => {
+  const client = requireClient()
+  const { error } = await client.auth.resetPasswordForEmail(email.trim().toLowerCase(), {
+    redirectTo: `${window.location.origin}/reset-password`
+  })
+  if (error) throw new Error(friendlyError(error))
+}
+
+// Sets a new password for the signed-in (or recovery-session) user.
+export const updatePassword = async (password) => {
+  const client = requireClient()
+  const { data, error } = await client.auth.updateUser({ password })
+  if (error) throw new Error(friendlyError(error))
+  recoveryPending.value = false
   currentUser.value = toUser(data.user)
 }
 
