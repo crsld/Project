@@ -21,7 +21,7 @@ const router = useRouter()
     </a>
 
     <div class="relative w-full max-w-[440px] bg-white/[0.03] border border-white/[0.08] rounded-[24px] p-8 sm:p-10 backdrop-blur-md shadow-2xl">
-      <p class="text-[0.7rem] font-bold tracking-[0.2em] text-[#b5f4ff] uppercase mb-3 text-center">Maritime System Modules</p>
+      <p class="text-[0.7rem] font-bold tracking-[0.2em] text-[#b5f4ff] uppercase mb-3 text-center">Scanship Wastewater System Modules</p>
       <h1 class="text-[clamp(1.8rem,5vw,2.2rem)] font-black leading-tight tracking-tight text-center mb-2">
         {{ title }}
       </h1>

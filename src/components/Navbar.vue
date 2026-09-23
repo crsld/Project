@@ -126,8 +126,8 @@ const goToSection = async (sectionId) => {
         </a>
       </div>
 
-      <!-- Navigation Links (desktop) -->
-      <div class="hidden md:flex items-center gap-8">
+      <!-- Navigation Links + Signed-in user (desktop), grouped on the right -->
+      <div class="hidden md:flex items-center gap-8 ml-auto">
         <a href="#" @click.prevent="goHome"
            class="font-['Trebuchet_MS'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200">
           Home
@@ -140,35 +140,35 @@ const goToSection = async (sectionId) => {
            class="font-['Trebuchet_MS'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200">
           Modules
         </a>
-      </div>
 
-      <!-- Signed-in user (desktop) -->
-      <div ref="userMenuRef" class="relative hidden md:block">
-        <button type="button" @click="userMenuOpen = !userMenuOpen"
-          aria-haspopup="menu" :aria-expanded="userMenuOpen"
-          class="flex items-center gap-2 pl-2 pr-4 py-1.5 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-full cursor-pointer transition-all">
-          <span class="w-7 h-7 rounded-full bg-[#4da8f0] flex items-center justify-center text-xs font-black">{{ userInitial }}</span>
-          <span class="font-['Trebuchet_MS'] font-medium text-sm max-w-[160px] truncate">{{ userName }}</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
-            class="transition-transform duration-200" :class="userMenuOpen ? 'rotate-180' : ''">
-            <polyline points="6 9 12 15 18 9"/>
-          </svg>
-        </button>
+        <!-- Signed-in user -->
+        <div ref="userMenuRef" class="relative">
+          <button type="button" @click="userMenuOpen = !userMenuOpen"
+            aria-haspopup="menu" :aria-expanded="userMenuOpen"
+            class="flex items-center gap-2 pl-2 pr-4 py-1.5 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-full cursor-pointer transition-all">
+            <span class="w-7 h-7 rounded-full bg-[#4da8f0] flex items-center justify-center text-xs font-black">{{ userInitial }}</span>
+            <span class="font-['Trebuchet_MS'] font-medium text-sm max-w-[160px] truncate">{{ userName }}</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+              class="transition-transform duration-200" :class="userMenuOpen ? 'rotate-180' : ''">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
 
-        <Transition name="user-menu">
-          <div v-if="userMenuOpen" role="menu"
-            class="absolute right-0 mt-3 w-56 rounded-2xl border border-white/10 bg-[#040f1e]/95 backdrop-blur-md shadow-2xl overflow-hidden">
-            <div class="px-4 py-3 border-b border-white/10">
-              <p class="text-[0.65rem] font-bold tracking-[0.15em] text-[#b5f4ff] uppercase mb-1">Signed in as</p>
-              <p class="text-sm text-white truncate">{{ currentUser?.email }}</p>
+          <Transition name="user-menu">
+            <div v-if="userMenuOpen" role="menu"
+              class="absolute right-0 mt-3 w-56 rounded-2xl border border-white/10 bg-[#040f1e]/95 backdrop-blur-md shadow-2xl overflow-hidden">
+              <div class="px-4 py-3 border-b border-white/10">
+                <p class="text-[0.65rem] font-bold tracking-[0.15em] text-[#b5f4ff] uppercase mb-1">Signed in as</p>
+                <p class="text-sm text-white truncate">{{ currentUser?.email }}</p>
+              </div>
+              <button type="button" role="menuitem" @click="handleLogout"
+                class="w-full flex items-center gap-3 px-4 py-3 text-left text-sm font-medium text-white hover:bg-white/10 hover:text-[#4da8f0] bg-transparent border-none cursor-pointer transition-colors">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Log Out
+              </button>
             </div>
-            <button type="button" role="menuitem" @click="handleLogout"
-              class="w-full flex items-center gap-3 px-4 py-3 text-left text-sm font-medium text-white hover:bg-white/10 hover:text-[#4da8f0] bg-transparent border-none cursor-pointer transition-colors">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-              Log Out
-            </button>
-          </div>
-        </Transition>
+          </Transition>
+        </div>
       </div>
 
       <!-- Mobile Menu Toggle -->

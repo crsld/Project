@@ -101,11 +101,11 @@ onMounted(() => {
     <section id="home" class="min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 relative overflow-hidden bg-[#040f1e]">
       <div class="relative max-w-4xl mx-auto w-full reveal">
         <h1 class="font-['Trebuchet_MS'] text-[clamp(2.4rem,8vw,4.5rem)] font-black leading-[1.05] tracking-tight mb-8 text-white">
-          Unlimited access to Maritime System modules,
+          Unlimited access to Scanship Wastewater System modules,
           <span class="text-[#9ddbff]">anytime.</span>
         </h1>
         <p class="text-[1.1rem] text-white/70 leading-[1.75] mb-10 max-w-[650px] mx-auto">
-          Scanship gives your fleet instant access to a comprehensive library of maritime system modules from navigation to safety compliance. Subscribe once, deploy everywhere.
+          Scanship gives your fleet instant access to a comprehensive library of wastewater system modules from navigation to safety compliance. Subscribe once, deploy everywhere.
         </p>
         <div class="flex flex-wrap justify-center gap-4">
           <a href="#modules" class="px-8 py-4 bg-[#4da8f0] hover:bg-[#3b97e0] text-white rounded-full font-bold transition-all transform hover:scale-105">

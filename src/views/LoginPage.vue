@@ -30,7 +30,7 @@ const submit = async () => {
 </script>
 
 <template>
-  <AuthLayout title="Welcome back" subtitle="Log in to access your maritime system modules.">
+  <AuthLayout title="Welcome back" subtitle="Log in to access your Scanship wastewater system modules.">
     <form @submit.prevent="submit" class="flex flex-col gap-5" novalidate>
       <div>
         <label for="email" class="block text-xs font-bold uppercase tracking-wider text-white/70 mb-2">Email</label>
