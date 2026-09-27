@@ -177,7 +177,7 @@ const lessons = [
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#040f1e] text-white font-['Trebuchet_MS']">
+  <div class="min-h-screen bg-[#040f1e] text-white font-['Kanit']">
     <Navbar />
 
 <!-- HERO BANNER -->
@@ -197,7 +197,7 @@ const lessons = [
 
         <!-- 1. CENTERED CONTENT (Main Title) -->
         <div class="relative z-10 w-full max-w-[1000px] mx-auto px-8 text-center"> 
-            <h1 class="font-['Trebuchet_MS'] text-[clamp(2.5rem,7vw,4.2rem)] font-extrabold text-white leading-[1.1] drop-shadow-2xl">
+            <h1 class="font-['Kanit'] text-[clamp(2.5rem,7vw,4.2rem)] font-extrabold text-white leading-[1.1] drop-shadow-2xl">
                 Module 1: Introduction to <br class="hidden md:block"> Wastewater Systems
             </h1>
         </div>
@@ -223,7 +223,7 @@ const lessons = [
         <div>
           <!-- Overview -->
           <div class="mb-8">
-            <h2 class="font-['Trebuchet_MS'] text-[1.1rem] font-extrabold text-[#b5f4ff] mb-3">Overview</h2>
+            <h2 class="font-['Kanit'] text-[1.1rem] font-extrabold text-[#b5f4ff] mb-3">Overview</h2>
             <p class="text-[0.9rem] text-white leading-relaxed mb-3">
               This manual gives mechanical engineers clear, step-by-step instructions for finding and fixing common faults on shipboard mechanical equipment such as pumps, motors, blowers and valves. Each procedure starts with the safety precautions, lists the tools you need, and then walks through the checks in order, with the result you should expect at every step.
             </p>
@@ -235,7 +235,7 @@ const lessons = [
 
           <!-- Contents -->
           <div class="mb-8">
-            <h2 class="font-['Trebuchet_MS'] text-[1.1rem] font-extrabold text-[#b5f4ff] mb-4">Contents</h2>
+            <h2 class="font-['Kanit'] text-[1.1rem] font-extrabold text-[#b5f4ff] mb-4">Contents</h2>
             <div>
               <div v-for="(item, i) in lessons" :key="item.id" class="flex items-center gap-4 py-3 border-b border-white/50">
                 <span class="text-[0.75rem] font-black text-[#b5f4ff] w-4 shrink-0">{{ i + 1 }}</span>
@@ -247,7 +247,7 @@ const lessons = [
 
           <!-- Prior Knowledge -->
           <div class="mb-8">
-            <h2 class="font-['Trebuchet_MS'] text-[1.1rem] font-extrabold text-[#b5f4ff] mb-3">Prior Knowledge</h2>
+            <h2 class="font-['Kanit'] text-[1.1rem] font-extrabold text-[#b5f4ff] mb-3">Prior Knowledge</h2>
             <p class="text-[0.9rem] text-white leading-relaxed">
               Basic mechanical knowledge, familiarity with your vessel's lock-out / tag-out procedure, and access to the OEM manual for the equipment. Always follow the ship's safety management system.
             </p>
@@ -287,7 +287,7 @@ const lessons = [
       <div class="mt-16">
         <div class="mb-10 text-center lg:text-left">
           <p class="text-[0.7rem] font-bold tracking-[0.3em] text-[#4da8f0] uppercase mb-3">Step-by-Step Procedures</p>
-          <h2 class="font-['Trebuchet_MS'] text-[2.2rem] font-extrabold text-white leading-tight">Troubleshooting Procedures</h2>
+          <h2 class="font-['Kanit'] text-[2.2rem] font-extrabold text-white leading-tight">Troubleshooting Procedures</h2>
         </div>
 
         <div class="space-y-4">
@@ -305,13 +305,13 @@ const lessons = [
 
             <div class="relative flex items-center gap-5 p-6 md:p-7">
               <!-- Animated Number Badge -->
-              <div class="shrink-0 w-12 h-12 rounded-[12px] flex items-center justify-center font-['Trebuchet_MS'] text-[1rem] font-black transition-all duration-500"
+              <div class="shrink-0 w-12 h-12 rounded-[12px] flex items-center justify-center font-['Kanit'] text-[1rem] font-black transition-all duration-500"
                 :class="activeLesson === lesson.id ? 'bg-[#4da8f0] text-white shadow-[0_0_15px_rgba(77,168,240,0.5)]' : 'bg-white/10 text-white/50 group-hover:text-white'">
                 {{ lesson.number }}
               </div>
 
               <div class="flex-1 min-w-0">
-                <h3 class="font-['Trebuchet_MS'] text-[1.05rem] md:text-[1.15rem] font-bold text-white transition-colors duration-300"
+                <h3 class="font-['Kanit'] text-[1.05rem] md:text-[1.15rem] font-bold text-white transition-colors duration-300"
                   :class="activeLesson === lesson.id ? 'text-[#4da8f0]' : 'group-hover:text-white'">
                   {{ lesson.title }}
                 </h3>
@@ -456,7 +456,7 @@ const lessons = [
                   <!-- Escalation -->
                   <div class="bg-white/5 rounded-xl p-5 border border-white/5">
                     <p class="text-[0.88rem] text-white/60 leading-relaxed">
-                      <strong class="text-white block mb-1 font-['Trebuchet_MS']">If the fault is not resolved:</strong>
+                      <strong class="text-white block mb-1 font-['Kanit']">If the fault is not resolved:</strong>
                       {{ lesson.escalate }}
                     </p>
                   </div>

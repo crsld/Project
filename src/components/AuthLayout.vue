@@ -11,7 +11,7 @@ const router = useRouter()
 </script>
 
 <template>
-  <div class="font-['Trebuchet_MS'] min-h-screen bg-[#040f1e] text-white selection:bg-[#4da8f0]/30 relative overflow-hidden flex flex-col items-center justify-center px-6 py-12">
+  <div class="font-['Kanit'] min-h-screen bg-[#040f1e] text-white selection:bg-[#4da8f0]/30 relative overflow-hidden flex flex-col items-center justify-center px-6 py-12">
     <!-- soft background glow -->
     <div class="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full bg-[#4da8f0]/10 blur-3xl"></div>
 

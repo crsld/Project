@@ -120,7 +120,7 @@ const goToSection = async (sectionId) => {
           <img :src="Logo" alt="Scanship" class="h-10 w-10 object-contain rounded-full" />
         </a>
         <a href="#" class="flex items-center no-underline" @click.prevent="goHome">
-          <span class="font-['Trebuchet_MS'] font-bold tracking-tight text-2xl text-white">
+          <span class="font-['Kanit'] font-bold tracking-tight text-2xl text-white">
             Scanship
           </span>
         </a>
@@ -129,15 +129,15 @@ const goToSection = async (sectionId) => {
       <!-- Navigation Links + Signed-in user (desktop), grouped on the right -->
       <div class="hidden md:flex items-center gap-8 ml-auto">
         <a href="#" @click.prevent="goHome"
-           class="font-['Trebuchet_MS'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200">
+           class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200">
           Home
         </a>
         <a href="#" @click.prevent="goToSection('about')"
-           class="font-['Trebuchet_MS'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200">
+           class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200">
           About
         </a>
         <a href="#" @click.prevent="goToSection('modules')"
-           class="font-['Trebuchet_MS'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200">
+           class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200">
           Modules
         </a>
 
@@ -147,7 +147,7 @@ const goToSection = async (sectionId) => {
             aria-haspopup="menu" :aria-expanded="userMenuOpen"
             class="flex items-center gap-2 pl-2 pr-4 py-1.5 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-full cursor-pointer transition-all">
             <span class="w-7 h-7 rounded-full bg-[#4da8f0] flex items-center justify-center text-xs font-black">{{ userInitial }}</span>
-            <span class="font-['Trebuchet_MS'] font-medium text-sm max-w-[160px] truncate">{{ userName }}</span>
+            <span class="font-['Kanit'] font-medium text-sm max-w-[160px] truncate">{{ userName }}</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
               class="transition-transform duration-200" :class="userMenuOpen ? 'rotate-180' : ''">
               <polyline points="6 9 12 15 18 9"/>
@@ -196,24 +196,24 @@ const goToSection = async (sectionId) => {
       <div v-if="mobileMenuOpen" class="md:hidden border-t border-white/10">
         <div class="flex flex-col px-4 py-3">
           <a href="#" @click.prevent="goHome"
-             class="font-['Trebuchet_MS'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200 py-3 border-b border-white/5">
+             class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200 py-3 border-b border-white/5">
             Home
           </a>
           <a href="#" @click.prevent="goToSection('about')"
-             class="font-['Trebuchet_MS'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200 py-3 border-b border-white/5">
+             class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200 py-3 border-b border-white/5">
             About
           </a>
           <a href="#" @click.prevent="goToSection('modules')"
-             class="font-['Trebuchet_MS'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200 py-3 border-b border-white/5">
+             class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200 py-3 border-b border-white/5">
             Modules
           </a>
           <div class="flex items-center justify-between gap-3 py-3">
             <span class="flex items-center gap-2 min-w-0">
               <span class="w-7 h-7 shrink-0 rounded-full bg-[#4da8f0] flex items-center justify-center text-xs font-black">{{ userInitial }}</span>
-              <span class="font-['Trebuchet_MS'] font-medium text-sm text-white truncate">{{ userName }}</span>
+              <span class="font-['Kanit'] font-medium text-sm text-white truncate">{{ userName }}</span>
             </span>
             <a href="#" @click.prevent="handleLogout"
-               class="shrink-0 font-['Trebuchet_MS'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200">
+               class="shrink-0 font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200">
               Log Out
             </a>
           </div>
@@ -233,7 +233,7 @@ const goToSection = async (sectionId) => {
       class="flex items-center gap-2 px-4 py-2 rounded-full bg-[#040f1e]/60 backdrop-blur-xl border border-white/10 hover:border-white/30 pointer-events-auto transition-all duration-300 hover:bg-[#040f1e]/80 hover:scale-110 group"
     >
       <img :src="Logo" alt="Scanship" class="h-8 w-8 object-contain rounded-full transition-transform group-hover:rotate-12" />
-      <span class="font-['Trebuchet_MS'] font-bold tracking-tight text-lg text-white whitespace-nowrap">
+      <span class="font-['Kanit'] font-bold tracking-tight text-lg text-white whitespace-nowrap">
         Scanship
       </span>
     </a>
