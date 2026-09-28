@@ -10,6 +10,21 @@ const route = useRoute()
 const showDropdown = ref(false)
 const mobileMenuOpen = ref(false)
 
+// ── Light / dark navbar theme ──
+// Defaults to time-of-day (light 6am-6pm, dark otherwise) unless the visitor
+// has already picked a preference, which then sticks across visits.
+const THEME_KEY = 'scanship_navbar_theme'
+const timeBasedTheme = () => {
+  const hour = new Date().getHours()
+  return (hour >= 6 && hour < 18) ? 'light' : 'dark'
+}
+const theme = ref(localStorage.getItem(THEME_KEY) || timeBasedTheme())
+const isLight = computed(() => theme.value === 'light')
+const toggleTheme = () => {
+  theme.value = isLight.value ? 'dark' : 'light'
+  localStorage.setItem(THEME_KEY, theme.value)
+}
+
 // ── Scroll-retract state ──
 const retracted = ref(false)
 const lastScrollY = ref(0)
@@ -111,7 +126,12 @@ const goToSection = async (sectionId) => {
   <!-- ===== FULL NAVBAR (shows when at top / scrolling up) ===== -->
   <nav
     class="fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ease-in-out border-b"
-    :class="(retracted && !mobileMenuOpen) ? '-translate-y-full opacity-0 pointer-events-none' : 'bg-[#040f1e]/80 backdrop-blur-md border-white/30 opacity-100'"
+    :class="[
+      (retracted && !mobileMenuOpen)
+        ? '-translate-y-full opacity-0 pointer-events-none'
+        : (isLight ? 'bg-white/90 border-black/10 opacity-100' : 'bg-[#040f1e]/80 border-white/30 opacity-100'),
+      'backdrop-blur-md'
+    ]"
   >
     <div class="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-16 flex items-center justify-between h-20">
       <!-- Logo + Wordmark -->
@@ -120,7 +140,7 @@ const goToSection = async (sectionId) => {
           <img :src="Logo" alt="Scanship" class="h-10 w-10 object-contain rounded-full" />
         </a>
         <a href="#" class="flex items-center no-underline" @click.prevent="goHome">
-          <span class="font-['Kanit'] font-bold tracking-tight text-2xl text-white">
+          <span class="font-['Kanit'] font-bold tracking-tight text-2xl transition-colors duration-300" :class="isLight ? 'text-[#0b1a2b]' : 'text-white'">
             Scanship
           </span>
         </a>
@@ -129,24 +149,38 @@ const goToSection = async (sectionId) => {
       <!-- Navigation Links + Signed-in user (desktop), grouped on the right -->
       <div class="hidden md:flex items-center gap-8 ml-auto">
         <a href="#" @click.prevent="goHome"
-           class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200">
+           class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#4da8f0] transition-colors duration-200"
+           :class="isLight ? 'text-[#0b1a2b]' : 'text-white'">
           Home
         </a>
         <a href="#" @click.prevent="goToSection('about')"
-           class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200">
+           class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#4da8f0] transition-colors duration-200"
+           :class="isLight ? 'text-[#0b1a2b]' : 'text-white'">
           About
         </a>
         <a href="#" @click.prevent="goToSection('modules')"
-           class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200">
+           class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#4da8f0] transition-colors duration-200"
+           :class="isLight ? 'text-[#0b1a2b]' : 'text-white'">
           Modules
         </a>
+
+        <!-- Light / dark toggle -->
+        <button type="button" @click="toggleTheme"
+          class="flex items-center justify-center w-9 h-9 rounded-full border cursor-pointer transition-all"
+          :class="isLight ? 'bg-black/5 hover:bg-black/10 border-black/10 text-[#0b1a2b]' : 'bg-white/5 hover:bg-white/10 border-white/10 text-white'"
+          :aria-label="isLight ? 'Switch to dark mode' : 'Switch to light mode'"
+        >
+          <svg v-if="isLight" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        </button>
 
         <!-- Signed-in user -->
         <div ref="userMenuRef" class="relative">
           <button type="button" @click="userMenuOpen = !userMenuOpen"
             aria-haspopup="menu" :aria-expanded="userMenuOpen"
-            class="flex items-center gap-2 pl-2 pr-4 py-1.5 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-full cursor-pointer transition-all">
-            <span class="w-7 h-7 rounded-full bg-[#4da8f0] flex items-center justify-center text-xs font-black">{{ userInitial }}</span>
+            class="flex items-center gap-2 pl-2 pr-4 py-1.5 border rounded-full cursor-pointer transition-all"
+            :class="isLight ? 'bg-black/5 hover:bg-black/10 text-[#0b1a2b] border-black/10' : 'bg-white/5 hover:bg-white/10 text-white border-white/10'">
+            <span class="w-7 h-7 rounded-full bg-[#4da8f0] flex items-center justify-center text-xs font-black text-white">{{ userInitial }}</span>
             <span class="font-['Kanit'] font-medium text-sm max-w-[160px] truncate">{{ userName }}</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
               class="transition-transform duration-200" :class="userMenuOpen ? 'rotate-180' : ''">
@@ -156,13 +190,15 @@ const goToSection = async (sectionId) => {
 
           <Transition name="user-menu">
             <div v-if="userMenuOpen" role="menu"
-              class="absolute right-0 mt-3 w-56 rounded-2xl border border-white/10 bg-[#040f1e]/95 backdrop-blur-md shadow-2xl overflow-hidden">
-              <div class="px-4 py-3 border-b border-white/10">
-                <p class="text-[0.65rem] font-bold tracking-[0.15em] text-[#b5f4ff] uppercase mb-1">Signed in as</p>
-                <p class="text-sm text-white truncate">{{ currentUser?.email }}</p>
+              class="absolute right-0 mt-3 w-56 rounded-2xl border backdrop-blur-md shadow-2xl overflow-hidden"
+              :class="isLight ? 'bg-white/95 border-black/10' : 'bg-[#040f1e]/95 border-white/10'">
+              <div class="px-4 py-3 border-b" :class="isLight ? 'border-black/10' : 'border-white/10'">
+                <p class="text-[0.65rem] font-bold tracking-[0.15em] text-[#4da8f0] uppercase mb-1">Signed in as</p>
+                <p class="text-sm truncate" :class="isLight ? 'text-[#0b1a2b]' : 'text-white'">{{ currentUser?.email }}</p>
               </div>
               <button type="button" role="menuitem" @click="handleLogout"
-                class="w-full flex items-center gap-3 px-4 py-3 text-left text-sm font-medium text-white hover:bg-white/10 hover:text-[#4da8f0] bg-transparent border-none cursor-pointer transition-colors">
+                class="w-full flex items-center gap-3 px-4 py-3 text-left text-sm font-medium hover:text-[#4da8f0] bg-transparent border-none cursor-pointer transition-colors"
+                :class="isLight ? 'text-[#0b1a2b] hover:bg-black/5' : 'text-white hover:bg-white/10'">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
                 Log Out
               </button>
@@ -171,10 +207,21 @@ const goToSection = async (sectionId) => {
         </div>
       </div>
 
+      <!-- Light / dark toggle (mobile) -->
+      <button type="button" @click="toggleTheme"
+        class="md:hidden flex items-center justify-center w-9 h-9 mr-2 rounded-full border cursor-pointer transition-all"
+        :class="isLight ? 'bg-black/5 hover:bg-black/10 border-black/10 text-[#0b1a2b]' : 'bg-white/5 hover:bg-white/10 border-white/10 text-white'"
+        :aria-label="isLight ? 'Switch to dark mode' : 'Switch to light mode'"
+      >
+        <svg v-if="isLight" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
+
       <!-- Mobile Menu Toggle -->
       <button
         type="button"
-        class="md:hidden flex items-center justify-center w-10 h-10 text-white cursor-pointer bg-transparent border-none"
+        class="md:hidden flex items-center justify-center w-10 h-10 cursor-pointer bg-transparent border-none"
+        :class="isLight ? 'text-[#0b1a2b]' : 'text-white'"
         @click="mobileMenuOpen = !mobileMenuOpen"
         :aria-expanded="mobileMenuOpen"
         aria-label="Toggle navigation menu"
@@ -193,27 +240,31 @@ const goToSection = async (sectionId) => {
 
     <!-- Mobile Menu Panel -->
     <Transition name="mobile-menu">
-      <div v-if="mobileMenuOpen" class="md:hidden border-t border-white/10">
+      <div v-if="mobileMenuOpen" class="md:hidden border-t" :class="isLight ? 'border-black/10' : 'border-white/10'">
         <div class="flex flex-col px-4 py-3">
           <a href="#" @click.prevent="goHome"
-             class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200 py-3 border-b border-white/5">
+             class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#4da8f0] transition-colors duration-200 py-3 border-b"
+             :class="isLight ? 'text-[#0b1a2b] border-black/5' : 'text-white border-white/5'">
             Home
           </a>
           <a href="#" @click.prevent="goToSection('about')"
-             class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200 py-3 border-b border-white/5">
+             class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#4da8f0] transition-colors duration-200 py-3 border-b"
+             :class="isLight ? 'text-[#0b1a2b] border-black/5' : 'text-white border-white/5'">
             About
           </a>
           <a href="#" @click.prevent="goToSection('modules')"
-             class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200 py-3 border-b border-white/5">
+             class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#4da8f0] transition-colors duration-200 py-3 border-b"
+             :class="isLight ? 'text-[#0b1a2b] border-black/5' : 'text-white border-white/5'">
             Modules
           </a>
           <div class="flex items-center justify-between gap-3 py-3">
             <span class="flex items-center gap-2 min-w-0">
-              <span class="w-7 h-7 shrink-0 rounded-full bg-[#4da8f0] flex items-center justify-center text-xs font-black">{{ userInitial }}</span>
-              <span class="font-['Kanit'] font-medium text-sm text-white truncate">{{ userName }}</span>
+              <span class="w-7 h-7 shrink-0 rounded-full bg-[#4da8f0] flex items-center justify-center text-xs font-black text-white">{{ userInitial }}</span>
+              <span class="font-['Kanit'] font-medium text-sm truncate" :class="isLight ? 'text-[#0b1a2b]' : 'text-white'">{{ userName }}</span>
             </span>
             <a href="#" @click.prevent="handleLogout"
-               class="shrink-0 font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline text-white hover:text-[#4da8f0] transition-colors duration-200">
+               class="shrink-0 font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#4da8f0] transition-colors duration-200"
+               :class="isLight ? 'text-[#0b1a2b]' : 'text-white'">
               Log Out
             </a>
           </div>
@@ -227,13 +278,14 @@ const goToSection = async (sectionId) => {
     class="fixed top-0 left-0 right-0 h-16 z-[99] flex items-center justify-center pointer-events-none transition-all duration-500 ease-in-out"
     :class="retracted ? 'opacity-100' : 'opacity-0 -translate-y-8'"
   >
-    <a 
-      href="#" 
+    <a
+      href="#"
       @click.prevent="goHome"
-      class="flex items-center gap-2 px-4 py-2 rounded-full bg-[#040f1e]/60 backdrop-blur-xl border border-white/10 hover:border-white/30 pointer-events-auto transition-all duration-300 hover:bg-[#040f1e]/80 hover:scale-110 group"
+      class="flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-xl border pointer-events-auto transition-all duration-300 hover:scale-110 group"
+      :class="isLight ? 'bg-white/70 border-black/10 hover:border-black/20 hover:bg-white/90' : 'bg-[#040f1e]/60 border-white/10 hover:border-white/30 hover:bg-[#040f1e]/80'"
     >
       <img :src="Logo" alt="Scanship" class="h-8 w-8 object-contain rounded-full transition-transform group-hover:rotate-12" />
-      <span class="font-['Kanit'] font-bold tracking-tight text-lg text-white whitespace-nowrap">
+      <span class="font-['Kanit'] font-bold tracking-tight text-lg whitespace-nowrap" :class="isLight ? 'text-[#0b1a2b]' : 'text-white'">
         Scanship
       </span>
     </a>
