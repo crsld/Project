@@ -3,6 +3,7 @@ import AuthLayout from '../components/AuthLayout.vue'
 import { ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { signUp, postAuthPath } from '../auth'
+import { mutedText, inputClasses, dangerClasses, successClasses } from '../theme'
 
 const router = useRouter()
 const route = useRoute()
@@ -55,34 +56,34 @@ const submit = async () => {
   <AuthLayout title="Create your account" subtitle="Sign up to unlock unlimited access to Scanship modules.">
     <form @submit.prevent="submit" class="flex flex-col gap-5" novalidate>
       <div>
-        <label for="name" class="block text-xs font-bold uppercase tracking-wider text-white/70 mb-2">Full name</label>
+        <label for="name" class="block text-xs font-bold uppercase tracking-wider mb-2" :class="mutedText">Full name</label>
         <input id="name" v-model="name" type="text" required autocomplete="name" placeholder="Jane Doe"
-          class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 outline-none transition-all focus:border-[#4da8f0] focus:bg-white/[0.07]" />
+          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#4da8f0]" :class="inputClasses" />
       </div>
 
       <div>
-        <label for="email" class="block text-xs font-bold uppercase tracking-wider text-white/70 mb-2">Email</label>
+        <label for="email" class="block text-xs font-bold uppercase tracking-wider mb-2" :class="mutedText">Email</label>
         <input id="email" v-model="email" type="email" required autocomplete="email" placeholder="you@company.com"
-          class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 outline-none transition-all focus:border-[#4da8f0] focus:bg-white/[0.07]" />
+          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#4da8f0]" :class="inputClasses" />
       </div>
 
       <div>
-        <label for="password" class="block text-xs font-bold uppercase tracking-wider text-white/70 mb-2">Password</label>
+        <label for="password" class="block text-xs font-bold uppercase tracking-wider mb-2" :class="mutedText">Password</label>
         <input id="password" v-model="password" type="password" required autocomplete="new-password" placeholder="At least 8 characters"
-          class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 outline-none transition-all focus:border-[#4da8f0] focus:bg-white/[0.07]" />
-        <p v-if="passwordProblem" class="mt-2 text-xs text-red-300">{{ passwordProblem }}</p>
+          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#4da8f0]" :class="inputClasses" />
+        <p v-if="passwordProblem" class="mt-2 text-xs text-red-400">{{ passwordProblem }}</p>
       </div>
 
       <div>
-        <label for="confirm" class="block text-xs font-bold uppercase tracking-wider text-white/70 mb-2">Confirm password</label>
+        <label for="confirm" class="block text-xs font-bold uppercase tracking-wider mb-2" :class="mutedText">Confirm password</label>
         <input id="confirm" v-model="confirm" type="password" required autocomplete="new-password" placeholder="Re-enter password"
-          class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 outline-none transition-all focus:border-[#4da8f0] focus:bg-white/[0.07]" />
-        <p v-if="mismatch" class="mt-2 text-xs text-red-300">Passwords do not match.</p>
+          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#4da8f0]" :class="inputClasses" />
+        <p v-if="mismatch" class="mt-2 text-xs text-red-400">Passwords do not match.</p>
       </div>
 
-      <p v-if="error" role="alert" class="text-sm text-red-300 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3">{{ error }}</p>
+      <p v-if="error" role="alert" class="text-sm rounded-xl px-4 py-3 border" :class="dangerClasses">{{ error }}</p>
 
-      <p v-if="info" role="status" class="text-sm text-emerald-300 bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-4 py-3">{{ info }}</p>
+      <p v-if="info" role="status" class="text-sm rounded-xl px-4 py-3 border" :class="successClasses">{{ info }}</p>
 
       <button type="submit" :disabled="!canSubmit"
         class="w-full py-4 bg-[#4da8f0] hover:bg-[#3b97e0] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#4da8f0] text-white rounded-full font-bold transition-all cursor-pointer border-none">

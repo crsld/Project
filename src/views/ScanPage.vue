@@ -4,6 +4,7 @@ import jsQR from 'jsqr'
 import { ref, computed, onBeforeUnmount } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { acceptQr } from '../auth'
+import { subtleText, ghostButtonClasses, dangerClasses } from '../theme'
 
 const router = useRouter()
 const route = useRoute()
@@ -215,19 +216,19 @@ const onFile = async (e) => {
         {{ status === 'starting' ? 'Starting camera…' : status === 'scanning' ? 'Stop Camera' : 'Scan with Camera' }}
       </button>
 
-      <div class="flex items-center gap-3 text-white/30 text-xs uppercase tracking-widest">
-        <span class="h-px flex-1 bg-white/10"></span>or<span class="h-px flex-1 bg-white/10"></span>
+      <div class="flex items-center gap-3 text-xs uppercase tracking-widest" :class="subtleText">
+        <span class="h-px flex-1 bg-current opacity-20"></span>or<span class="h-px flex-1 bg-current opacity-20"></span>
       </div>
 
       <button type="button" @click="fileInput.click()" :disabled="busy"
-        class="w-full py-4 bg-white/5 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed text-white border border-white/10 rounded-full font-bold backdrop-blur-md transition-all cursor-pointer flex items-center justify-center gap-2">
+        class="w-full py-4 disabled:opacity-50 disabled:cursor-not-allowed rounded-full font-bold backdrop-blur-md transition-all cursor-pointer flex items-center justify-center gap-2 border" :class="ghostButtonClasses">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
         Upload QR Image
       </button>
       <input ref="fileInput" type="file" accept="image/*" class="hidden" @change="onFile" />
     </div>
 
-    <p v-if="error" role="alert" class="mt-5 text-sm text-red-300 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3">{{ error }}</p>
+    <p v-if="error" role="alert" class="mt-5 text-sm rounded-xl px-4 py-3 border" :class="dangerClasses">{{ error }}</p>
   </AuthLayout>
 </template>
 

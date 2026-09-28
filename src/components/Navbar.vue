@@ -3,27 +3,13 @@ import Logo from '../assets/Company_Logo.png'
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { logOut, currentUser } from '../auth'
+import { isLight, toggleTheme } from '../theme'
 
 const router = useRouter()
 const route = useRoute()
 
 const showDropdown = ref(false)
 const mobileMenuOpen = ref(false)
-
-// ── Light / dark navbar theme ──
-// Defaults to time-of-day (light 6am-6pm, dark otherwise) unless the visitor
-// has already picked a preference, which then sticks across visits.
-const THEME_KEY = 'scanship_navbar_theme'
-const timeBasedTheme = () => {
-  const hour = new Date().getHours()
-  return (hour >= 6 && hour < 18) ? 'light' : 'dark'
-}
-const theme = ref(localStorage.getItem(THEME_KEY) || timeBasedTheme())
-const isLight = computed(() => theme.value === 'light')
-const toggleTheme = () => {
-  theme.value = isLight.value ? 'dark' : 'light'
-  localStorage.setItem(THEME_KEY, theme.value)
-}
 
 // ── Scroll-retract state ──
 const retracted = ref(false)

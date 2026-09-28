@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar.vue'
 import Footer from '../components/Footer.vue'
 import AssistanceRequest from '../components/AssistanceRequest.vue'
 import { currentUser } from '../auth'
+import { isLight, pageBg, mutedText, subtleText, cardClasses, accentText } from '../theme'
 
 // I-import ang background image
 import BG_PerModule from '../assets/BG_PerModule.jpg'
@@ -177,7 +178,7 @@ const lessons = [
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#040f1e] text-white font-['Kanit']">
+  <div class="min-h-screen font-['Kanit'] transition-colors duration-300" :class="pageBg">
     <Navbar />
 
 <!-- HERO BANNER -->
@@ -223,11 +224,11 @@ const lessons = [
         <div>
           <!-- Overview -->
           <div class="mb-8">
-            <h2 class="font-['Kanit'] text-[1.1rem] font-extrabold text-[#b5f4ff] mb-3">Overview</h2>
-            <p class="text-[0.9rem] text-white leading-relaxed mb-3">
+            <h2 class="font-['Kanit'] text-[1.1rem] font-extrabold mb-3" :class="accentText">Overview</h2>
+            <p class="text-[0.9rem] leading-relaxed mb-3">
               This manual gives mechanical engineers clear, step-by-step instructions for finding and fixing common faults on shipboard mechanical equipment such as pumps, motors, blowers and valves. Each procedure starts with the safety precautions, lists the tools you need, and then walks through the checks in order, with the result you should expect at every step.
             </p>
-            <p class="text-[0.9rem] text-white leading-relaxed">
+            <p class="text-[0.9rem] leading-relaxed">
               Read the first procedure before you start any job. Then go to the procedure that matches the symptom you see. Tick each step off as you complete it, and request service if a fault is not resolved.
             </p>
           </div>
@@ -235,11 +236,11 @@ const lessons = [
 
           <!-- Contents -->
           <div class="mb-8">
-            <h2 class="font-['Kanit'] text-[1.1rem] font-extrabold text-[#b5f4ff] mb-4">Contents</h2>
+            <h2 class="font-['Kanit'] text-[1.1rem] font-extrabold mb-4" :class="accentText">Contents</h2>
             <div>
-              <div v-for="(item, i) in lessons" :key="item.id" class="flex items-center gap-4 py-3 border-b border-white/50">
-                <span class="text-[0.75rem] font-black text-[#b5f4ff] w-4 shrink-0">{{ i + 1 }}</span>
-                <span class="text-[0.88rem] text-white">{{ item.title }}</span>
+              <div v-for="(item, i) in lessons" :key="item.id" class="flex items-center gap-4 py-3 border-b" :class="isLight ? 'border-black/10' : 'border-white/50'">
+                <span class="text-[0.75rem] font-black w-4 shrink-0" :class="accentText">{{ i + 1 }}</span>
+                <span class="text-[0.88rem]">{{ item.title }}</span>
               </div>
             </div>
           </div>
@@ -247,8 +248,8 @@ const lessons = [
 
           <!-- Prior Knowledge -->
           <div class="mb-8">
-            <h2 class="font-['Kanit'] text-[1.1rem] font-extrabold text-[#b5f4ff] mb-3">Prior Knowledge</h2>
-            <p class="text-[0.9rem] text-white leading-relaxed">
+            <h2 class="font-['Kanit'] text-[1.1rem] font-extrabold mb-3" :class="accentText">Prior Knowledge</h2>
+            <p class="text-[0.9rem] leading-relaxed">
               Basic mechanical knowledge, familiarity with your vessel's lock-out / tag-out procedure, and access to the OEM manual for the equipment. Always follow the ship's safety management system.
             </p>
           </div>
@@ -287,7 +288,7 @@ const lessons = [
       <div class="mt-16">
         <div class="mb-10 text-center lg:text-left">
           <p class="text-[0.7rem] font-bold tracking-[0.3em] text-[#4da8f0] uppercase mb-3">Step-by-Step Procedures</p>
-          <h2 class="font-['Kanit'] text-[2.2rem] font-extrabold text-white leading-tight">Troubleshooting Procedures</h2>
+          <h2 class="font-['Kanit'] text-[2.2rem] font-extrabold leading-tight">Troubleshooting Procedures</h2>
         </div>
 
         <div class="space-y-4">
@@ -295,29 +296,31 @@ const lessons = [
             @click="activeLesson = activeLesson === lesson.id ? null : lesson.id"
             class="group relative rounded-[20px] border transition-all duration-500 overflow-hidden cursor-pointer"
             :class="[
-              activeLesson === lesson.id 
-              ? 'border-[#4da8f0]/60 bg-gradient-to-b from-[#00364D] to-[#011c29] shadow-[0_10px_30px_rgba(0,0,0,0.3)]' 
-              : 'border-white/10 bg-white/[0.03] hover:border-white/30 hover:bg-white/[0.06] hover:-translate-y-1'
+              activeLesson === lesson.id
+              ? 'border-[#4da8f0]/60 bg-gradient-to-b from-[#00364D] to-[#011c29] text-white shadow-[0_10px_30px_rgba(0,0,0,0.3)]'
+              : (isLight
+                  ? 'border-black/10 bg-black/[0.03] hover:border-black/20 hover:bg-black/[0.06] hover:-translate-y-1'
+                  : 'border-white/10 bg-white/[0.03] hover:border-white/30 hover:bg-white/[0.06] hover:-translate-y-1')
             ]">
-            
+
             <!-- Glow Effect on Hover (Hidden by default) -->
             <div class="absolute inset-0 bg-gradient-to-r from-[#4da8f0]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
             <div class="relative flex items-center gap-5 p-6 md:p-7">
               <!-- Animated Number Badge -->
               <div class="shrink-0 w-12 h-12 rounded-[12px] flex items-center justify-center font-['Kanit'] text-[1rem] font-black transition-all duration-500"
-                :class="activeLesson === lesson.id ? 'bg-[#4da8f0] text-white shadow-[0_0_15px_rgba(77,168,240,0.5)]' : 'bg-white/10 text-white/50 group-hover:text-white'">
+                :class="activeLesson === lesson.id ? 'bg-[#4da8f0] text-white shadow-[0_0_15px_rgba(77,168,240,0.5)]' : (isLight ? 'bg-black/10 text-black/50 group-hover:text-black' : 'bg-white/10 text-white/50 group-hover:text-white')">
                 {{ lesson.number }}
               </div>
 
               <div class="flex-1 min-w-0">
-                <h3 class="font-['Kanit'] text-[1.05rem] md:text-[1.15rem] font-bold text-white transition-colors duration-300"
-                  :class="activeLesson === lesson.id ? 'text-[#4da8f0]' : 'group-hover:text-white'">
+                <h3 class="font-['Kanit'] text-[1.05rem] md:text-[1.15rem] font-bold transition-colors duration-300"
+                  :class="activeLesson === lesson.id ? 'text-[#4da8f0]' : (isLight ? 'group-hover:text-black' : 'group-hover:text-white')">
                   {{ lesson.title }}
                 </h3>
                 <div class="flex items-center gap-3 mt-1">
-                   <span class="text-[0.65rem] font-bold tracking-wider uppercase text-white/30">Procedure</span>
-                   <div class="h-px w-8 bg-white/10"></div>
+                   <span class="text-[0.65rem] font-bold tracking-wider uppercase" :class="subtleText">Procedure</span>
+                   <div class="h-px w-8" :class="isLight ? 'bg-black/10' : 'bg-white/10'"></div>
                    <span v-if="isLessonDone(lesson)" class="inline-flex items-center gap-1 text-[0.65rem] font-bold tracking-wider uppercase text-[#34d399]">
                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                      Completed
@@ -329,9 +332,9 @@ const lessons = [
               </div>
 
               <!-- Modern SVG Chevron -->
-              <div class="shrink-0 w-8 h-8 rounded-full border border-white/10 flex items-center justify-center transition-all duration-500"
-                :class="activeLesson === lesson.id ? 'rotate-180 bg-[#4da8f0] border-[#4da8f0]' : 'bg-white/5'">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <div class="shrink-0 w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-500"
+                :class="activeLesson === lesson.id ? 'rotate-180 bg-[#4da8f0] border-[#4da8f0]' : (isLight ? 'bg-black/5 border-black/10' : 'bg-white/5 border-white/10')">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" :stroke="activeLesson === lesson.id ? 'white' : (isLight ? '#0b1a2b' : 'white')" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </div>
@@ -473,7 +476,7 @@ const lessons = [
               <span class="shrink-0 w-9 h-9 rounded-full bg-[#34d399] flex items-center justify-center">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#04241a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
               </span>
-              <p class="text-[0.95rem] text-white"><strong>Module completed.</strong> All {{ lessons.length }} procedures are done.</p>
+              <p class="text-[0.95rem]"><strong>Module completed.</strong> All {{ lessons.length }} procedures are done.</p>
             </div>
 
             <!-- Final actions -->
@@ -492,7 +495,7 @@ const lessons = [
                 Proceed to Next Module
               </button>
             </div>
-            <p v-if="!nextModuleRoute" class="mt-2 text-[0.75rem] text-white/40">The next module is coming soon.</p>
+            <p v-if="!nextModuleRoute" class="mt-2 text-[0.75rem]" :class="subtleText">The next module is coming soon.</p>
 
             <!-- Request Future Assistance form -->
             <Transition name="help">
