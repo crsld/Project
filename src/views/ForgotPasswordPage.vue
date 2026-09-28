@@ -2,7 +2,7 @@
 import AuthLayout from '../components/AuthLayout.vue'
 import { ref } from 'vue'
 import { requestPasswordReset } from '../auth'
-import { mutedText, subtleText, inputClasses, dangerClasses, successClasses, ghostButtonClasses } from '../theme'
+import { lightMutedText, lightSubtleText, lightInputClasses, lightDangerClasses, lightSuccessClasses, lightGhostButtonClasses } from '../theme'
 
 const email = ref('')
 const error = ref('')
@@ -27,14 +27,14 @@ const submit = async () => {
   <AuthLayout title="Forgot password?" subtitle="Enter your email and we'll send you a link to reset it.">
     <!-- Sent -->
     <div v-if="sent" class="flex flex-col gap-5" role="status">
-      <p class="text-sm rounded-xl px-4 py-3 leading-relaxed border" :class="successClasses">
+      <p class="text-sm rounded-xl px-4 py-3 leading-relaxed border" :class="lightSuccessClasses">
         Check your email. If an account exists for <strong>{{ email }}</strong>, we've sent a link to reset your password.
       </p>
-      <p class="text-[0.8rem] leading-relaxed" :class="subtleText">
+      <p class="text-[0.8rem] leading-relaxed" :class="lightSubtleText">
         It can take a minute to arrive. If you don't see it, check your spam folder.
       </p>
       <button type="button" @click="sent = false"
-        class="w-full py-4 rounded-full font-bold backdrop-blur-md transition-all cursor-pointer border" :class="ghostButtonClasses">
+        class="w-full py-4 rounded-full font-bold backdrop-blur-md transition-all cursor-pointer border" :class="lightGhostButtonClasses">
         Send again
       </button>
     </div>
@@ -42,12 +42,12 @@ const submit = async () => {
     <!-- Form -->
     <form v-else @submit.prevent="submit" class="flex flex-col gap-5" novalidate>
       <div>
-        <label for="email" class="block text-xs font-bold uppercase tracking-wider mb-2" :class="mutedText">Email</label>
+        <label for="email" class="block text-xs font-bold uppercase tracking-wider mb-2" :class="lightMutedText">Email</label>
         <input id="email" v-model="email" type="email" required autocomplete="email" placeholder="you@company.com"
-          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#4da8f0]" :class="inputClasses" />
+          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#4da8f0]" :class="lightInputClasses" />
       </div>
 
-      <p v-if="error" role="alert" class="text-sm rounded-xl px-4 py-3 border" :class="dangerClasses">{{ error }}</p>
+      <p v-if="error" role="alert" class="text-sm rounded-xl px-4 py-3 border" :class="lightDangerClasses">{{ error }}</p>
 
       <button type="submit" :disabled="loading || !email.trim()"
         class="w-full py-4 bg-[#4da8f0] hover:bg-[#3b97e0] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#4da8f0] text-white rounded-full font-bold transition-all cursor-pointer border-none">

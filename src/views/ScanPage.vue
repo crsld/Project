@@ -4,7 +4,7 @@ import jsQR from 'jsqr'
 import { ref, computed, onBeforeUnmount } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { acceptQr } from '../auth'
-import { subtleText, ghostButtonClasses, dangerClasses } from '../theme'
+import { lightSubtleText, lightGhostButtonClasses, lightDangerClasses } from '../theme'
 
 const router = useRouter()
 const route = useRoute()
@@ -216,19 +216,19 @@ const onFile = async (e) => {
         {{ status === 'starting' ? 'Starting camera…' : status === 'scanning' ? 'Stop Camera' : 'Scan with Camera' }}
       </button>
 
-      <div class="flex items-center gap-3 text-xs uppercase tracking-widest" :class="subtleText">
+      <div class="flex items-center gap-3 text-xs uppercase tracking-widest" :class="lightSubtleText">
         <span class="h-px flex-1 bg-current opacity-20"></span>or<span class="h-px flex-1 bg-current opacity-20"></span>
       </div>
 
       <button type="button" @click="fileInput.click()" :disabled="busy"
-        class="w-full py-4 disabled:opacity-50 disabled:cursor-not-allowed rounded-full font-bold backdrop-blur-md transition-all cursor-pointer flex items-center justify-center gap-2 border" :class="ghostButtonClasses">
+        class="w-full py-4 disabled:opacity-50 disabled:cursor-not-allowed rounded-full font-bold backdrop-blur-md transition-all cursor-pointer flex items-center justify-center gap-2 border" :class="lightGhostButtonClasses">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
         Upload QR Image
       </button>
       <input ref="fileInput" type="file" accept="image/*" class="hidden" @change="onFile" />
     </div>
 
-    <p v-if="error" role="alert" class="mt-5 text-sm rounded-xl px-4 py-3 border" :class="dangerClasses">{{ error }}</p>
+    <p v-if="error" role="alert" class="mt-5 text-sm rounded-xl px-4 py-3 border" :class="lightDangerClasses">{{ error }}</p>
   </AuthLayout>
 </template>
 

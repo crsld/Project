@@ -3,7 +3,7 @@ import AuthLayout from '../components/AuthLayout.vue'
 import { ref, computed, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import { isAuthenticated, updatePassword, postAuthPath } from '../auth'
-import { mutedText, inputClasses, dangerClasses, successClasses } from '../theme'
+import { lightMutedText, lightInputClasses, lightDangerClasses, lightSuccessClasses } from '../theme'
 
 const router = useRouter()
 
@@ -63,26 +63,26 @@ onBeforeUnmount(() => clearTimeout(timer))
 
   <!-- Set a new password -->
   <AuthLayout v-else title="Set a new password" subtitle="Choose a new password for your account.">
-    <p v-if="done" role="status" class="text-sm rounded-xl px-4 py-3 border" :class="successClasses">
+    <p v-if="done" role="status" class="text-sm rounded-xl px-4 py-3 border" :class="lightSuccessClasses">
       Password updated. Taking you in…
     </p>
 
     <form v-else @submit.prevent="submit" class="flex flex-col gap-5" novalidate>
       <div>
-        <label for="password" class="block text-xs font-bold uppercase tracking-wider mb-2" :class="mutedText">New password</label>
+        <label for="password" class="block text-xs font-bold uppercase tracking-wider mb-2" :class="lightMutedText">New password</label>
         <input id="password" v-model="password" type="password" required autocomplete="new-password" placeholder="At least 8 characters"
-          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#4da8f0]" :class="inputClasses" />
-        <p v-if="passwordProblem" class="mt-2 text-xs text-red-400">{{ passwordProblem }}</p>
+          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#4da8f0]" :class="lightInputClasses" />
+        <p v-if="passwordProblem" class="mt-2 text-xs text-red-500">{{ passwordProblem }}</p>
       </div>
 
       <div>
-        <label for="confirm" class="block text-xs font-bold uppercase tracking-wider mb-2" :class="mutedText">Confirm new password</label>
+        <label for="confirm" class="block text-xs font-bold uppercase tracking-wider mb-2" :class="lightMutedText">Confirm new password</label>
         <input id="confirm" v-model="confirm" type="password" required autocomplete="new-password" placeholder="Re-enter password"
-          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#4da8f0]" :class="inputClasses" />
-        <p v-if="mismatch" class="mt-2 text-xs text-red-400">Passwords do not match.</p>
+          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#4da8f0]" :class="lightInputClasses" />
+        <p v-if="mismatch" class="mt-2 text-xs text-red-500">Passwords do not match.</p>
       </div>
 
-      <p v-if="error" role="alert" class="text-sm rounded-xl px-4 py-3 border" :class="dangerClasses">{{ error }}</p>
+      <p v-if="error" role="alert" class="text-sm rounded-xl px-4 py-3 border" :class="lightDangerClasses">{{ error }}</p>
 
       <button type="submit" :disabled="!canSubmit"
         class="w-full py-4 bg-[#4da8f0] hover:bg-[#3b97e0] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#4da8f0] text-white rounded-full font-bold transition-all cursor-pointer border-none">

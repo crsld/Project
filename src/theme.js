@@ -49,3 +49,15 @@ export const noticeClasses = computed(() => isLight.value
 // The #b5f4ff light-cyan accent (section eyebrows, "Expected:" labels) reads
 // fine on the dark navy background but washes out on the light one.
 export const accentText = computed(() => isLight.value ? 'text-[#0f6fd1]' : 'text-[#b5f4ff]')
+
+// Fixed "light surface" tokens (not theme-reactive) for the auth card, which
+// stays solid white regardless of the site-wide theme toggle.
+export const lightSurfaceText = 'text-[#0b1a2b]'
+export const lightMutedText = 'text-[#0b1a2b]/70'
+export const lightSubtleText = 'text-[#0b1a2b]/40'
+export const lightInputClasses = 'bg-black/5 border-black/10 text-[#0b1a2b] placeholder-black/30 focus:bg-black/[0.07]'
+export const lightGhostButtonClasses = 'bg-black/5 hover:bg-black/10 text-[#0b1a2b] border-black/10'
+export const lightDangerClasses = 'text-red-700 bg-red-500/10 border-red-500/30'
+export const lightSuccessClasses = 'text-emerald-700 bg-emerald-500/10 border-emerald-500/30'
+export const lightNoticeClasses = 'text-amber-700 bg-amber-500/10 border-amber-500/30'
+export const lightAccentText = 'text-[#0f6fd1]'

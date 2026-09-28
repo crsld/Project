@@ -3,7 +3,7 @@ import AuthLayout from '../components/AuthLayout.vue'
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { logIn, postAuthPath } from '../auth'
-import { mutedText, inputClasses, dangerClasses, noticeClasses } from '../theme'
+import { lightMutedText, lightInputClasses, lightDangerClasses, lightNoticeClasses } from '../theme'
 
 const router = useRouter()
 const route = useRoute()
@@ -34,23 +34,23 @@ const submit = async () => {
   <AuthLayout title="Welcome back" subtitle="Log in to access your maritime system modules.">
     <form @submit.prevent="submit" class="flex flex-col gap-5" novalidate>
       <div>
-        <label for="email" class="block text-xs font-bold uppercase tracking-wider mb-2" :class="mutedText">Email</label>
+        <label for="email" class="block text-xs font-bold uppercase tracking-wider mb-2" :class="lightMutedText">Email</label>
         <input id="email" v-model="email" type="email" required autocomplete="email" placeholder="you@company.com"
-          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#4da8f0]" :class="inputClasses" />
+          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#4da8f0]" :class="lightInputClasses" />
       </div>
 
       <div>
-        <label for="password" class="block text-xs font-bold uppercase tracking-wider mb-2" :class="mutedText">Password</label>
+        <label for="password" class="block text-xs font-bold uppercase tracking-wider mb-2" :class="lightMutedText">Password</label>
         <input id="password" v-model="password" type="password" required autocomplete="current-password" placeholder="••••••••"
-          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#4da8f0]" :class="inputClasses" />
+          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#4da8f0]" :class="lightInputClasses" />
         <div class="mt-2 text-right">
-          <router-link to="/forgot-password" class="text-xs text-[#9ddbff] hover:text-[#4da8f0] font-bold no-underline transition-colors">Forgot password?</router-link>
+          <router-link to="/forgot-password" class="text-xs text-[#0f6fd1] hover:text-[#4da8f0] font-bold no-underline transition-colors">Forgot password?</router-link>
         </div>
       </div>
 
-      <p v-if="notice" role="status" class="text-sm rounded-xl px-4 py-3 border" :class="noticeClasses">{{ notice }}</p>
+      <p v-if="notice" role="status" class="text-sm rounded-xl px-4 py-3 border" :class="lightNoticeClasses">{{ notice }}</p>
 
-      <p v-if="error" role="alert" class="text-sm rounded-xl px-4 py-3 border" :class="dangerClasses">{{ error }}</p>
+      <p v-if="error" role="alert" class="text-sm rounded-xl px-4 py-3 border" :class="lightDangerClasses">{{ error }}</p>
 
       <button type="submit" :disabled="loading || !email || !password"
         class="w-full py-4 bg-[#4da8f0] hover:bg-[#3b97e0] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#4da8f0] text-white rounded-full font-bold transition-all cursor-pointer border-none">

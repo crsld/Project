@@ -1,7 +1,7 @@
 <script setup>
 import Logo from '../assets/Company_Logo.png'
 import { useRouter } from 'vue-router'
-import { pageBg, cardClasses, mutedText, accentText } from '../theme'
+import { pageBg, mutedText, lightSurfaceText, lightMutedText, lightAccentText } from '../theme'
 
 defineProps({
   title: String,
@@ -21,12 +21,13 @@ const router = useRouter()
       <span class="font-bold tracking-tight text-2xl">Scanship</span>
     </a>
 
-    <div class="relative w-full max-w-[440px] rounded-[24px] p-8 sm:p-10 backdrop-blur-md shadow-2xl border" :class="cardClasses">
-      <p class="text-[0.7rem] font-bold tracking-[0.2em] uppercase mb-3 text-center" :class="accentText">Maritime System Modules</p>
+    <!-- Card stays solid white regardless of the site theme -->
+    <div class="relative w-full max-w-[440px] rounded-[24px] p-8 sm:p-10 shadow-2xl border bg-white border-black/10" :class="lightSurfaceText">
+      <p class="text-[0.7rem] font-bold tracking-[0.2em] uppercase mb-3 text-center" :class="lightAccentText">Maritime System Modules</p>
       <h1 class="text-[clamp(1.8rem,5vw,2.2rem)] font-black leading-tight tracking-tight text-center mb-2">
         {{ title }}
       </h1>
-      <p class="text-[0.95rem] text-center mb-8" :class="mutedText">{{ subtitle }}</p>
+      <p class="text-[0.95rem] text-center mb-8" :class="lightMutedText">{{ subtitle }}</p>
 
       <slot />
     </div>
