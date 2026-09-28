@@ -21,8 +21,8 @@ const router = useRouter()
       <span class="font-bold tracking-tight text-2xl">Scanship</span>
     </a>
 
-    <!-- Card stays solid white regardless of the site theme -->
-    <div class="relative w-full max-w-[440px] rounded-[24px] p-8 sm:p-10 shadow-2xl border bg-white border-black/10" :class="lightSurfaceText">
+    <!-- Card stays a soft off-white regardless of the site theme -->
+    <div class="relative w-full max-w-[440px] rounded-[24px] p-8 sm:p-10 shadow-2xl border bg-[#f4f6f8] border-black/10" :class="lightSurfaceText">
       <p class="text-[0.7rem] font-bold tracking-[0.2em] uppercase mb-3 text-center" :class="lightAccentText">Maritime System Modules</p>
       <h1 class="text-[clamp(1.8rem,5vw,2.2rem)] font-black leading-tight tracking-tight text-center mb-2">
         {{ title }}
