@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar.vue'
 import Footer from '../components/Footer.vue'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { isLight, pageBg, mutedText, ghostButtonClasses, cardClasses, accentText } from '../theme'
+import { isLight, pageBg, mutedText, ghostButtonClasses, accentText } from '../theme'
 import { trainingPrograms } from '../data/trainingPrograms'
 
 const router = useRouter()
@@ -151,7 +151,7 @@ onMounted(() => {
           <div v-for="program in programs" :key="program.key"
             @click="router.push(program.route)"
             class="reveal group relative rounded-[28px] border overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-1 hover:border-[#2D5C6F]/60"
-            :class="cardClasses">
+            :class="isLight ? 'bg-white border-black/10' : 'bg-white/[0.03] border-white/[0.08]'">
             <div class="grid grid-cols-1 md:grid-cols-[1.2fr_1fr]">
               <!-- Info -->
               <div class="p-8 sm:p-10 flex flex-col justify-center">
