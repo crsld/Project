@@ -127,7 +127,7 @@ const goToSection = async (sectionId) => {
     <div class="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-16 flex items-center justify-between h-20">
       <!-- Logo -->
       <a href="#" class="flex items-center no-underline transition-transform hover:scale-105" @click.prevent="goHome">
-        <img :src="navLogo" alt="Scanship" class="h-9 w-auto object-contain" />
+        <img :src="navLogo" alt="Scanship" class="h-14 w-auto object-contain" />
       </a>
 
       <!-- Navigation Links + Signed-in user (desktop), grouped on the right -->
@@ -268,7 +268,7 @@ const goToSection = async (sectionId) => {
       class="flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-xl border pointer-events-auto transition-all duration-300 hover:scale-110 group"
       :class="isLight ? 'bg-white/70 border-black/10 hover:border-black/20 hover:bg-white/90' : 'bg-[#002E4B]/60 border-white/10 hover:border-white/30 hover:bg-[#002E4B]/80'"
     >
-      <img :src="navLogo" alt="Scanship" class="h-6 w-auto object-contain" />
+      <img :src="navLogo" alt="Scanship" class="h-8 w-auto object-contain" />
     </a>
   </div>
 </template>
