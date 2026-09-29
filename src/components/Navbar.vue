@@ -1,6 +1,6 @@
 <script setup>
 import LogoFull from '../assets/LOGO.png'
-import LogoIcon from '../assets/Company_Logo.png'
+import LogoFullDark from '../assets/LOGO-FORDARKMODE.PNG'
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { logOut, currentUser } from '../auth'
@@ -9,9 +9,9 @@ import { isLight, toggleTheme } from '../theme'
 const router = useRouter()
 const route = useRoute()
 
-// The full logo has dark navy text baked in, so it only reads on the light
-// navbar; fall back to the icon-only mark when the navbar goes dark.
-const navLogo = computed(() => isLight.value ? LogoFull : LogoIcon)
+// The light-mode logo has dark navy text baked in, so it only reads on the
+// light navbar; swap to the white-text variant when the navbar goes dark.
+const navLogo = computed(() => isLight.value ? LogoFull : LogoFullDark)
 
 const showDropdown = ref(false)
 const mobileMenuOpen = ref(false)
@@ -127,7 +127,7 @@ const goToSection = async (sectionId) => {
     <div class="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-16 flex items-center justify-between h-20">
       <!-- Logo -->
       <a href="#" class="flex items-center no-underline transition-transform hover:scale-105" @click.prevent="goHome">
-        <img :src="navLogo" alt="Scanship" class="w-auto object-contain" :class="isLight ? 'h-9' : 'h-10 rounded-full'" />
+        <img :src="navLogo" alt="Scanship" class="h-9 w-auto object-contain" />
       </a>
 
       <!-- Navigation Links + Signed-in user (desktop), grouped on the right -->
@@ -141,6 +141,11 @@ const goToSection = async (sectionId) => {
            class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#2D5C6F] transition-colors duration-200"
            :class="isLight ? 'text-[#141414]' : 'text-white'">
           About
+        </a>
+        <a href="#" @click.prevent="goToSection('training')"
+           class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#2D5C6F] transition-colors duration-200"
+           :class="isLight ? 'text-[#141414]' : 'text-white'">
+          Training
         </a>
         <a href="#" @click.prevent="goToSection('courses')"
            class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#2D5C6F] transition-colors duration-200"
@@ -236,6 +241,11 @@ const goToSection = async (sectionId) => {
              :class="isLight ? 'text-[#141414] border-black/5' : 'text-white border-white/5'">
             About
           </a>
+          <a href="#" @click.prevent="goToSection('training')"
+             class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#2D5C6F] transition-colors duration-200 py-3 border-b"
+             :class="isLight ? 'text-[#141414] border-black/5' : 'text-white border-white/5'">
+            Training
+          </a>
           <a href="#" @click.prevent="goToSection('courses')"
              class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#2D5C6F] transition-colors duration-200 py-3 border-b"
              :class="isLight ? 'text-[#141414] border-black/5' : 'text-white border-white/5'">
@@ -268,7 +278,7 @@ const goToSection = async (sectionId) => {
       class="flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-xl border pointer-events-auto transition-all duration-300 hover:scale-110 group"
       :class="isLight ? 'bg-white/70 border-black/10 hover:border-black/20 hover:bg-white/90' : 'bg-[#002E4B]/60 border-white/10 hover:border-white/30 hover:bg-[#002E4B]/80'"
     >
-      <img :src="navLogo" alt="Scanship" class="w-auto object-contain" :class="isLight ? 'h-6' : 'h-7 rounded-full'" />
+      <img :src="navLogo" alt="Scanship" class="h-6 w-auto object-contain" />
     </a>
   </div>
 </template>

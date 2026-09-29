@@ -4,6 +4,7 @@ import Footer from '../components/Footer.vue'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { isLight, pageBg, mutedText, ghostButtonClasses, cardClasses, accentText } from '../theme'
+import { trainingPrograms } from '../data/trainingPrograms'
 
 const router = useRouter()
 const showAuth = ref(false)
@@ -35,6 +36,12 @@ const videos = [
     youtubeId: 'MpKaKnOM75o'
   }
 ]
+
+const programs = Object.values(trainingPrograms).map(p => ({
+  ...p,
+  moduleCount: p.modules.length,
+  availableModules: p.modules.filter(m => m.route).length,
+}))
 
 const courses = [
   {
@@ -162,6 +169,61 @@ onMounted(() => {
             </div>
             <div class="p-5">
               <h4 class="font-bold text-sm line-clamp-2">{{ video.title }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. TRAINING MODULES (AWP / EP PROGRAMS) ── -->
+    <section id="training" class="py-24 px-8">
+      <div class="max-w-[1100px] mx-auto">
+        <div class="text-center mb-16">
+          <p class="text-[0.7rem] font-bold tracking-[0.2em] uppercase mb-3" :class="accentText">Training Programs</p>
+          <h2 class="font-['Kanit'] text-[clamp(2rem,4vw,3rem)] font-extrabold mb-4">
+            Choose Your <span :class="accentText">Training Path</span>
+          </h2>
+          <p class="text-[1rem] max-w-[800px] mx-auto" :class="mutedText">
+            Two certification tracks, each built from seven progressive modules your crew can complete at their own pace.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-8">
+          <div v-for="program in programs" :key="program.key"
+            @click="router.push(program.route)"
+            class="reveal group relative rounded-[28px] border overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-1 hover:border-[#2D5C6F]/60"
+            :class="cardClasses">
+            <div class="grid grid-cols-1 md:grid-cols-[1.2fr_1fr]">
+              <!-- Info -->
+              <div class="p-8 sm:p-10 flex flex-col justify-center">
+                <span class="text-[2.6rem] font-black leading-none mb-3 opacity-25 group-hover:opacity-50 transition-opacity duration-500" :class="accentText">{{ program.number }}</span>
+                <h3 class="font-['Kanit'] text-[2.4rem] sm:text-[2.8rem] font-black leading-none mb-2">{{ program.name }}</h3>
+                <p class="text-[1rem] font-semibold mb-4" :class="accentText">{{ program.subtitle }}</p>
+                <p class="text-[0.95rem] leading-relaxed mb-6 max-w-[420px]" :class="mutedText">{{ program.description }}</p>
+                <div class="flex flex-wrap items-center gap-4">
+                  <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full border" :class="isLight ? 'border-black/10 bg-black/5' : 'border-white/10 bg-white/5'">
+                    {{ program.moduleCount }} Modules
+                  </span>
+                  <span class="inline-flex items-center gap-2 font-bold text-[0.95rem] transition-all duration-300" :class="accentText">
+                    View Training
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:translate-x-1.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Module preview grid -->
+              <div class="relative p-8 sm:p-10 flex items-center justify-center" :class="isLight ? 'bg-black/[0.02]' : 'bg-white/[0.02]'">
+                <div class="grid grid-cols-4 gap-3 w-full max-w-[260px]">
+                  <div v-for="n in program.moduleCount" :key="n"
+                    class="aspect-square rounded-xl border flex items-center justify-center text-sm font-black transition-all duration-300 group-hover:scale-110"
+                    :class="n <= program.availableModules
+                      ? 'bg-[#2D5C6F] border-[#2D5C6F] text-white'
+                      : (isLight ? 'border-black/10 bg-black/[0.03] text-black/30' : 'border-white/10 bg-white/[0.03] text-white/30')"
+                    :style="{ transitionDelay: (n * 40) + 'ms' }">
+                    {{ n }}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

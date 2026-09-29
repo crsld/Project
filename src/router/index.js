@@ -13,6 +13,11 @@ const routes = [
     component: () => import('../views/Module1Detail.vue')
   },
   {
+    path: '/training/:program',
+    name: 'TrainingProgram',
+    component: () => import('../views/TrainingProgramPage.vue')
+  },
+  {
     // Target of a station QR link. Validates the code, then:
     //  - signed in: opens the scanned module right away
     //  - signed out: goes to log in / sign up (the module opens after that)
