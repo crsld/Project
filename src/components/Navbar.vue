@@ -115,7 +115,7 @@ const goToSection = async (sectionId) => {
     :class="[
       (retracted && !mobileMenuOpen)
         ? '-translate-y-full opacity-0 pointer-events-none'
-        : (isLight ? 'bg-white/90 border-black/10 opacity-100' : 'bg-[#040f1e]/80 border-white/30 opacity-100'),
+        : (isLight ? 'bg-white/90 border-black/10 opacity-100' : 'bg-[#002E4B]/80 border-white/30 opacity-100'),
       'backdrop-blur-md'
     ]"
   >
@@ -126,7 +126,7 @@ const goToSection = async (sectionId) => {
           <img :src="Logo" alt="Scanship" class="h-10 w-10 object-contain rounded-full" />
         </a>
         <a href="#" class="flex items-center no-underline" @click.prevent="goHome">
-          <span class="font-['Kanit'] font-bold tracking-tight text-2xl transition-colors duration-300" :class="isLight ? 'text-[#0b1a2b]' : 'text-white'">
+          <span class="font-['Kanit'] font-bold tracking-tight text-2xl transition-colors duration-300" :class="isLight ? 'text-[#141414]' : 'text-white'">
             Scanship
           </span>
         </a>
@@ -135,25 +135,25 @@ const goToSection = async (sectionId) => {
       <!-- Navigation Links + Signed-in user (desktop), grouped on the right -->
       <div class="hidden md:flex items-center gap-8 ml-auto">
         <a href="#" @click.prevent="goHome"
-           class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#4da8f0] transition-colors duration-200"
-           :class="isLight ? 'text-[#0b1a2b]' : 'text-white'">
+           class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#2D5C6F] transition-colors duration-200"
+           :class="isLight ? 'text-[#141414]' : 'text-white'">
           Home
         </a>
         <a href="#" @click.prevent="goToSection('about')"
-           class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#4da8f0] transition-colors duration-200"
-           :class="isLight ? 'text-[#0b1a2b]' : 'text-white'">
+           class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#2D5C6F] transition-colors duration-200"
+           :class="isLight ? 'text-[#141414]' : 'text-white'">
           About
         </a>
-        <a href="#" @click.prevent="goToSection('modules')"
-           class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#4da8f0] transition-colors duration-200"
-           :class="isLight ? 'text-[#0b1a2b]' : 'text-white'">
-          Modules
+        <a href="#" @click.prevent="goToSection('courses')"
+           class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#2D5C6F] transition-colors duration-200"
+           :class="isLight ? 'text-[#141414]' : 'text-white'">
+          Courses
         </a>
 
         <!-- Light / dark toggle -->
         <button type="button" @click="toggleTheme"
           class="flex items-center justify-center w-9 h-9 rounded-full border cursor-pointer transition-all"
-          :class="isLight ? 'bg-black/5 hover:bg-black/10 border-black/10 text-[#0b1a2b]' : 'bg-white/5 hover:bg-white/10 border-white/10 text-white'"
+          :class="isLight ? 'bg-black/5 hover:bg-black/10 border-black/10 text-[#141414]' : 'bg-white/5 hover:bg-white/10 border-white/10 text-white'"
           :aria-label="isLight ? 'Switch to dark mode' : 'Switch to light mode'"
         >
           <svg v-if="isLight" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -165,8 +165,8 @@ const goToSection = async (sectionId) => {
           <button type="button" @click="userMenuOpen = !userMenuOpen"
             aria-haspopup="menu" :aria-expanded="userMenuOpen"
             class="flex items-center gap-2 pl-2 pr-4 py-1.5 border rounded-full cursor-pointer transition-all"
-            :class="isLight ? 'bg-black/5 hover:bg-black/10 text-[#0b1a2b] border-black/10' : 'bg-white/5 hover:bg-white/10 text-white border-white/10'">
-            <span class="w-7 h-7 rounded-full bg-[#4da8f0] flex items-center justify-center text-xs font-black text-white">{{ userInitial }}</span>
+            :class="isLight ? 'bg-black/5 hover:bg-black/10 text-[#141414] border-black/10' : 'bg-white/5 hover:bg-white/10 text-white border-white/10'">
+            <span class="w-7 h-7 rounded-full bg-[#2D5C6F] flex items-center justify-center text-xs font-black text-white">{{ userInitial }}</span>
             <span class="font-['Kanit'] font-medium text-sm max-w-[160px] truncate">{{ userName }}</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
               class="transition-transform duration-200" :class="userMenuOpen ? 'rotate-180' : ''">
@@ -177,14 +177,14 @@ const goToSection = async (sectionId) => {
           <Transition name="user-menu">
             <div v-if="userMenuOpen" role="menu"
               class="absolute right-0 mt-3 w-56 rounded-2xl border backdrop-blur-md shadow-2xl overflow-hidden"
-              :class="isLight ? 'bg-white/95 border-black/10' : 'bg-[#040f1e]/95 border-white/10'">
+              :class="isLight ? 'bg-white/95 border-black/10' : 'bg-[#002E4B]/95 border-white/10'">
               <div class="px-4 py-3 border-b" :class="isLight ? 'border-black/10' : 'border-white/10'">
-                <p class="text-[0.65rem] font-bold tracking-[0.15em] text-[#4da8f0] uppercase mb-1">Signed in as</p>
-                <p class="text-sm truncate" :class="isLight ? 'text-[#0b1a2b]' : 'text-white'">{{ currentUser?.email }}</p>
+                <p class="text-[0.65rem] font-bold tracking-[0.15em] text-[#2D5C6F] uppercase mb-1">Signed in as</p>
+                <p class="text-sm truncate" :class="isLight ? 'text-[#141414]' : 'text-white'">{{ currentUser?.email }}</p>
               </div>
               <button type="button" role="menuitem" @click="handleLogout"
-                class="w-full flex items-center gap-3 px-4 py-3 text-left text-sm font-medium hover:text-[#4da8f0] bg-transparent border-none cursor-pointer transition-colors"
-                :class="isLight ? 'text-[#0b1a2b] hover:bg-black/5' : 'text-white hover:bg-white/10'">
+                class="w-full flex items-center gap-3 px-4 py-3 text-left text-sm font-medium hover:text-[#2D5C6F] bg-transparent border-none cursor-pointer transition-colors"
+                :class="isLight ? 'text-[#141414] hover:bg-black/5' : 'text-white hover:bg-white/10'">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
                 Log Out
               </button>
@@ -196,7 +196,7 @@ const goToSection = async (sectionId) => {
       <!-- Light / dark toggle (mobile) -->
       <button type="button" @click="toggleTheme"
         class="md:hidden flex items-center justify-center w-9 h-9 mr-2 rounded-full border cursor-pointer transition-all"
-        :class="isLight ? 'bg-black/5 hover:bg-black/10 border-black/10 text-[#0b1a2b]' : 'bg-white/5 hover:bg-white/10 border-white/10 text-white'"
+        :class="isLight ? 'bg-black/5 hover:bg-black/10 border-black/10 text-[#141414]' : 'bg-white/5 hover:bg-white/10 border-white/10 text-white'"
         :aria-label="isLight ? 'Switch to dark mode' : 'Switch to light mode'"
       >
         <svg v-if="isLight" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -207,7 +207,7 @@ const goToSection = async (sectionId) => {
       <button
         type="button"
         class="md:hidden flex items-center justify-center w-10 h-10 cursor-pointer bg-transparent border-none"
-        :class="isLight ? 'text-[#0b1a2b]' : 'text-white'"
+        :class="isLight ? 'text-[#141414]' : 'text-white'"
         @click="mobileMenuOpen = !mobileMenuOpen"
         :aria-expanded="mobileMenuOpen"
         aria-label="Toggle navigation menu"
@@ -229,28 +229,28 @@ const goToSection = async (sectionId) => {
       <div v-if="mobileMenuOpen" class="md:hidden border-t" :class="isLight ? 'border-black/10' : 'border-white/10'">
         <div class="flex flex-col px-4 py-3">
           <a href="#" @click.prevent="goHome"
-             class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#4da8f0] transition-colors duration-200 py-3 border-b"
-             :class="isLight ? 'text-[#0b1a2b] border-black/5' : 'text-white border-white/5'">
+             class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#2D5C6F] transition-colors duration-200 py-3 border-b"
+             :class="isLight ? 'text-[#141414] border-black/5' : 'text-white border-white/5'">
             Home
           </a>
           <a href="#" @click.prevent="goToSection('about')"
-             class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#4da8f0] transition-colors duration-200 py-3 border-b"
-             :class="isLight ? 'text-[#0b1a2b] border-black/5' : 'text-white border-white/5'">
+             class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#2D5C6F] transition-colors duration-200 py-3 border-b"
+             :class="isLight ? 'text-[#141414] border-black/5' : 'text-white border-white/5'">
             About
           </a>
-          <a href="#" @click.prevent="goToSection('modules')"
-             class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#4da8f0] transition-colors duration-200 py-3 border-b"
-             :class="isLight ? 'text-[#0b1a2b] border-black/5' : 'text-white border-white/5'">
-            Modules
+          <a href="#" @click.prevent="goToSection('courses')"
+             class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#2D5C6F] transition-colors duration-200 py-3 border-b"
+             :class="isLight ? 'text-[#141414] border-black/5' : 'text-white border-white/5'">
+            Courses
           </a>
           <div class="flex items-center justify-between gap-3 py-3">
             <span class="flex items-center gap-2 min-w-0">
-              <span class="w-7 h-7 shrink-0 rounded-full bg-[#4da8f0] flex items-center justify-center text-xs font-black text-white">{{ userInitial }}</span>
-              <span class="font-['Kanit'] font-medium text-sm truncate" :class="isLight ? 'text-[#0b1a2b]' : 'text-white'">{{ userName }}</span>
+              <span class="w-7 h-7 shrink-0 rounded-full bg-[#2D5C6F] flex items-center justify-center text-xs font-black text-white">{{ userInitial }}</span>
+              <span class="font-['Kanit'] font-medium text-sm truncate" :class="isLight ? 'text-[#141414]' : 'text-white'">{{ userName }}</span>
             </span>
             <a href="#" @click.prevent="handleLogout"
-               class="shrink-0 font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#4da8f0] transition-colors duration-200"
-               :class="isLight ? 'text-[#0b1a2b]' : 'text-white'">
+               class="shrink-0 font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#2D5C6F] transition-colors duration-200"
+               :class="isLight ? 'text-[#141414]' : 'text-white'">
               Log Out
             </a>
           </div>
@@ -268,10 +268,10 @@ const goToSection = async (sectionId) => {
       href="#"
       @click.prevent="goHome"
       class="flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-xl border pointer-events-auto transition-all duration-300 hover:scale-110 group"
-      :class="isLight ? 'bg-white/70 border-black/10 hover:border-black/20 hover:bg-white/90' : 'bg-[#040f1e]/60 border-white/10 hover:border-white/30 hover:bg-[#040f1e]/80'"
+      :class="isLight ? 'bg-white/70 border-black/10 hover:border-black/20 hover:bg-white/90' : 'bg-[#002E4B]/60 border-white/10 hover:border-white/30 hover:bg-[#002E4B]/80'"
     >
       <img :src="Logo" alt="Scanship" class="h-8 w-8 object-contain rounded-full transition-transform group-hover:rotate-12" />
-      <span class="font-['Kanit'] font-bold tracking-tight text-lg whitespace-nowrap" :class="isLight ? 'text-[#0b1a2b]' : 'text-white'">
+      <span class="font-['Kanit'] font-bold tracking-tight text-lg whitespace-nowrap" :class="isLight ? 'text-[#141414]' : 'text-white'">
         Scanship
       </span>
     </a>

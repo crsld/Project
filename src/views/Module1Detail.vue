@@ -194,7 +194,7 @@ const lessons = [
       }" 
     >
         <!-- Dark Overlay -->
-        <div class="absolute inset-0 bg-[#040f1e]/50"></div>
+        <div class="absolute inset-0 bg-[#002E4B]/50"></div>
 
         <!-- 1. CENTERED CONTENT (Main Title) -->
         <div class="relative z-10 w-full max-w-[1000px] mx-auto px-8 text-center"> 
@@ -209,7 +209,7 @@ const lessons = [
                 World leading solutions for cleaner oceans
             </p>
             <!-- Optional: A small accent line -->
-            <div class="bg-[#4da8f0] mx-auto mt-2 opacity-60"></div>
+            <div class="bg-[#2D5C6F] mx-auto mt-2 opacity-60"></div>
         </div>
     </div>
 </section>
@@ -259,7 +259,7 @@ const lessons = [
         <div class="space-y-5">
 
           <!-- Module Info -->
-          <div class="rounded-[20px] border border-white bg-[#00364D] p-8 space-y-3">
+          <div class="rounded-[20px] border border-white bg-[#002E4B] p-8 space-y-3">
             <p class="text-[0.65rem] font-bold tracking-[0.15em] text-white uppercase mb-1">Module Info</p>
             <div class="flex items-start justify-between text-[0.82rem] gap-2">
               <span class="text-white shrink-0">Created by</span>
@@ -287,7 +287,7 @@ const lessons = [
       <!-- LESSONS LIST -->
       <div class="mt-16">
         <div class="mb-10 text-center lg:text-left">
-          <p class="text-[0.7rem] font-bold tracking-[0.3em] text-[#4da8f0] uppercase mb-3">Step-by-Step Procedures</p>
+          <p class="text-[0.7rem] font-bold tracking-[0.3em] text-[#2D5C6F] uppercase mb-3">Step-by-Step Procedures</p>
           <h2 class="font-['Kanit'] text-[2.2rem] font-extrabold leading-tight">Troubleshooting Procedures</h2>
         </div>
 
@@ -297,25 +297,25 @@ const lessons = [
             class="group relative rounded-[20px] border transition-all duration-500 overflow-hidden cursor-pointer"
             :class="[
               activeLesson === lesson.id
-              ? 'border-[#4da8f0]/60 bg-gradient-to-b from-[#00364D] to-[#011c29] text-white shadow-[0_10px_30px_rgba(0,0,0,0.3)]'
+              ? 'border-[#2D5C6F]/60 bg-gradient-to-b from-[#002E4B] to-[#141414] text-white shadow-[0_10px_30px_rgba(0,0,0,0.3)]'
               : (isLight
                   ? 'border-black/10 bg-black/[0.03] hover:border-black/20 hover:bg-black/[0.06] hover:-translate-y-1'
                   : 'border-white/10 bg-white/[0.03] hover:border-white/30 hover:bg-white/[0.06] hover:-translate-y-1')
             ]">
 
             <!-- Glow Effect on Hover (Hidden by default) -->
-            <div class="absolute inset-0 bg-gradient-to-r from-[#4da8f0]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-[#2D5C6F]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
             <div class="relative flex items-center gap-5 p-6 md:p-7">
               <!-- Animated Number Badge -->
               <div class="shrink-0 w-12 h-12 rounded-[12px] flex items-center justify-center font-['Kanit'] text-[1rem] font-black transition-all duration-500"
-                :class="activeLesson === lesson.id ? 'bg-[#4da8f0] text-white shadow-[0_0_15px_rgba(77,168,240,0.5)]' : (isLight ? 'bg-black/10 text-black/50 group-hover:text-black' : 'bg-white/10 text-white/50 group-hover:text-white')">
+                :class="activeLesson === lesson.id ? 'bg-[#2D5C6F] text-white shadow-[0_0_15px_rgba(45,92,111,0.5)]' : (isLight ? 'bg-black/10 text-black/50 group-hover:text-black' : 'bg-white/10 text-white/50 group-hover:text-white')">
                 {{ lesson.number }}
               </div>
 
               <div class="flex-1 min-w-0">
                 <h3 class="font-['Kanit'] text-[1.05rem] md:text-[1.15rem] font-bold transition-colors duration-300"
-                  :class="activeLesson === lesson.id ? 'text-[#4da8f0]' : (isLight ? 'group-hover:text-black' : 'group-hover:text-white')">
+                  :class="activeLesson === lesson.id ? 'text-[#2D5C6F]' : (isLight ? 'group-hover:text-black' : 'group-hover:text-white')">
                   {{ lesson.title }}
                 </h3>
                 <div class="flex items-center gap-3 mt-1">
@@ -325,7 +325,7 @@ const lessons = [
                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                      Completed
                    </span>
-                   <span v-else-if="completedCount(lesson) > 0" class="text-[0.65rem] font-bold tracking-wider uppercase text-[#9ddbff]">
+                   <span v-else-if="completedCount(lesson) > 0" class="text-[0.65rem] font-bold tracking-wider uppercase text-[#E1F1F0]">
                      {{ completedCount(lesson) }} / {{ lesson.steps.length }} steps
                    </span>
                 </div>
@@ -333,8 +333,8 @@ const lessons = [
 
               <!-- Modern SVG Chevron -->
               <div class="shrink-0 w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-500"
-                :class="activeLesson === lesson.id ? 'rotate-180 bg-[#4da8f0] border-[#4da8f0]' : (isLight ? 'bg-black/5 border-black/10' : 'bg-white/5 border-white/10')">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" :stroke="activeLesson === lesson.id ? 'white' : (isLight ? '#0b1a2b' : 'white')" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                :class="activeLesson === lesson.id ? 'rotate-180 bg-[#2D5C6F] border-[#2D5C6F]' : (isLight ? 'bg-black/5 border-black/10' : 'bg-white/5 border-white/10')">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" :stroke="activeLesson === lesson.id ? 'white' : (isLight ? '#141414' : 'white')" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </div>
@@ -345,7 +345,7 @@ const lessons = [
               <div v-if="activeLesson === lesson.id" class="relative px-6 pb-8 md:px-24 cursor-default" @click.stop>
                 <div class="pt-2 space-y-6 border-t border-white/10">
                   <div class="mt-6">
-                    <p class="text-[0.95rem] text-white/80 leading-relaxed italic border-l-2 border-[#4da8f0] pl-4">
+                    <p class="text-[0.95rem] text-white/80 leading-relaxed italic border-l-2 border-[#2D5C6F] pl-4">
                       {{ lesson.summary }}
                     </p>
                   </div>
@@ -360,7 +360,7 @@ const lessons = [
 
                   <!-- Tools -->
                   <div>
-                    <p class="text-[0.65rem] font-bold tracking-[0.15em] text-[#b5f4ff] uppercase mb-3">Tools &amp; PPE</p>
+                    <p class="text-[0.65rem] font-bold tracking-[0.15em] text-[#E1F1F0] uppercase mb-3">Tools &amp; PPE</p>
                     <div class="flex flex-wrap gap-2">
                       <span v-for="tool in lesson.tools" :key="tool"
                         class="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-[0.78rem] text-white/80">
@@ -372,7 +372,7 @@ const lessons = [
                   <!-- Steps (guided) -->
                   <div>
                     <div class="flex items-center justify-between mb-4">
-                      <p class="text-[0.65rem] font-bold tracking-[0.15em] text-[#b5f4ff] uppercase">Procedure</p>
+                      <p class="text-[0.65rem] font-bold tracking-[0.15em] text-[#E1F1F0] uppercase">Procedure</p>
                       <span class="text-[0.72rem] font-bold text-white/50">{{ completedCount(lesson) }} of {{ lesson.steps.length }} completed</span>
                     </div>
                     <div class="h-1 rounded-full bg-white/10 mb-6 overflow-hidden">
@@ -382,7 +382,7 @@ const lessons = [
                     <ol class="space-y-3">
                       <li v-for="(step, i) in lesson.steps" :key="i"
                         class="flex items-start gap-4 rounded-2xl p-4 border transition-all duration-300"
-                        :class="stepState(lesson, i) === 'current' ? 'border-[#4da8f0]/40 bg-white/[0.05]' : 'border-transparent'"
+                        :class="stepState(lesson, i) === 'current' ? 'border-[#2D5C6F]/40 bg-white/[0.05]' : 'border-transparent'"
                         :aria-current="stepState(lesson, i) === 'current' ? 'step' : undefined">
 
                         <!-- Status badge -->
@@ -390,10 +390,10 @@ const lessons = [
                           :aria-label="`Step ${i + 1} completed. Click to redo from this step`"
                           title="Completed. Click to redo from this step"
                           class="shrink-0 w-9 h-9 rounded-full bg-[#34d399] flex items-center justify-center cursor-pointer border-none hover:brightness-110 transition-all">
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#04241a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                         </button>
                         <div v-else-if="stepState(lesson, i) === 'current'"
-                          class="shrink-0 w-9 h-9 rounded-full bg-[#00364D] border border-[#4da8f0] text-white flex items-center justify-center font-black text-[0.85rem] shadow-[0_0_15px_rgba(77,168,240,0.4)]">
+                          class="shrink-0 w-9 h-9 rounded-full bg-[#002E4B] border border-[#2D5C6F] text-white flex items-center justify-center font-black text-[0.85rem] shadow-[0_0_15px_rgba(45,92,111,0.4)]">
                           {{ i + 1 }}
                         </div>
                         <div v-else
@@ -406,20 +406,20 @@ const lessons = [
                             <h4 class="text-[0.95rem] font-bold text-white">{{ step.action }}</h4>
                             <p class="text-[0.88rem] text-white/70 leading-relaxed mt-1">{{ step.detail }}</p>
                             <p class="mt-2 text-[0.82rem] text-white/60 leading-relaxed bg-white/5 border border-white/5 rounded-lg px-3 py-2">
-                              <strong class="text-[#b5f4ff]">Expected:</strong> {{ step.expected }}
+                              <strong class="text-[#E1F1F0]">Expected:</strong> {{ step.expected }}
                             </p>
                           </div>
 
                           <!-- Actions for the current step only -->
                           <div v-if="stepState(lesson, i) === 'current'" class="mt-5">
                             <button type="button" @click="completeStep(lesson)"
-                              class="px-6 py-3 rounded-xl bg-[#00364D] hover:bg-[#4da8f0] border border-[#4da8f0]/60 text-white text-[0.88rem] font-bold cursor-pointer transition-all">
+                              class="px-6 py-3 rounded-xl bg-[#002E4B] hover:bg-[#2D5C6F] border border-[#2D5C6F]/60 text-white text-[0.88rem] font-bold cursor-pointer transition-all">
                               {{ i === lesson.steps.length - 1 ? 'Done, finish procedure' : 'Done, next step' }}
                             </button>
 
                             <button type="button" @click="toggleHelp(lesson.id, i)"
                               :aria-expanded="openHelp === helpKey(lesson.id, i)"
-                              class="mt-4 w-full py-3 rounded-xl border border-[#4da8f0]/50 bg-transparent text-[#9ddbff] hover:bg-[#4da8f0]/10 hover:border-[#4da8f0] text-[0.9rem] font-medium cursor-pointer transition-all">
+                              class="mt-4 w-full py-3 rounded-xl border border-[#2D5C6F]/50 bg-transparent text-[#E1F1F0] hover:bg-[#2D5C6F]/10 hover:border-[#2D5C6F] text-[0.9rem] font-medium cursor-pointer transition-all">
                               Need help?
                             </button>
 
@@ -439,7 +439,7 @@ const lessons = [
                     <div v-if="isLessonDone(lesson)" class="mt-6 rounded-xl border border-[#34d399]/30 bg-[#34d399]/10 p-5 flex flex-col sm:flex-row sm:items-center gap-4">
                       <div class="flex items-center gap-3 flex-1">
                         <span class="shrink-0 w-9 h-9 rounded-full bg-[#34d399] flex items-center justify-center">
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#04241a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                         </span>
                         <p class="text-[0.9rem] text-white"><strong>Procedure completed.</strong> Check the result and log it.</p>
                       </div>
@@ -449,7 +449,7 @@ const lessons = [
                           Start over
                         </button>
                         <button v-if="lesson.id < lessons.length" type="button" @click="goToNextLesson(lesson)"
-                          class="px-5 py-2.5 rounded-xl bg-[#4da8f0] hover:bg-[#3b97e0] border-none text-white text-[0.82rem] font-bold cursor-pointer transition-all">
+                          class="px-5 py-2.5 rounded-xl bg-[#2D5C6F] hover:bg-[#002E4B] border-none text-white text-[0.82rem] font-bold cursor-pointer transition-all">
                           Next procedure
                         </button>
                       </div>
@@ -474,7 +474,7 @@ const lessons = [
           <div v-if="allLessonsDone" class="mt-10 rounded-[20px] border border-[#34d399]/30 bg-[#34d399]/5 p-6 md:p-8">
             <div class="flex items-center gap-3 mb-6">
               <span class="shrink-0 w-9 h-9 rounded-full bg-[#34d399] flex items-center justify-center">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#04241a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
               </span>
               <p class="text-[0.95rem]"><strong>Module completed.</strong> All {{ lessons.length }} procedures are done.</p>
             </div>
@@ -482,16 +482,16 @@ const lessons = [
             <!-- Final actions -->
             <div class="flex flex-col sm:flex-row flex-wrap gap-3">
               <button type="button" @click="handleDone"
-                class="px-6 py-3 rounded-xl bg-[#00364D] hover:bg-[#4da8f0] border border-[#4da8f0]/60 text-white text-[0.88rem] font-bold cursor-pointer transition-all">
+                class="px-6 py-3 rounded-xl bg-[#002E4B] hover:bg-[#2D5C6F] border border-[#2D5C6F]/60 text-white text-[0.88rem] font-bold cursor-pointer transition-all">
                 Done
               </button>
               <button type="button" @click="requestOpen = !requestOpen" :aria-expanded="requestOpen"
-                class="px-6 py-3 rounded-xl border border-[#4da8f0]/50 bg-transparent text-[#9ddbff] hover:bg-[#4da8f0]/10 hover:border-[#4da8f0] text-[0.88rem] font-bold cursor-pointer transition-all">
+                class="px-6 py-3 rounded-xl border border-[#2D5C6F]/50 bg-transparent hover:bg-[#2D5C6F]/10 hover:border-[#2D5C6F] text-[0.88rem] font-bold cursor-pointer transition-all" :class="accentText">
                 Request Future Assistance
               </button>
               <button type="button" @click="proceedToNextModule" :disabled="!nextModuleRoute"
                 :title="nextModuleRoute ? '' : 'The next module is coming soon'"
-                class="px-6 py-3 rounded-xl bg-[#4da8f0] hover:bg-[#3b97e0] border-none text-white text-[0.88rem] font-bold cursor-pointer transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-[#4da8f0]">
+                class="px-6 py-3 rounded-xl bg-[#2D5C6F] hover:bg-[#002E4B] border-none text-white text-[0.88rem] font-bold cursor-pointer transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-[#2D5C6F]">
                 Proceed to Next Module
               </button>
             </div>

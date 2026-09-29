@@ -3,7 +3,7 @@ import AuthLayout from '../components/AuthLayout.vue'
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { logIn, postAuthPath } from '../auth'
-import { lightMutedText, lightInputClasses, lightDangerClasses, lightNoticeClasses } from '../theme'
+import { lightMutedText, lightInputClasses, lightDangerClasses, lightNoticeClasses, accentLink } from '../theme'
 
 const router = useRouter()
 const route = useRoute()
@@ -36,15 +36,15 @@ const submit = async () => {
       <div>
         <label for="email" class="block text-xs font-bold uppercase tracking-wider mb-2" :class="lightMutedText">Email</label>
         <input id="email" v-model="email" type="email" required autocomplete="email" placeholder="you@company.com"
-          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#4da8f0]" :class="lightInputClasses" />
+          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#2D5C6F]" :class="lightInputClasses" />
       </div>
 
       <div>
         <label for="password" class="block text-xs font-bold uppercase tracking-wider mb-2" :class="lightMutedText">Password</label>
         <input id="password" v-model="password" type="password" required autocomplete="current-password" placeholder="••••••••"
-          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#4da8f0]" :class="lightInputClasses" />
+          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#2D5C6F]" :class="lightInputClasses" />
         <div class="mt-2 text-right">
-          <router-link to="/forgot-password" class="text-xs text-[#0f6fd1] hover:text-[#4da8f0] font-bold no-underline transition-colors">Forgot password?</router-link>
+          <router-link to="/forgot-password" class="text-xs text-[#2D5C6F] hover:text-[#002E4B] font-bold no-underline transition-colors">Forgot password?</router-link>
         </div>
       </div>
 
@@ -53,14 +53,14 @@ const submit = async () => {
       <p v-if="error" role="alert" class="text-sm rounded-xl px-4 py-3 border" :class="lightDangerClasses">{{ error }}</p>
 
       <button type="submit" :disabled="loading || !email || !password"
-        class="w-full py-4 bg-[#4da8f0] hover:bg-[#3b97e0] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#4da8f0] text-white rounded-full font-bold transition-all cursor-pointer border-none">
+        class="w-full py-4 bg-[#2D5C6F] hover:bg-[#002E4B] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#2D5C6F] text-white rounded-full font-bold transition-all cursor-pointer border-none">
         {{ loading ? 'Logging in…' : 'Log In' }}
       </button>
     </form>
 
     <template #footer>
       Don't have an account?
-      <router-link to="/signup" class="text-[#9ddbff] hover:text-[#4da8f0] font-bold no-underline transition-colors">Sign up</router-link>
+      <router-link to="/signup" class="font-bold no-underline transition-colors" :class="accentLink">Sign up</router-link>
     </template>
   </AuthLayout>
 </template>

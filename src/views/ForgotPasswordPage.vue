@@ -2,7 +2,7 @@
 import AuthLayout from '../components/AuthLayout.vue'
 import { ref } from 'vue'
 import { requestPasswordReset } from '../auth'
-import { lightMutedText, lightSubtleText, lightInputClasses, lightDangerClasses, lightSuccessClasses, lightGhostButtonClasses } from '../theme'
+import { lightMutedText, lightSubtleText, lightInputClasses, lightDangerClasses, lightSuccessClasses, lightGhostButtonClasses, accentLink } from '../theme'
 
 const email = ref('')
 const error = ref('')
@@ -44,20 +44,20 @@ const submit = async () => {
       <div>
         <label for="email" class="block text-xs font-bold uppercase tracking-wider mb-2" :class="lightMutedText">Email</label>
         <input id="email" v-model="email" type="email" required autocomplete="email" placeholder="you@company.com"
-          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#4da8f0]" :class="lightInputClasses" />
+          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#2D5C6F]" :class="lightInputClasses" />
       </div>
 
       <p v-if="error" role="alert" class="text-sm rounded-xl px-4 py-3 border" :class="lightDangerClasses">{{ error }}</p>
 
       <button type="submit" :disabled="loading || !email.trim()"
-        class="w-full py-4 bg-[#4da8f0] hover:bg-[#3b97e0] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#4da8f0] text-white rounded-full font-bold transition-all cursor-pointer border-none">
+        class="w-full py-4 bg-[#2D5C6F] hover:bg-[#002E4B] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#2D5C6F] text-white rounded-full font-bold transition-all cursor-pointer border-none">
         {{ loading ? 'Sending…' : 'Send reset link' }}
       </button>
     </form>
 
     <template #footer>
       Remembered it?
-      <router-link to="/login" class="text-[#9ddbff] hover:text-[#4da8f0] font-bold no-underline transition-colors">Back to log in</router-link>
+      <router-link to="/login" class="font-bold no-underline transition-colors" :class="accentLink">Back to log in</router-link>
     </template>
   </AuthLayout>
 </template>

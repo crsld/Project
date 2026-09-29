@@ -3,7 +3,7 @@ import AuthLayout from '../components/AuthLayout.vue'
 import { ref, computed, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import { isAuthenticated, updatePassword, postAuthPath } from '../auth'
-import { lightMutedText, lightInputClasses, lightDangerClasses, lightSuccessClasses } from '../theme'
+import { lightMutedText, lightInputClasses, lightDangerClasses, lightSuccessClasses, accentLink } from '../theme'
 
 const router = useRouter()
 
@@ -53,11 +53,11 @@ onBeforeUnmount(() => clearTimeout(timer))
   <!-- Link expired / invalid -->
   <AuthLayout v-if="!linkValid" title="Link expired" subtitle="This reset link is invalid or has expired.">
     <router-link to="/forgot-password"
-      class="block w-full py-4 bg-[#4da8f0] hover:bg-[#3b97e0] text-white text-center rounded-full font-bold no-underline transition-all">
+      class="block w-full py-4 bg-[#2D5C6F] hover:bg-[#002E4B] text-white text-center rounded-full font-bold no-underline transition-all">
       Request a new link
     </router-link>
     <template #footer>
-      <router-link to="/login" class="text-[#9ddbff] hover:text-[#4da8f0] font-bold no-underline transition-colors">Back to log in</router-link>
+      <router-link to="/login" class="font-bold no-underline transition-colors" :class="accentLink">Back to log in</router-link>
     </template>
   </AuthLayout>
 
@@ -71,21 +71,21 @@ onBeforeUnmount(() => clearTimeout(timer))
       <div>
         <label for="password" class="block text-xs font-bold uppercase tracking-wider mb-2" :class="lightMutedText">New password</label>
         <input id="password" v-model="password" type="password" required autocomplete="new-password" placeholder="At least 8 characters"
-          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#4da8f0]" :class="lightInputClasses" />
+          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#2D5C6F]" :class="lightInputClasses" />
         <p v-if="passwordProblem" class="mt-2 text-xs text-red-500">{{ passwordProblem }}</p>
       </div>
 
       <div>
         <label for="confirm" class="block text-xs font-bold uppercase tracking-wider mb-2" :class="lightMutedText">Confirm new password</label>
         <input id="confirm" v-model="confirm" type="password" required autocomplete="new-password" placeholder="Re-enter password"
-          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#4da8f0]" :class="lightInputClasses" />
+          class="w-full px-4 py-3 rounded-xl border outline-none transition-all focus:border-[#2D5C6F]" :class="lightInputClasses" />
         <p v-if="mismatch" class="mt-2 text-xs text-red-500">Passwords do not match.</p>
       </div>
 
       <p v-if="error" role="alert" class="text-sm rounded-xl px-4 py-3 border" :class="lightDangerClasses">{{ error }}</p>
 
       <button type="submit" :disabled="!canSubmit"
-        class="w-full py-4 bg-[#4da8f0] hover:bg-[#3b97e0] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#4da8f0] text-white rounded-full font-bold transition-all cursor-pointer border-none">
+        class="w-full py-4 bg-[#2D5C6F] hover:bg-[#002E4B] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#2D5C6F] text-white rounded-full font-bold transition-all cursor-pointer border-none">
         {{ loading ? 'Updating…' : 'Update password' }}
       </button>
     </form>

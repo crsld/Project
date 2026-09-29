@@ -12,9 +12,9 @@ const router = useRouter()
 </script>
 
 <template>
-  <div class="font-['Kanit'] min-h-screen selection:bg-[#4da8f0]/30 relative overflow-hidden flex flex-col items-center justify-center px-6 py-12 transition-colors duration-300" :class="pageBg">
+  <div class="font-['Kanit'] min-h-screen selection:bg-[#2D5C6F]/30 relative overflow-hidden flex flex-col items-center justify-center px-6 py-12 transition-colors duration-300" :class="pageBg">
     <!-- soft background glow -->
-    <div class="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full bg-[#4da8f0]/10 blur-3xl"></div>
+    <div class="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full bg-[#2D5C6F]/10 blur-3xl"></div>
 
     <a href="#" @click.prevent="router.push('/login')" class="relative flex items-center gap-3 mb-10 no-underline">
       <img :src="Logo" alt="Scanship" class="h-10 w-10 object-contain rounded-full" />
@@ -22,7 +22,7 @@ const router = useRouter()
     </a>
 
     <!-- Card stays a soft off-white regardless of the site theme -->
-    <div class="relative w-full max-w-[440px] rounded-[24px] p-8 sm:p-10 shadow-2xl border bg-[#f4f6f8] border-black/10" :class="lightSurfaceText">
+    <div class="relative w-full max-w-[440px] rounded-[24px] p-8 sm:p-10 shadow-2xl border bg-[#E1F1F0] border-black/10" :class="lightSurfaceText">
       <p class="text-[0.7rem] font-bold tracking-[0.2em] uppercase mb-3 text-center" :class="lightAccentText">Maritime System Modules</p>
       <h1 class="text-[clamp(1.8rem,5vw,2.2rem)] font-black leading-tight tracking-tight text-center mb-2">
         {{ title }}

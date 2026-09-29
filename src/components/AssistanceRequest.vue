@@ -41,9 +41,9 @@ const submit = () => {
 </script>
 
 <template>
-  <div class="rounded-2xl border border-white/10 overflow-hidden bg-[#040f1e] shadow-[0_10px_30px_rgba(0,0,0,0.3)]" role="region" :aria-label="title">
+  <div class="rounded-2xl border border-white/10 overflow-hidden bg-[#002E4B] shadow-[0_10px_30px_rgba(0,0,0,0.3)]" role="region" :aria-label="title">
     <!-- Header -->
-    <div class="flex items-center gap-4 px-5 py-4 bg-gradient-to-r from-[#00364D] to-[#011c29] border-b border-white/10">
+    <div class="flex items-center gap-4 px-5 py-4 bg-gradient-to-r from-[#002E4B] to-[#141414] border-b border-white/10">
       <button type="button" @click="emit('close')" aria-label="Close"
         class="shrink-0 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white cursor-pointer border-none transition-colors">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
@@ -57,7 +57,7 @@ const submit = () => {
     <!-- Sent -->
     <div v-if="sent" class="p-6 flex items-start gap-3">
       <span class="shrink-0 w-8 h-8 rounded-full bg-[#34d399] flex items-center justify-center">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#04241a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </span>
       <div class="flex-1">
         <p class="text-[0.95rem] text-white"><strong>Request submitted.</strong></p>
@@ -72,10 +72,10 @@ const submit = () => {
     <!-- Form -->
     <form v-else @submit.prevent="submit" class="p-5 sm:p-6 space-y-4">
       <div>
-        <label for="assist-message" class="block text-[0.82rem] font-bold text-[#9ddbff] mb-2">What do you need help with?</label>
+        <label for="assist-message" class="block text-[0.82rem] font-bold text-[#E1F1F0] mb-2">What do you need help with?</label>
         <textarea id="assist-message" v-model="message" rows="4" required
           placeholder="Type your concern, question or the assistance you need."
-          class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-[0.95rem] leading-relaxed placeholder-white/30 outline-none transition-all focus:border-[#4da8f0] focus:bg-white/[0.07] resize-y"></textarea>
+          class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-[0.95rem] leading-relaxed placeholder-white/30 outline-none transition-all focus:border-[#2D5C6F] focus:bg-white/[0.07] resize-y"></textarea>
       </div>
 
       <p class="text-[0.75rem] text-white/40 leading-relaxed">
@@ -85,7 +85,7 @@ const submit = () => {
       <p v-if="error" role="alert" class="text-sm text-red-300">{{ error }}</p>
 
       <button type="submit" :disabled="!message.trim()"
-        class="w-full py-3.5 rounded-xl bg-[#f59e0b] hover:bg-[#e08e0a] text-[#040f1e] text-[0.95rem] font-extrabold cursor-pointer border-none transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#f59e0b]">
+        class="w-full py-3.5 rounded-xl bg-[#2D5C6F] hover:bg-[#E1F1F0] hover:text-[#002E4B] text-white text-[0.95rem] font-extrabold cursor-pointer border-none transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#2D5C6F] disabled:hover:text-white">
         Submit
       </button>
     </form>

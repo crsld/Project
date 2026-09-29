@@ -177,7 +177,7 @@ const onFile = async (e) => {
       <!-- Idle / starting / checking -->
       <div v-if="status !== 'scanning' && status !== 'success'"
         class="absolute inset-0 flex flex-col items-center justify-center gap-4 px-6 text-center text-white/60">
-        <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#4da8f0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#2D5C6F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>
           <line x1="14" y1="14" x2="14" y2="14.01"/><line x1="18" y1="14" x2="21" y2="14"/><line x1="14" y1="18" x2="14" y2="21"/><line x1="17.5" y1="17.5" x2="21" y2="17.5"/><line x1="21" y1="21" x2="21" y2="21.01"/>
         </svg>
@@ -190,18 +190,18 @@ const onFile = async (e) => {
 
       <!-- Scanning overlay -->
       <template v-if="status === 'scanning'">
-        <div class="absolute top-6 left-6 w-10 h-10 border-t-4 border-l-4 border-[#4da8f0] rounded-tl-xl"></div>
-        <div class="absolute top-6 right-6 w-10 h-10 border-t-4 border-r-4 border-[#4da8f0] rounded-tr-xl"></div>
-        <div class="absolute bottom-6 left-6 w-10 h-10 border-b-4 border-l-4 border-[#4da8f0] rounded-bl-xl"></div>
-        <div class="absolute bottom-6 right-6 w-10 h-10 border-b-4 border-r-4 border-[#4da8f0] rounded-br-xl"></div>
-        <div class="scan-line absolute left-6 right-6 h-0.5 bg-[#4da8f0] shadow-[0_0_12px_rgba(77,168,240,0.9)]"></div>
+        <div class="absolute top-6 left-6 w-10 h-10 border-t-4 border-l-4 border-[#2D5C6F] rounded-tl-xl"></div>
+        <div class="absolute top-6 right-6 w-10 h-10 border-t-4 border-r-4 border-[#2D5C6F] rounded-tr-xl"></div>
+        <div class="absolute bottom-6 left-6 w-10 h-10 border-b-4 border-l-4 border-[#2D5C6F] rounded-bl-xl"></div>
+        <div class="absolute bottom-6 right-6 w-10 h-10 border-b-4 border-r-4 border-[#2D5C6F] rounded-br-xl"></div>
+        <div class="scan-line absolute left-6 right-6 h-0.5 bg-[#2D5C6F] shadow-[0_0_12px_rgba(45,92,111,0.9)]"></div>
       </template>
 
       <!-- Success -->
       <div v-if="status === 'success'"
         class="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[#34d399]/10 text-center px-6" role="status">
         <span class="w-16 h-16 rounded-full bg-[#34d399] flex items-center justify-center">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#04241a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </span>
         <p class="text-[1.1rem] font-bold text-white">QR code recognized</p>
         <p class="text-[0.85rem] text-white/60">Taking you to log in…</p>
@@ -211,7 +211,7 @@ const onFile = async (e) => {
     <!-- Actions -->
     <div class="mt-6 flex flex-col gap-3">
       <button type="button" @click="status === 'scanning' ? stopCamera() : startCamera()" :disabled="busy"
-        class="w-full py-4 bg-[#4da8f0] hover:bg-[#3b97e0] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#4da8f0] text-white rounded-full font-bold transition-all cursor-pointer border-none flex items-center justify-center gap-2">
+        class="w-full py-4 bg-[#2D5C6F] hover:bg-[#002E4B] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#2D5C6F] text-white rounded-full font-bold transition-all cursor-pointer border-none flex items-center justify-center gap-2">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
         {{ status === 'starting' ? 'Starting camera…' : status === 'scanning' ? 'Stop Camera' : 'Scan with Camera' }}
       </button>

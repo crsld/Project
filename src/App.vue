@@ -3,7 +3,7 @@ import { isLight } from './theme'
 </script>
 
 <template>
-  <div class="font-['Kanit'] min-h-screen transition-colors duration-300" :class="isLight ? 'bg-[#eef2f6] text-[#0b1a2b]' : 'bg-[#061120] text-white'">
+  <div class="font-['Kanit'] min-h-screen transition-colors duration-300" :class="isLight ? 'bg-[#E1F1F0] text-[#141414]' : 'bg-[#002E4B] text-white'">
     <router-view />
   </div>
 </template>
