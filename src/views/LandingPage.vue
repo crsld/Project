@@ -43,47 +43,6 @@ const programs = Object.values(trainingPrograms).map(p => ({
   availableModules: p.modules.filter(m => m.route).length,
 }))
 
-const courses = [
-  {
-    id: 1,
-    route: '/module/1',
-    name: 'Intro to Wastewater Systems',
-    color: '#f59e0b',
-    gradientFrom: '#f59e0b',
-    thumbnail: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
-  },
-  {
-    id: 2,
-    route: null,
-    name: 'Pre-treatment Operations',
-    color: '#2D5C6F',
-    gradientFrom: '#2D5C6F',
-    thumbnail: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=600&q=80',
-  },
-  {
-    id: 3,
-    route: null,
-    name: 'Advanced Filtration',
-    color: '#10b981',
-    gradientFrom: '#10b981',
-    thumbnail: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=600&q=80',
-  },
-  {
-    id: 4,
-    route: null,
-    name: 'Sludge Management',
-    color: '#6366f1',
-    gradientFrom: '#6366f1',
-    thumbnail: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=600&q=80',
-  }
-]
-
-const handleSeeDetails = (mod) => {
-  if (mod.route) {
-    router.push(mod.route)
-  }
-}
-
 onMounted(() => {
   const observer = new IntersectionObserver(
     (entries) => {
@@ -175,11 +134,11 @@ onMounted(() => {
       </div>
     </section>
 
-    <!-- ── 3. TRAINING MODULES (AWP / EP PROGRAMS) ── -->
-    <section id="training" class="py-24 px-8">
+    <!-- ── 3. COURSES (TRAINING PROGRAMS: AWP / EP) ── -->
+    <section id="courses" class="py-24 px-8">
       <div class="max-w-[1100px] mx-auto">
         <div class="text-center mb-16">
-          <p class="text-[0.7rem] font-bold tracking-[0.2em] uppercase mb-3" :class="accentText">Training Programs</p>
+          <p class="text-[0.7rem] font-bold tracking-[0.2em] uppercase mb-3" :class="accentText">Our Courses</p>
           <h2 class="font-['Kanit'] text-[clamp(2rem,4vw,3rem)] font-extrabold mb-4">
             Choose Your <span :class="accentText">Training Path</span>
           </h2>
@@ -224,38 +183,6 @@ onMounted(() => {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── 4. COURSES (OUR COURSES) ── -->
-    <section id="courses" class="py-10 px-8">
-      <div class="max-w-[1200px] mx-auto">
-        <div class="text-center mb-16">
-          <p class="text-[0.7rem] font-bold tracking-[0.2em] uppercase mb-3" :class="accentText">Our Courses</p>
-          <h2 class="font-['Kanit'] text-[clamp(2rem,4vw,3rem)] font-extrabold mb-4">
-            Our Most Popular <span :class="accentText">Courses</span>
-          </h2>
-          <p class="text-[1rem] max-w-[800px] mx-auto">
-            Industry leading maritime wastewater training built for compliance and operational excellence.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-2">
-          <div v-for="mod in courses" :key="mod.id" class="reveal group rounded-2xl overflow-hidden flex flex-col hover:border-[#2D5C6F]/50 transition-all border" :class="cardClasses">
-            <div class="h-44 overflow-hidden relative">
-              <img :src="mod.thumbnail" class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-500" />
-              <div class="absolute inset-0 bg-gradient-to-t from-[#002E4B] to-transparent"></div>
-            </div>
-            <div class="p-6 flex flex-col flex-1">
-              <h3 class="font-bold text-[1.1rem] mb-6 leading-tight h-12">{{ mod.name }}</h3>
-              <button @click="handleSeeDetails(mod)"
-                class="mt-auto w-full py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-all"
-                :class="mod.route ? 'bg-[#2D5C6F] hover:bg-[#002E4B] text-white' : (isLight ? 'bg-black/5 text-black/30 cursor-not-allowed' : 'bg-white/5 text-white/30 cursor-not-allowed')">
-                {{ mod.route ? 'See Details' : 'Coming Soon' }}
-              </button>
             </div>
           </div>
         </div>

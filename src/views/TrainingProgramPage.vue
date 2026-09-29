@@ -39,7 +39,7 @@ onMounted(async () => {
     <section class="pt-32 pb-16 px-8">
       <div class="max-w-[1100px] mx-auto">
         <template v-if="program">
-          <router-link to="/#training" class="inline-flex items-center gap-2 text-sm font-bold no-underline mb-8 transition-colors" :class="accentText">
+          <router-link to="/#courses" class="inline-flex items-center gap-2 text-sm font-bold no-underline mb-8 transition-colors" :class="accentText">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 19"/></svg>
             Back to Training Programs
           </router-link>
@@ -89,7 +89,7 @@ onMounted(async () => {
           <div class="text-center py-20">
             <p class="text-[1.3rem] font-bold mb-3">Training program not found</p>
             <p class="mb-8" :class="mutedText">Check the link and try again, or head back to the training programs overview.</p>
-            <router-link to="/#training" class="inline-block px-8 py-4 rounded-full font-bold no-underline transition-all border" :class="ghostButtonClasses">
+            <router-link to="/#courses" class="inline-block px-8 py-4 rounded-full font-bold no-underline transition-all border" :class="ghostButtonClasses">
               Back to Training Programs
             </router-link>
           </div>

@@ -142,11 +142,6 @@ const goToSection = async (sectionId) => {
            :class="isLight ? 'text-[#141414]' : 'text-white'">
           About
         </a>
-        <a href="#" @click.prevent="goToSection('training')"
-           class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#2D5C6F] transition-colors duration-200"
-           :class="isLight ? 'text-[#141414]' : 'text-white'">
-          Training
-        </a>
         <a href="#" @click.prevent="goToSection('courses')"
            class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#2D5C6F] transition-colors duration-200"
            :class="isLight ? 'text-[#141414]' : 'text-white'">
@@ -240,11 +235,6 @@ const goToSection = async (sectionId) => {
              class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#2D5C6F] transition-colors duration-200 py-3 border-b"
              :class="isLight ? 'text-[#141414] border-black/5' : 'text-white border-white/5'">
             About
-          </a>
-          <a href="#" @click.prevent="goToSection('training')"
-             class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#2D5C6F] transition-colors duration-200 py-3 border-b"
-             :class="isLight ? 'text-[#141414] border-black/5' : 'text-white border-white/5'">
-            Training
           </a>
           <a href="#" @click.prevent="goToSection('courses')"
              class="font-['Kanit'] font-medium text-sm uppercase tracking-widest no-underline hover:text-[#2D5C6F] transition-colors duration-200 py-3 border-b"
