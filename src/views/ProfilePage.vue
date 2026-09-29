@@ -32,7 +32,7 @@ const quickLinks = [
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#040f1e] text-white font-['Kanit']">
+  <div class="min-h-screen bg-[#002E4B] text-white font-['Kanit']">
     <div class="pt-16 max-w-250 mx-auto px-4 pb-10 flex flex-col sm:flex-row gap-8">
 
       <aside class="w-full sm:w-50 shrink-0 pt-4">
@@ -49,7 +49,7 @@ const quickLinks = [
             :class="activeSection === item.key
               ? 'bg-white/[0.07] text-white font-medium'
               : 'bg-transparent text-white/45 hover:text-white/80 hover:bg-white/4'">
-            <span v-html="item.icon" class="shrink-0" :class="activeSection === item.key ? 'text-[#4da8f0]' : ''"></span>
+            <span v-html="item.icon" class="shrink-0" :class="activeSection === item.key ? 'text-[#2D5C6F]' : ''"></span>
             {{ item.label }}
           </button>
         </nav>
@@ -63,7 +63,7 @@ const quickLinks = [
           <!-- Member card -->
           <div class="rounded-2xl border border-white/8 bg-white/3 overflow-hidden mb-5">
             <div class="px-6 pt-5 pb-2">
-              <span class="inline-block text-[0.7rem] font-bold px-3 py-1.5 rounded-full bg-[#4da8f0] text-[#040f1e] mb-4">
+              <span class="inline-block text-[0.7rem] font-bold px-3 py-1.5 rounded-full bg-[#2D5C6F] text-[#002E4B] mb-4">
                 Member since {{ user ? new Date(user.metadata.creationTime).toLocaleDateString('en-US', { month:'long', year:'numeric' }) : '—' }}
               </span>
               <div class="border-b border-white/6 pb-4 mb-4">
@@ -100,7 +100,7 @@ const quickLinks = [
           <!-- Rest of the sections remain same... -->
           <div class="rounded-2xl border border-white/8 bg-white/3 overflow-hidden divide-y divide-white/6 mb-5">
             <div class="px-6 py-5">
-              <p class="text-[0.72rem] font-bold tracking-[0.12em] uppercase text-[#4da8f0] mb-2">Current Plan</p>
+              <p class="text-[0.72rem] font-bold tracking-[0.12em] uppercase text-[#2D5C6F] mb-2">Current Plan</p>
               <p class="text-[1.1rem] font-semibold text-white">Vessel Plan</p>
               <p class="text-[0.8rem] text-white/35 mt-1">$199 / month · All 12 modules · One vessel</p>
             </div>
@@ -121,14 +121,14 @@ const quickLinks = [
               { name:'Fleet Plan',    price:'Custom', desc:'Multiple vessels · Dedicated support', current: false },
             ]" :key="plan.name"
               class="rounded-[14px] border px-5 py-4 flex items-center justify-between transition-all"
-              :class="plan.current ? 'border-[#4da8f0]/40 bg-[#4da8f0]/5' : 'border-white/7 bg-white/2 hover:border-white/12 hover:bg-white/4'">
+              :class="plan.current ? 'border-[#2D5C6F]/40 bg-[#2D5C6F]/5' : 'border-white/7 bg-white/2 hover:border-white/12 hover:bg-white/4'">
               <div>
                 <p class="text-[0.92rem] font-semibold text-white">{{ plan.name }}</p>
                 <p class="text-[0.78rem] text-white/35 mt-0.5">{{ plan.desc }}</p>
               </div>
               <div class="flex items-center gap-3">
-                <p class="text-[0.88rem] font-bold" :class="plan.current ? 'text-[#4da8f0]' : 'text-white/60'">{{ plan.price }}</p>
-                <span v-if="plan.current" class="text-[0.62rem] font-bold px-2 py-0.5 rounded-full bg-[#4da8f0]/15 border border-[#4da8f0]/30 text-[#4da8f0]">Current</span>
+                <p class="text-[0.88rem] font-bold" :class="plan.current ? 'text-[#2D5C6F]' : 'text-white/60'">{{ plan.price }}</p>
+                <span v-if="plan.current" class="text-[0.62rem] font-bold px-2 py-0.5 rounded-full bg-[#2D5C6F]/15 border border-[#2D5C6F]/30 text-[#2D5C6F]">Current</span>
                 <button v-else class="text-[0.78rem] font-semibold px-3 py-1.5 rounded-lg border border-white/15 text-white/50 hover:text-white hover:border-white/30 transition-all cursor-pointer bg-transparent">
                   Switch
                 </button>
@@ -174,7 +174,7 @@ const quickLinks = [
               <p v-if="passwordError" class="text-[0.78rem] text-red-400">{{ passwordError }}</p>
               <p v-if="passwordSuccess" class="text-[0.78rem] text-[#10b981]">{{ passwordSuccess }}</p>
               <button @click="handleUpdatePassword"
-                class="mt-1 px-5 py-2.5 bg-[#4da8f0] rounded-lg text-[0.88rem] font-bold text-black cursor-pointer hover:bg-[#3a8fe0] transition-colors border-none w-fit">
+                class="mt-1 px-5 py-2.5 bg-[#2D5C6F] rounded-lg text-[0.88rem] font-bold text-white cursor-pointer hover:bg-[#002E4B] transition-colors border-none w-fit">
                 Update Password
               </button>
             </div>

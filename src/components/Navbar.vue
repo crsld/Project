@@ -1,5 +1,6 @@
 <script setup>
-import Logo from '../assets/Company_Logo.png'
+import LogoFull from '../assets/LOGO.png'
+import LogoIcon from '../assets/Company_Logo.png'
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { logOut, currentUser } from '../auth'
@@ -7,6 +8,10 @@ import { isLight, toggleTheme } from '../theme'
 
 const router = useRouter()
 const route = useRoute()
+
+// The full logo has dark navy text baked in, so it only reads on the light
+// navbar; fall back to the icon-only mark when the navbar goes dark.
+const navLogo = computed(() => isLight.value ? LogoFull : LogoIcon)
 
 const showDropdown = ref(false)
 const mobileMenuOpen = ref(false)
@@ -120,17 +125,10 @@ const goToSection = async (sectionId) => {
     ]"
   >
     <div class="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-16 flex items-center justify-between h-20">
-      <!-- Logo + Wordmark -->
-      <div class="flex items-center gap-3">
-        <a href="#" class="flex items-center no-underline transition-transform hover:scale-110" @click.prevent="goHome">
-          <img :src="Logo" alt="Scanship" class="h-10 w-10 object-contain rounded-full" />
-        </a>
-        <a href="#" class="flex items-center no-underline" @click.prevent="goHome">
-          <span class="font-['Kanit'] font-bold tracking-tight text-2xl transition-colors duration-300" :class="isLight ? 'text-[#141414]' : 'text-white'">
-            Scanship
-          </span>
-        </a>
-      </div>
+      <!-- Logo -->
+      <a href="#" class="flex items-center no-underline transition-transform hover:scale-105" @click.prevent="goHome">
+        <img :src="navLogo" alt="Scanship" class="w-auto object-contain" :class="isLight ? 'h-9' : 'h-10 rounded-full'" />
+      </a>
 
       <!-- Navigation Links + Signed-in user (desktop), grouped on the right -->
       <div class="hidden md:flex items-center gap-8 ml-auto">
@@ -270,10 +268,7 @@ const goToSection = async (sectionId) => {
       class="flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-xl border pointer-events-auto transition-all duration-300 hover:scale-110 group"
       :class="isLight ? 'bg-white/70 border-black/10 hover:border-black/20 hover:bg-white/90' : 'bg-[#002E4B]/60 border-white/10 hover:border-white/30 hover:bg-[#002E4B]/80'"
     >
-      <img :src="Logo" alt="Scanship" class="h-8 w-8 object-contain rounded-full transition-transform group-hover:rotate-12" />
-      <span class="font-['Kanit'] font-bold tracking-tight text-lg whitespace-nowrap" :class="isLight ? 'text-[#141414]' : 'text-white'">
-        Scanship
-      </span>
+      <img :src="navLogo" alt="Scanship" class="w-auto object-contain" :class="isLight ? 'h-6' : 'h-7 rounded-full'" />
     </a>
   </div>
 </template>
