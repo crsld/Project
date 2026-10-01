@@ -16,24 +16,6 @@ const videos = [
     title: 'Wastewater Systems Overview',
     description: 'Understanding the fundamentals of maritime wastewater management',
     youtubeId: 'Dzg0nwCpY8c'
-  },
-  {
-    id: 2,
-    title: 'Treatment Technologies Explained',
-    description: 'Comprehensive overview of modern treatment systems',
-    youtubeId: '2QfEAr3kmHE'
-  },
-  {
-    id: 3,
-    title: 'Regulatory Compliance Guide',
-    description: 'MARPOL Annex IV and international standards',
-    youtubeId: 'WteGcQ_GcBw'
-  },
-  {
-    id: 4,
-    title: 'Operational Best Practices',
-    description: 'Optimization tips and maintenance procedures',
-    youtubeId: 'MpKaKnOM75o'
   }
 ]
 
@@ -127,26 +109,6 @@ onMounted(() => {
             <div class="absolute bottom-0 left-0 right-0 p-5 sm:p-8 bg-gradient-to-t from-black to-transparent">
               <h3 class="text-lg sm:text-2xl font-bold text-white">{{ videos[0].title }}</h3>
               <p class="text-sm sm:text-base text-white/70">{{ videos[0].description }}</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Other Videos Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div v-for="video in videos.slice(1)" :key="video.id"
-            @click="selectedVideo = video.id"
-            class="reveal group cursor-pointer rounded-2xl overflow-hidden border transition-all"
-            :class="isLight ? 'border-black/[0.05] bg-black/[0.02] hover:bg-black/[0.05]' : 'border-white/[0.05] bg-white/[0.02] hover:bg-white/[0.05]'">
-            <div class="relative aspect-video">
-              <img :src="`https://img.youtube.com/vi/${video.youtubeId}/mqdefault.jpg`" class="w-full h-full object-cover opacity-50" />
-              <div class="absolute inset-0 flex items-center justify-center">
-                <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center group-hover:bg-[#2D5C6F] transition-colors">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                </div>
-              </div>
-            </div>
-            <div class="p-5">
-              <h4 class="font-bold text-sm line-clamp-2">{{ video.title }}</h4>
             </div>
           </div>
         </div>
