@@ -26,11 +26,16 @@ const programs = Object.values(trainingPrograms).map(p => ({
 }))
 
 onMounted(() => {
+  // Set the revealed state via inline style rather than a CSS class: elements
+  // here also carry a reactive `:class` binding (e.g. theme colors), and Vue
+  // rewrites the whole className whenever that binding re-evaluates — which
+  // was silently wiping out a classList-added "is-visible" on theme toggle.
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible')
+          entry.target.style.opacity = '1'
+          entry.target.style.transform = 'translateY(0)'
           observer.unobserve(entry.target)
         }
       })
@@ -199,10 +204,6 @@ onMounted(() => {
   transform: translateY(30px);
   transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
   transition-delay: var(--delay, 0ms);
-}
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .fade-enter-active, .fade-leave-active { transition: opacity 0.4s ease; }

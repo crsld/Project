@@ -21,11 +21,16 @@ const goToModule = (mod) => {
 
 onMounted(async () => {
   await nextTick()
+  // Set the revealed state via inline style rather than a CSS class: these
+  // cards also carry a reactive `:class` binding (theme colors), and Vue
+  // rewrites the whole className whenever that binding re-evaluates — which
+  // was silently wiping out a classList-added "is-visible" on theme toggle.
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible')
+          entry.target.style.opacity = '1'
+          entry.target.style.transform = 'translateY(0)'
           observer.unobserve(entry.target)
         }
       })
@@ -120,9 +125,5 @@ onMounted(async () => {
   transform: translateY(24px);
   transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
   transition-delay: var(--delay, 0ms);
-}
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
 }
 </style>
