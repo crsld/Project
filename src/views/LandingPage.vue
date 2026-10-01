@@ -71,34 +71,8 @@ onMounted(() => {
     <!-- ──  2. ABOUT THE TRAINING + VIDEOS  ── -->
     <section id="about" class="py-24 px-8">
       <div class="max-w-[1000px] mx-auto">
-        <div class="text-center mb-16">
-          <p class="text-[0.7rem] font-bold tracking-[0.2em] uppercase mb-3" :class="accentText">About the Training</p>
-          <h2 class="font-['Kanit'] text-[clamp(1.8rem,4vw,2.6rem)] font-extrabold mb-4">
-            Welcome to the onboard waste management training platform.
-          </h2>
-          <p class="text-[1rem] max-w-[800px] mx-auto" :class="mutedText">
-            This learning portal is designed to help you develop the knowledge and practical understanding needed to safely and effectively operate onboard waste management systems. Through a series of structured training modules, you will learn about the different systems, how they work, and how to operate them correctly in day-to-day situations.
-          </p>
-        </div>
-
-        <!-- Learn at Your Own Pace / Start Your Training -->
-        <div class="reveal grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-          <div class="rounded-2xl border p-6 sm:p-8" :class="isLight ? 'bg-white border-black/10' : 'border-white/[0.08] bg-white/[0.03]'">
-            <h3 class="font-['Kanit'] font-bold text-[1.15rem] mb-3" :class="accentText">Learn at Your Own Pace</h3>
-            <p class="text-[0.92rem] leading-relaxed" :class="mutedText">
-              Each training area is divided into clear, step-by-step modules, making it easy to follow the learning path and return to specific topics whenever needed. You can track your progress, continue where you left off, and access the information you need as you develop your knowledge, skills, and confidence in operating these systems.
-            </p>
-          </div>
-          <div class="rounded-2xl border p-6 sm:p-8" :class="isLight ? 'bg-white border-black/10' : 'border-white/[0.08] bg-white/[0.03]'">
-            <h3 class="font-['Kanit'] font-bold text-[1.15rem] mb-3" :class="accentText">Start Your Training</h3>
-            <p class="text-[0.92rem] leading-relaxed" :class="mutedText">
-              Explore the available training modules and begin with the system most relevant to your role. Each module will guide you through the system, its operation, and the key procedures you need to know for safe and effective operation.
-            </p>
-          </div>
-        </div>
-
         <!-- Featured Video -->
-        <div class="reveal mb-10 group cursor-pointer" @click="selectedVideo = videos[0].id">
+        <div class="reveal mb-16 group cursor-pointer" @click="selectedVideo = videos[0].id">
           <div class="relative aspect-video rounded-[24px] overflow-hidden border border-white/[0.1] bg-black shadow-2xl">
             <img :src="`https://img.youtube.com/vi/${videos[0].youtubeId}/hqdefault.jpg`" class="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" />
             <div class="absolute inset-0 flex items-center justify-center">
@@ -110,6 +84,32 @@ onMounted(() => {
               <h3 class="text-lg sm:text-2xl font-bold text-white">{{ videos[0].title }}</h3>
               <p class="text-sm sm:text-base text-white/70">{{ videos[0].description }}</p>
             </div>
+          </div>
+        </div>
+
+        <div class="text-center mb-16">
+          <p class="text-[0.7rem] font-bold tracking-[0.2em] uppercase mb-3" :class="accentText">About the Training</p>
+          <h2 class="font-['Kanit'] text-[clamp(1.8rem,4vw,2.6rem)] font-extrabold mb-4">
+            Welcome to the onboard waste management training platform.
+          </h2>
+          <p class="text-[1rem] max-w-[800px] mx-auto" :class="mutedText">
+            This learning portal is designed to help you develop the knowledge and practical understanding needed to safely and effectively operate onboard waste management systems. Through a series of structured training modules, you will learn about the different systems, how they work, and how to operate them correctly in day-to-day situations.
+          </p>
+        </div>
+
+        <!-- Learn at Your Own Pace / Start Your Training -->
+        <div class="reveal grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="rounded-2xl border p-6 sm:p-8" :class="isLight ? 'bg-white border-black/10' : 'border-white/[0.08] bg-white/[0.03]'">
+            <h3 class="font-['Kanit'] font-bold text-[1.15rem] mb-3" :class="accentText">Learn at Your Own Pace</h3>
+            <p class="text-[0.92rem] leading-relaxed" :class="mutedText">
+              Each training area is divided into clear, step-by-step modules, making it easy to follow the learning path and return to specific topics whenever needed. You can track your progress, continue where you left off, and access the information you need as you develop your knowledge, skills, and confidence in operating these systems.
+            </p>
+          </div>
+          <div class="rounded-2xl border p-6 sm:p-8" :class="isLight ? 'bg-white border-black/10' : 'border-white/[0.08] bg-white/[0.03]'">
+            <h3 class="font-['Kanit'] font-bold text-[1.15rem] mb-3" :class="accentText">Start Your Training</h3>
+            <p class="text-[0.92rem] leading-relaxed" :class="mutedText">
+              Explore the available training modules and begin with the system most relevant to your role. Each module will guide you through the system, its operation, and the key procedures you need to know for safe and effective operation.
+            </p>
           </div>
         </div>
       </div>
