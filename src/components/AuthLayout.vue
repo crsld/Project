@@ -1,7 +1,9 @@
 <script setup>
-import Logo from '../assets/Company_Logo.png'
+import { computed } from 'vue'
+import LogoFull from '../assets/LOGO.png'
+import LogoFullDark from '../assets/LOGO-FORDARKMODE.PNG'
 import { useRouter } from 'vue-router'
-import { pageBg, mutedText, lightSurfaceText, lightMutedText, lightAccentText } from '../theme'
+import { isLight, pageBg, mutedText, lightSurfaceText, lightMutedText, lightAccentText } from '../theme'
 
 defineProps({
   title: String,
@@ -9,6 +11,10 @@ defineProps({
 })
 
 const router = useRouter()
+
+// The light-mode logo has dark navy text baked in, so it only reads on the
+// light page background; swap to the white-text variant when dark.
+const logo = computed(() => isLight.value ? LogoFull : LogoFullDark)
 </script>
 
 <template>
@@ -16,9 +22,8 @@ const router = useRouter()
     <!-- soft background glow -->
     <div class="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full bg-[#2D5C6F]/10 blur-3xl"></div>
 
-    <a href="#" @click.prevent="router.push('/login')" class="relative flex items-center gap-3 mb-10 no-underline">
-      <img :src="Logo" alt="Scanship" class="h-10 w-10 object-contain rounded-full" />
-      <span class="font-bold tracking-tight text-2xl">Scanship</span>
+    <a href="#" @click.prevent="router.push('/login')" class="relative flex items-center no-underline mb-10">
+      <img :src="logo" alt="Scanship" class="h-12 w-auto object-contain" />
     </a>
 
     <!-- Card stays a soft off-white regardless of the site theme -->
