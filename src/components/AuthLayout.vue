@@ -22,7 +22,7 @@ const logo = computed(() => isLight.value ? LogoFull : LogoFullDark)
     <!-- soft background glow -->
     <div class="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full bg-[#2D5C6F]/10 blur-3xl"></div>
 
-    <a href="#" @click.prevent="router.push('/login')" class="relative flex items-center no-underline mb-10">
+    <a href="#" @click.prevent="router.push('/login')" class="relative flex items-center no-underline mb-5">
       <img :src="logo" alt="Scanship" class="h-12 w-auto object-contain" />
     </a>
 
