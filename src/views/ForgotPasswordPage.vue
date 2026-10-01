@@ -2,7 +2,7 @@
 import AuthLayout from '../components/AuthLayout.vue'
 import { ref } from 'vue'
 import { requestPasswordReset } from '../auth'
-import { lightMutedText, lightSubtleText, lightInputClasses, lightDangerClasses, lightSuccessClasses, lightGhostButtonClasses, accentLink } from '../theme'
+import { lightMutedText, lightSubtleText, lightInputClasses, lightDangerClasses, lightSuccessClasses, lightGhostButtonClasses } from '../theme'
 
 const email = ref('')
 const error = ref('')
@@ -57,7 +57,7 @@ const submit = async () => {
 
     <template #footer>
       Remembered it?
-      <router-link to="/login" class="font-bold no-underline transition-colors" :class="accentLink">Back to log in</router-link>
+      <router-link to="/login" class="font-bold no-underline transition-colors text-[#E1F1F0] hover:text-white">Back to log in</router-link>
     </template>
   </AuthLayout>
 </template>

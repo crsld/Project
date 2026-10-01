@@ -3,7 +3,7 @@ import AuthLayout from '../components/AuthLayout.vue'
 import { ref, computed, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import { isAuthenticated, updatePassword, postAuthPath } from '../auth'
-import { lightMutedText, lightInputClasses, lightDangerClasses, lightSuccessClasses, accentLink } from '../theme'
+import { lightMutedText, lightInputClasses, lightDangerClasses, lightSuccessClasses } from '../theme'
 
 const router = useRouter()
 
@@ -57,7 +57,7 @@ onBeforeUnmount(() => clearTimeout(timer))
       Request a new link
     </router-link>
     <template #footer>
-      <router-link to="/login" class="font-bold no-underline transition-colors" :class="accentLink">Back to log in</router-link>
+      <router-link to="/login" class="font-bold no-underline transition-colors text-[#E1F1F0] hover:text-white">Back to log in</router-link>
     </template>
   </AuthLayout>
 

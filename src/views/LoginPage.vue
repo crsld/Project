@@ -3,7 +3,7 @@ import AuthLayout from '../components/AuthLayout.vue'
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { logIn, postAuthPath } from '../auth'
-import { lightMutedText, lightInputClasses, lightDangerClasses, lightNoticeClasses, accentLink } from '../theme'
+import { lightMutedText, lightInputClasses, lightDangerClasses, lightNoticeClasses } from '../theme'
 
 const router = useRouter()
 const route = useRoute()
@@ -60,7 +60,7 @@ const submit = async () => {
 
     <template #footer>
       Don't have an account?
-      <router-link to="/signup" class="font-bold no-underline transition-colors" :class="accentLink">Sign up</router-link>
+      <router-link to="/signup" class="font-bold no-underline transition-colors text-[#E1F1F0] hover:text-white">Sign up</router-link>
     </template>
   </AuthLayout>
 </template>

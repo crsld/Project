@@ -58,7 +58,8 @@ export const accentLink = computed(() => isLight.value
   : 'text-[#E1F1F0] hover:text-white')
 
 // Fixed "light surface" tokens (not theme-reactive) for the auth card, which
-// stays a soft off-white (Light Blue) regardless of the site-wide theme toggle.
+// sits on a fixed photo background and stays a light card regardless of the
+// site-wide theme toggle.
 export const lightSurfaceText = 'text-[#141414]'
 export const lightMutedText = 'text-[#141414]/70'
 export const lightSubtleText = 'text-[#141414]/40'
