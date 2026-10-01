@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar.vue'
 import Footer from '../components/Footer.vue'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { isLight, pageBg, mutedText, ghostButtonClasses, accentText } from '../theme'
+import { isLight, pageBg, mutedText, subtleText, ghostButtonClasses, accentText } from '../theme'
 import { trainingPrograms } from '../data/trainingPrograms'
 
 const router = useRouter()
@@ -86,14 +86,33 @@ onMounted(() => {
     </section>
 
 
-    <!-- ──  2. VIDEOS  ── -->
+    <!-- ──  2. ABOUT THE TRAINING + VIDEOS  ── -->
     <section id="about" class="py-24 px-8">
       <div class="max-w-[1000px] mx-auto">
         <div class="text-center mb-16">
-          <p class="text-[1.4rem] font-bold tracking-[0.2em] uppercase mb-3" :class="accentText">About Scanship</p>
-          <p class="text-[1rem] max-w-[900px] mx-auto">
-            Discover how Scanship is revolutionizing maritime wastewater management with cutting-edge technology.
+          <p class="text-[0.7rem] font-bold tracking-[0.2em] uppercase mb-3" :class="accentText">About the Training</p>
+          <h2 class="font-['Kanit'] text-[clamp(1.8rem,4vw,2.6rem)] font-extrabold mb-4">
+            Welcome to the onboard waste management training platform.
+          </h2>
+          <p class="text-[1rem] max-w-[800px] mx-auto" :class="mutedText">
+            This learning portal is designed to help you develop the knowledge and practical understanding needed to safely and effectively operate onboard waste management systems. Through a series of structured training modules, you will learn about the different systems, how they work, and how to operate them correctly in day-to-day situations.
           </p>
+        </div>
+
+        <!-- Learn at Your Own Pace / Start Your Training -->
+        <div class="reveal grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+          <div class="rounded-2xl border p-6 sm:p-8" :class="isLight ? 'bg-white border-black/10' : 'border-white/[0.08] bg-white/[0.03]'">
+            <h3 class="font-['Kanit'] font-bold text-[1.15rem] mb-3" :class="accentText">Learn at Your Own Pace</h3>
+            <p class="text-[0.92rem] leading-relaxed" :class="mutedText">
+              Each training area is divided into clear, step-by-step modules, making it easy to follow the learning path and return to specific topics whenever needed. You can track your progress, continue where you left off, and access the information you need as you develop your knowledge, skills, and confidence in operating these systems.
+            </p>
+          </div>
+          <div class="rounded-2xl border p-6 sm:p-8" :class="isLight ? 'bg-white border-black/10' : 'border-white/[0.08] bg-white/[0.03]'">
+            <h3 class="font-['Kanit'] font-bold text-[1.15rem] mb-3" :class="accentText">Start Your Training</h3>
+            <p class="text-[0.92rem] leading-relaxed" :class="mutedText">
+              Explore the available training modules and begin with the system most relevant to your role. Each module will guide you through the system, its operation, and the key procedures you need to know for safe and effective operation.
+            </p>
+          </div>
         </div>
 
         <!-- Featured Video -->
@@ -143,7 +162,7 @@ onMounted(() => {
             Choose Your <span :class="accentText">Training Path</span>
           </h2>
           <p class="text-[1rem] max-w-[800px] mx-auto" :class="mutedText">
-            Two certification tracks, each built from seven progressive modules your crew can complete at their own pace.
+            Three training programs covering the onboard systems your crew works with, each broken into progressive modules you can complete at your own pace.
           </p>
         </div>
 
@@ -161,7 +180,7 @@ onMounted(() => {
                 <p class="text-[0.95rem] leading-relaxed mb-6 max-w-[420px]" :class="mutedText">{{ program.description }}</p>
                 <div class="flex flex-wrap items-center gap-4">
                   <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full border" :class="isLight ? 'border-black/10 bg-black/5' : 'border-white/10 bg-white/5'">
-                    {{ program.moduleCount }} Modules
+                    {{ program.moduleCount ? `${program.moduleCount} Modules` : 'Modules Coming Soon' }}
                   </span>
                   <span class="inline-flex items-center gap-2 font-bold text-[0.95rem] transition-all duration-300" :class="accentText">
                     View Training
@@ -172,7 +191,7 @@ onMounted(() => {
 
               <!-- Module preview grid -->
               <div class="relative p-8 sm:p-10 flex items-center justify-center" :class="isLight ? 'bg-black/[0.02]' : 'bg-white/[0.02]'">
-                <div class="grid grid-cols-4 gap-3 w-full max-w-[260px]">
+                <div v-if="program.moduleCount" class="grid grid-cols-4 gap-3 w-full max-w-[260px]">
                   <div v-for="n in program.moduleCount" :key="n"
                     class="aspect-square rounded-xl border flex items-center justify-center text-sm font-black transition-all duration-300 group-hover:scale-110"
                     :class="n <= program.availableModules
@@ -181,6 +200,10 @@ onMounted(() => {
                     :style="{ transitionDelay: (n * 40) + 'ms' }">
                     {{ n }}
                   </div>
+                </div>
+                <div v-else class="flex flex-col items-center gap-3 text-center" :class="subtleText">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                  <span class="text-xs font-bold uppercase tracking-wider">Module list coming soon</span>
                 </div>
               </div>
             </div>

@@ -9,7 +9,11 @@ import { isLight, pageBg, mutedText, subtleText, cardClasses, accentText, ghostB
 const route = useRoute()
 const router = useRouter()
 
-const program = computed(() => trainingPrograms[route.params.program])
+const program = computed(() => {
+  const p = trainingPrograms[route.params.program]
+  if (!p) return null
+  return { ...p, moduleCount: p.modules.length }
+})
 
 const goToModule = (mod) => {
   if (mod.route) router.push(mod.route)
@@ -45,13 +49,22 @@ onMounted(async () => {
           </router-link>
 
           <div class="mb-14">
-            <p class="text-[0.7rem] font-bold tracking-[0.2em] uppercase mb-3" :class="accentText">{{ program.number }} · {{ program.moduleCount }} Modules</p>
+            <p class="text-[0.7rem] font-bold tracking-[0.2em] uppercase mb-3" :class="accentText">
+              {{ program.number }} · {{ program.moduleCount ? `${program.moduleCount} Modules` : 'Modules Coming Soon' }}
+            </p>
             <h1 class="font-['Kanit'] text-[clamp(2.2rem,6vw,3.6rem)] font-black leading-none mb-3">{{ program.name }}</h1>
             <p class="text-[1.1rem] font-semibold mb-4" :class="accentText">{{ program.subtitle }}</p>
             <p class="text-[1rem] leading-relaxed max-w-[600px]" :class="mutedText">{{ program.description }}</p>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <!-- No modules defined yet -->
+          <div v-if="!program.moduleCount" class="reveal rounded-2xl border p-10 flex flex-col items-center gap-4 text-center" :class="cardClasses">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" :stroke="isLight ? '#2D5C6F' : '#E1F1F0'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            <p class="text-[1.05rem] font-bold">Module list coming soon</p>
+            <p class="max-w-[420px]" :class="mutedText">We're still building out the step-by-step modules for this program. Check back soon, or explore the other training programs in the meantime.</p>
+          </div>
+
+          <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             <div v-for="(mod, i) in program.modules" :key="mod.number"
               @click="goToModule(mod)"
               class="reveal group relative rounded-2xl border p-6 transition-all duration-300"
