@@ -1,27 +1,125 @@
-import { ref, computed, watchEffect } from 'vue'
+import { ref, computed, watchEffect, onMounted, onBeforeUnmount } from 'vue'
 
 // Site-wide light / dark theme, shared by the navbar and every page background.
-// Defaults to time-of-day (light 6am-6pm, dark otherwise) unless the visitor
-// has already picked a preference, which then sticks across visits.
-const THEME_KEY = 'scanship_theme'
+// The visitor's preference is 'auto' (default), 'light' or 'dark'. In 'auto' the
+// theme follows the device's local time: light 6:00 AM-5:59 PM, dark otherwise,
+// and switches live at the boundary while the page is open. A manual choice
+// sticks across visits until the visitor goes back to Automatic.
+// NOTE: index.html has an inline copy of this logic (same key and hours) that
+// applies the theme before the app loads to avoid a flash; keep them in sync.
+const THEME_KEY = 'scanship_theme_preference'
+// The old light/dark toggle saved its last click under this key. Drop it so
+// those visitors start on Automatic instead of being stuck on a stale choice.
+const LEGACY_THEME_KEY = 'scanship_theme'
+try { localStorage.removeItem(LEGACY_THEME_KEY) } catch { /* storage unavailable */ }
+const DAY_START_HOUR = 6
+const NIGHT_START_HOUR = 18
+// Upper bound between re-checks so a manual clock / timezone change is still
+// picked up eventually even if no visibility or focus event fires.
+const MAX_RECHECK_MS = 15 * 60 * 1000
 
-const timeBasedTheme = () => {
-  const hour = new Date().getHours()
-  return (hour >= 6 && hour < 18) ? 'light' : 'dark'
+export const timeBasedTheme = (date = new Date()) => {
+  const hour = date.getHours()
+  return (hour >= DAY_START_HOUR && hour < NIGHT_START_HOUR) ? 'light' : 'dark'
 }
 
-export const theme = ref(localStorage.getItem(THEME_KEY) || timeBasedTheme())
+// Milliseconds from `date` until the next 6:00 AM or 6:00 PM local time.
+const msUntilNextBoundary = (date = new Date()) => {
+  const next = new Date(date)
+  next.setMinutes(0, 0, 0)
+  const hour = date.getHours()
+  if (hour < DAY_START_HOUR) next.setHours(DAY_START_HOUR)
+  else if (hour < NIGHT_START_HOUR) next.setHours(NIGHT_START_HOUR)
+  else {
+    next.setDate(next.getDate() + 1)
+    next.setHours(DAY_START_HOUR)
+  }
+  return next - date
+}
+
+const readPreference = () => {
+  try {
+    const saved = localStorage.getItem(THEME_KEY)
+    return saved === 'light' || saved === 'dark' ? saved : 'auto'
+  } catch {
+    return 'auto'
+  }
+}
+
+export const themePreference = ref(readPreference())
+const autoTheme = ref(timeBasedTheme())
+
+export const theme = computed(() => themePreference.value === 'auto' ? autoTheme.value : themePreference.value)
 
 export const isLight = computed(() => theme.value === 'light')
 
-export const toggleTheme = () => {
-  theme.value = isLight.value ? 'dark' : 'light'
-  localStorage.setItem(THEME_KEY, theme.value)
+export const setThemePreference = (preference) => {
+  themePreference.value = preference
+  autoTheme.value = timeBasedTheme()
+  try {
+    if (preference === 'auto') localStorage.removeItem(THEME_KEY)
+    else localStorage.setItem(THEME_KEY, preference)
+  } catch { /* storage unavailable: preference lasts for this visit only */ }
 }
 
 watchEffect(() => {
-  document.documentElement.dataset.theme = theme.value
+  const root = document.documentElement
+  root.dataset.theme = theme.value
+  // `dark` class drives Tailwind's `dark:` variant (see style.css).
+  root.classList.toggle('dark', theme.value === 'dark')
+  root.style.colorScheme = theme.value
 })
+
+// ── Live time-of-day switching ──
+// One timer, armed for the next 6 AM / 6 PM boundary, re-checked whenever the
+// tab becomes visible again (covers sleep, tab suspension and clock changes).
+let recheckTimer = null
+let subscribers = 0
+
+const refreshAutoTheme = () => {
+  autoTheme.value = timeBasedTheme()
+  clearTimeout(recheckTimer)
+  // +250ms so the timer lands just past the boundary rather than a hair before it.
+  recheckTimer = setTimeout(refreshAutoTheme, Math.min(msUntilNextBoundary() + 250, MAX_RECHECK_MS))
+}
+
+const onVisibilityChange = () => {
+  if (document.visibilityState === 'visible') refreshAutoTheme()
+}
+
+// Another tab changed the preference: follow it.
+const onStorage = (event) => {
+  if (event.key === THEME_KEY || event.key === null) themePreference.value = readPreference()
+}
+
+const startScheduler = () => {
+  refreshAutoTheme()
+  document.addEventListener('visibilitychange', onVisibilityChange)
+  window.addEventListener('focus', refreshAutoTheme)
+  window.addEventListener('pageshow', refreshAutoTheme)
+  window.addEventListener('storage', onStorage)
+}
+
+const stopScheduler = () => {
+  clearTimeout(recheckTimer)
+  recheckTimer = null
+  document.removeEventListener('visibilitychange', onVisibilityChange)
+  window.removeEventListener('focus', refreshAutoTheme)
+  window.removeEventListener('pageshow', refreshAutoTheme)
+  window.removeEventListener('storage', onStorage)
+}
+
+// Composable: call from a component's setup to keep the theme live while it is
+// mounted. Shared state, so any number of callers run a single scheduler.
+export const useTheme = () => {
+  onMounted(() => {
+    if (subscribers++ === 0) startScheduler()
+  })
+  onBeforeUnmount(() => {
+    if (--subscribers === 0) stopScheduler()
+  })
+  return { theme, isLight, themePreference, setThemePreference }
+}
 
 // Official brand palette (strictly followed; status colors below are the
 // only intentional exception, kept for functional error/success/warning UX):

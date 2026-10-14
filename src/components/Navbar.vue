@@ -4,7 +4,8 @@ import LogoFullDark from '../assets/LOGO-FORDARKMODE.PNG'
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { logOut, currentUser } from '../auth'
-import { isLight, toggleTheme } from '../theme'
+import { isLight } from '../theme'
+import ThemeToggle from './ThemeToggle.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -12,6 +13,7 @@ const route = useRoute()
 // The light-mode logo has dark navy text baked in, so it only reads on the
 // light navbar; swap to the white-text variant when the navbar goes dark.
 const navLogo = computed(() => isLight.value ? LogoFull : LogoFullDark)
+
 
 const showDropdown = ref(false)
 const mobileMenuOpen = ref(false)
@@ -148,15 +150,8 @@ const goToSection = async (sectionId) => {
           Courses
         </a>
 
-        <!-- Light / dark toggle -->
-        <button type="button" @click="toggleTheme"
-          class="flex items-center justify-center w-9 h-9 rounded-full border cursor-pointer transition-all"
-          :class="isLight ? 'bg-black/5 hover:bg-black/10 border-black/10 text-[#141414]' : 'bg-white/5 hover:bg-white/10 border-white/10 text-white'"
-          :aria-label="isLight ? 'Switch to dark mode' : 'Switch to light mode'"
-        >
-          <svg v-if="isLight" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-          <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-        </button>
+        <!-- Theme selector: Auto / Light / Dark -->
+        <ThemeToggle />
 
         <!-- Signed-in user -->
         <div ref="userMenuRef" class="relative">
@@ -191,15 +186,8 @@ const goToSection = async (sectionId) => {
         </div>
       </div>
 
-      <!-- Light / dark toggle (mobile) -->
-      <button type="button" @click="toggleTheme"
-        class="md:hidden flex items-center justify-center w-9 h-9 mr-2 rounded-full border cursor-pointer transition-all"
-        :class="isLight ? 'bg-black/5 hover:bg-black/10 border-black/10 text-[#141414]' : 'bg-white/5 hover:bg-white/10 border-white/10 text-white'"
-        :aria-label="isLight ? 'Switch to dark mode' : 'Switch to light mode'"
-      >
-        <svg v-if="isLight" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-        <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-      </button>
+      <!-- Theme selector (mobile) -->
+      <ThemeToggle class="md:hidden mr-2" />
 
       <!-- Mobile Menu Toggle -->
       <button

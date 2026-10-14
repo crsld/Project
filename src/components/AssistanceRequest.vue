@@ -41,16 +41,16 @@ const submit = () => {
 </script>
 
 <template>
-  <div class="rounded-2xl border border-white/10 overflow-hidden bg-[#002E4B] shadow-[0_10px_30px_rgba(0,0,0,0.3)]" role="region" :aria-label="title">
+  <div class="rounded-2xl border border-black/10 dark:border-white/10 overflow-hidden bg-white dark:bg-[#002E4B] shadow-[0_10px_30px_rgba(0,46,75,0.12)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)]" role="region" :aria-label="title">
     <!-- Header -->
-    <div class="flex items-center gap-4 px-5 py-4 bg-gradient-to-r from-[#002E4B] to-[#141414] border-b border-white/10">
+    <div class="flex items-center gap-4 px-5 py-4 bg-gradient-to-r from-[#E1F1F0] to-white dark:from-[#002E4B] dark:to-[#141414] border-b border-black/10 dark:border-white/10">
       <button type="button" @click="emit('close')" aria-label="Close"
-        class="shrink-0 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white cursor-pointer border-none transition-colors">
+        class="shrink-0 w-10 h-10 rounded-full bg-black/10 dark:bg-white/10 hover:bg-black/15 dark:hover:bg-white/20 flex items-center justify-center text-[#141414] dark:text-white cursor-pointer border-none transition-colors">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
       </button>
       <div class="min-w-0">
-        <p class="text-[1.05rem] font-extrabold text-white leading-tight">{{ title }}</p>
-        <p v-if="subtitle" class="text-[0.78rem] text-white/60 truncate">{{ subtitle }}</p>
+        <p class="text-[1.05rem] font-extrabold text-[#141414] dark:text-white leading-tight">{{ title }}</p>
+        <p v-if="subtitle" class="text-[0.78rem] text-[#141414]/70 dark:text-white/60 truncate">{{ subtitle }}</p>
       </div>
     </div>
 
@@ -60,10 +60,10 @@ const submit = () => {
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </span>
       <div class="flex-1">
-        <p class="text-[0.95rem] text-white"><strong>Request submitted.</strong></p>
-        <p class="text-[0.8rem] text-white/50 mt-1 leading-relaxed">It is saved in this browser only for now. It is not sent to a service team until a backend is connected.</p>
+        <p class="text-[0.95rem] text-[#141414] dark:text-white"><strong>Request submitted.</strong></p>
+        <p class="text-[0.8rem] text-[#141414]/60 dark:text-white/50 mt-1 leading-relaxed">It is saved in this browser only for now. It is not sent to a service team until a backend is connected.</p>
         <button type="button" @click="emit('close')"
-          class="mt-4 px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-white text-[0.82rem] font-bold cursor-pointer transition-all">
+          class="mt-4 px-5 py-2.5 rounded-xl bg-black/[0.04] dark:bg-white/5 hover:bg-black/[0.08] dark:hover:bg-white/10 border border-black/15 dark:border-white/15 text-[#141414] dark:text-white text-[0.82rem] font-bold cursor-pointer transition-all">
           Close
         </button>
       </div>
@@ -72,17 +72,17 @@ const submit = () => {
     <!-- Form -->
     <form v-else @submit.prevent="submit" class="p-5 sm:p-6 space-y-4">
       <div>
-        <label for="assist-message" class="block text-[0.82rem] font-bold text-[#E1F1F0] mb-2">What do you need help with?</label>
+        <label for="assist-message" class="block text-[0.82rem] font-bold text-[#2D5C6F] dark:text-[#E1F1F0] mb-2">What do you need help with?</label>
         <textarea id="assist-message" v-model="message" rows="4" required
           placeholder="Type your concern, question or the assistance you need."
-          class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-[0.95rem] leading-relaxed placeholder-white/30 outline-none transition-all focus:border-[#2D5C6F] focus:bg-white/[0.07] resize-y"></textarea>
+          class="w-full px-4 py-3 rounded-xl bg-black/[0.04] dark:bg-white/5 border border-black/10 dark:border-white/10 text-[#141414] dark:text-white text-[0.95rem] leading-relaxed placeholder-black/30 dark:placeholder-white/30 outline-none transition-all focus:border-[#2D5C6F] focus:bg-black/[0.06] dark:focus:bg-white/[0.07] resize-y"></textarea>
       </div>
 
-      <p class="text-[0.75rem] text-white/40 leading-relaxed">
+      <p class="text-[0.75rem] text-[#141414]/50 dark:text-white/40 leading-relaxed">
         Included automatically: module, procedure, current step and steps already done.
       </p>
 
-      <p v-if="error" role="alert" class="text-sm text-red-300">{{ error }}</p>
+      <p v-if="error" role="alert" class="text-sm text-red-700 dark:text-red-300">{{ error }}</p>
 
       <button type="submit" :disabled="!message.trim()"
         class="w-full py-3.5 rounded-xl bg-[#2D5C6F] hover:bg-[#E1F1F0] hover:text-[#002E4B] text-white text-[0.95rem] font-extrabold cursor-pointer border-none transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#2D5C6F] disabled:hover:text-white">

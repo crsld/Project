@@ -259,25 +259,25 @@ const lessons = [
         <div class="space-y-5">
 
           <!-- Module Info -->
-          <div class="rounded-[20px] border border-white bg-[#002E4B] p-8 space-y-3">
-            <p class="text-[0.65rem] font-bold tracking-[0.15em] text-white uppercase mb-1">Module Info</p>
+          <div class="rounded-[20px] border border-black/10 bg-white dark:border-white dark:bg-[#002E4B] p-8 space-y-3 transition-colors duration-300">
+            <p class="text-[0.65rem] font-bold tracking-[0.15em] text-[#141414] dark:text-white uppercase mb-1">Module Info</p>
             <div class="flex items-start justify-between text-[0.82rem] gap-2">
-              <span class="text-white shrink-0">Created by</span>
-              <span class="font-semibold text-white text-right">Ian Estanislao<br><span class="text-white/40 font-normal text-[0.75rem]">Service Manager</span></span>
+              <span class="text-[#141414] dark:text-white shrink-0">Created by</span>
+              <span class="font-semibold text-[#141414] dark:text-white text-right">Ian Estanislao<br><span class="text-[#141414]/50 dark:text-white/40 font-normal text-[0.75rem]">Service Manager</span></span>
             </div>
-            <div class="h-px bg-white"></div>
+            <div class="h-px bg-black/10 dark:bg-white"></div>
             <div class="flex items-start justify-between text-[0.82rem] gap-2">
-              <span class="text-white shrink-0">Approved by</span>
-              <span class="font-semibold text-white text-right">Micheal Taylor<br><span class="text-white/40 font-normal text-[0.75rem]">EVP After Sales</span></span>
+              <span class="text-[#141414] dark:text-white shrink-0">Approved by</span>
+              <span class="font-semibold text-[#141414] dark:text-white text-right">Micheal Taylor<br><span class="text-[#141414]/50 dark:text-white/40 font-normal text-[0.75rem]">EVP After Sales</span></span>
             </div>
-            <div class="h-px bg-white"></div>
+            <div class="h-px bg-black/10 dark:bg-white"></div>
             <div class="flex items-center justify-between text-[0.82rem]">
-              <span class="text-white">Safety basis</span>
-              <span class="font-semibold text-white">LOTO / ISM Code</span>
+              <span class="text-[#141414] dark:text-white">Safety basis</span>
+              <span class="font-semibold text-[#141414] dark:text-white">LOTO / ISM Code</span>
             </div>
             <div class="flex items-center justify-between text-[0.82rem]">
-              <span class="text-white">Doc Rev</span>
-              <span class="font-semibold text-white">2025</span>
+              <span class="text-[#141414] dark:text-white">Doc Rev</span>
+              <span class="font-semibold text-[#141414] dark:text-white">2025</span>
             </div>
           </div>
         </div>
@@ -297,7 +297,9 @@ const lessons = [
             class="group relative rounded-[20px] border transition-all duration-500 overflow-hidden cursor-pointer"
             :class="[
               activeLesson === lesson.id
-              ? 'border-[#2D5C6F]/60 bg-gradient-to-b from-[#002E4B] to-[#141414] text-white shadow-[0_10px_30px_rgba(0,0,0,0.3)]'
+              ? (isLight
+                  ? 'border-[#2D5C6F]/40 bg-white text-[#141414] shadow-[0_10px_30px_rgba(0,46,75,0.12)]'
+                  : 'border-[#2D5C6F]/60 bg-gradient-to-b from-[#002E4B] to-[#141414] text-white shadow-[0_10px_30px_rgba(0,0,0,0.3)]')
               : (isLight
                   ? 'border-black/10 bg-black/[0.03] hover:border-black/20 hover:bg-black/[0.06] hover:-translate-y-1'
                   : 'border-white/10 bg-white/[0.03] hover:border-white/30 hover:bg-white/[0.06] hover:-translate-y-1')
@@ -315,17 +317,17 @@ const lessons = [
 
               <div class="flex-1 min-w-0">
                 <h3 class="font-['Kanit'] text-[1.05rem] md:text-[1.15rem] font-bold transition-colors duration-300"
-                  :class="activeLesson === lesson.id ? 'text-[#2D5C6F]' : (isLight ? 'group-hover:text-black' : 'group-hover:text-white')">
+                  :class="activeLesson === lesson.id ? accentText : (isLight ? 'group-hover:text-black' : 'group-hover:text-white')">
                   {{ lesson.title }}
                 </h3>
                 <div class="flex items-center gap-3 mt-1">
-                   <span class="text-[0.65rem] font-bold tracking-wider uppercase" :class="subtleText">Procedure</span>
+                   <span class="text-[0.65rem] font-bold tracking-wider uppercase" :class="mutedText">Procedure</span>
                    <div class="h-px w-8" :class="isLight ? 'bg-black/10' : 'bg-white/10'"></div>
-                   <span v-if="isLessonDone(lesson)" class="inline-flex items-center gap-1 text-[0.65rem] font-bold tracking-wider uppercase text-[#34d399]">
+                   <span v-if="isLessonDone(lesson)" class="inline-flex items-center gap-1 text-[0.65rem] font-bold tracking-wider uppercase text-emerald-600 dark:text-[#34d399]">
                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                      Completed
                    </span>
-                   <span v-else-if="completedCount(lesson) > 0" class="text-[0.65rem] font-bold tracking-wider uppercase text-[#E1F1F0]">
+                   <span v-else-if="completedCount(lesson) > 0" class="text-[0.65rem] font-bold tracking-wider uppercase" :class="accentText">
                      {{ completedCount(lesson) }} / {{ lesson.steps.length }} steps
                    </span>
                 </div>
@@ -343,27 +345,27 @@ const lessons = [
             <!-- Expanded content with Slide-down logic -->
             <Transition name="expand">
               <div v-if="activeLesson === lesson.id" class="relative px-6 pb-8 md:px-24 cursor-default" @click.stop>
-                <div class="pt-2 space-y-6 border-t border-white/10">
+                <div class="pt-2 space-y-6 border-t border-black/10 dark:border-white/10">
                   <div class="mt-6">
-                    <p class="text-[0.95rem] text-white/80 leading-relaxed italic border-l-2 border-[#2D5C6F] pl-4">
+                    <p class="text-[0.95rem] text-[#141414]/80 dark:text-white/80 leading-relaxed italic border-l-2 border-[#2D5C6F] pl-4">
                       {{ lesson.summary }}
                     </p>
                   </div>
 
                   <!-- Safety -->
                   <div class="flex items-start gap-3 rounded-xl border border-amber-400/30 bg-amber-400/10 p-4">
-                    <svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                    <p class="text-[0.88rem] text-white/80 leading-relaxed">
-                      <strong class="text-amber-300">Safety first.</strong> {{ lesson.safety }}
+                    <svg class="shrink-0 mt-0.5 text-amber-600 dark:text-amber-400" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    <p class="text-[0.88rem] text-[#141414]/80 dark:text-white/80 leading-relaxed">
+                      <strong class="text-amber-700 dark:text-amber-300">Safety first.</strong> {{ lesson.safety }}
                     </p>
                   </div>
 
                   <!-- Tools -->
                   <div>
-                    <p class="text-[0.65rem] font-bold tracking-[0.15em] text-[#E1F1F0] uppercase mb-3">Tools &amp; PPE</p>
+                    <p class="text-[0.65rem] font-bold tracking-[0.15em] text-[#2D5C6F] dark:text-[#E1F1F0] uppercase mb-3">Tools &amp; PPE</p>
                     <div class="flex flex-wrap gap-2">
                       <span v-for="tool in lesson.tools" :key="tool"
-                        class="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-[0.78rem] text-white/80">
+                        class="px-3 py-1.5 rounded-full bg-black/[0.04] dark:bg-white/5 border border-black/10 dark:border-white/10 text-[0.78rem] text-[#141414]/80 dark:text-white/80">
                         {{ tool }}
                       </span>
                     </div>
@@ -372,17 +374,17 @@ const lessons = [
                   <!-- Steps (guided) -->
                   <div>
                     <div class="flex items-center justify-between mb-4">
-                      <p class="text-[0.65rem] font-bold tracking-[0.15em] text-[#E1F1F0] uppercase">Procedure</p>
-                      <span class="text-[0.72rem] font-bold text-white/50">{{ completedCount(lesson) }} of {{ lesson.steps.length }} completed</span>
+                      <p class="text-[0.65rem] font-bold tracking-[0.15em] text-[#2D5C6F] dark:text-[#E1F1F0] uppercase">Procedure</p>
+                      <span class="text-[0.72rem] font-bold text-[#141414]/60 dark:text-white/50">{{ completedCount(lesson) }} of {{ lesson.steps.length }} completed</span>
                     </div>
-                    <div class="h-1 rounded-full bg-white/10 mb-6 overflow-hidden">
+                    <div class="h-1 rounded-full bg-black/10 dark:bg-white/10 mb-6 overflow-hidden">
                       <div class="h-full bg-[#34d399] transition-all duration-500" :style="{ width: (completedCount(lesson) / lesson.steps.length * 100) + '%' }"></div>
                     </div>
 
                     <ol class="space-y-3">
                       <li v-for="(step, i) in lesson.steps" :key="i"
                         class="flex items-start gap-4 rounded-2xl p-4 border transition-all duration-300"
-                        :class="stepState(lesson, i) === 'current' ? 'border-[#2D5C6F]/40 bg-white/[0.05]' : 'border-transparent'"
+                        :class="stepState(lesson, i) === 'current' ? 'border-[#2D5C6F]/40 bg-[#E1F1F0]/60 dark:bg-white/[0.05]' : 'border-transparent'"
                         :aria-current="stepState(lesson, i) === 'current' ? 'step' : undefined">
 
                         <!-- Status badge -->
@@ -397,16 +399,16 @@ const lessons = [
                           {{ i + 1 }}
                         </div>
                         <div v-else
-                          class="shrink-0 w-9 h-9 rounded-full bg-white/5 border border-white/15 text-white/40 flex items-center justify-center font-black text-[0.85rem]">
+                          class="shrink-0 w-9 h-9 rounded-full bg-black/[0.04] dark:bg-white/5 border border-black/15 dark:border-white/15 text-[#141414]/50 dark:text-white/40 flex items-center justify-center font-black text-[0.85rem]">
                           {{ i + 1 }}
                         </div>
 
                         <div class="flex-1 min-w-0">
                           <div :class="stepState(lesson, i) === 'upcoming' ? 'opacity-45' : ''">
-                            <h4 class="text-[0.95rem] font-bold text-white">{{ step.action }}</h4>
-                            <p class="text-[0.88rem] text-white/70 leading-relaxed mt-1">{{ step.detail }}</p>
-                            <p class="mt-2 text-[0.82rem] text-white/60 leading-relaxed bg-white/5 border border-white/5 rounded-lg px-3 py-2">
-                              <strong class="text-[#E1F1F0]">Expected:</strong> {{ step.expected }}
+                            <h4 class="text-[0.95rem] font-bold text-[#141414] dark:text-white">{{ step.action }}</h4>
+                            <p class="text-[0.88rem] text-[#141414]/70 dark:text-white/70 leading-relaxed mt-1">{{ step.detail }}</p>
+                            <p class="mt-2 text-[0.82rem] text-[#141414]/70 dark:text-white/60 leading-relaxed bg-black/[0.04] dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-lg px-3 py-2">
+                              <strong class="text-[#2D5C6F] dark:text-[#E1F1F0]">Expected:</strong> {{ step.expected }}
                             </p>
                           </div>
 
@@ -419,7 +421,7 @@ const lessons = [
 
                             <button type="button" @click="toggleHelp(lesson.id, i)"
                               :aria-expanded="openHelp === helpKey(lesson.id, i)"
-                              class="mt-4 w-full py-3 rounded-xl border border-[#2D5C6F]/50 bg-transparent text-[#E1F1F0] hover:bg-[#2D5C6F]/10 hover:border-[#2D5C6F] text-[0.9rem] font-medium cursor-pointer transition-all">
+                              class="mt-4 w-full py-3 rounded-xl border border-[#2D5C6F]/50 bg-transparent text-[#2D5C6F] dark:text-[#E1F1F0] hover:bg-[#2D5C6F]/10 hover:border-[#2D5C6F] text-[0.9rem] font-medium cursor-pointer transition-all">
                               Need help?
                             </button>
 
@@ -441,11 +443,11 @@ const lessons = [
                         <span class="shrink-0 w-9 h-9 rounded-full bg-[#34d399] flex items-center justify-center">
                           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                         </span>
-                        <p class="text-[0.9rem] text-white"><strong>Procedure completed.</strong> Check the result and log it.</p>
+                        <p class="text-[0.9rem] text-[#141414] dark:text-white"><strong>Procedure completed.</strong> Check the result and log it.</p>
                       </div>
                       <div class="flex flex-wrap gap-3">
                         <button type="button" @click="reopenStep(lesson, 0)"
-                          class="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-white text-[0.82rem] font-bold cursor-pointer transition-all">
+                          class="px-5 py-2.5 rounded-xl bg-black/[0.04] dark:bg-white/5 hover:bg-black/[0.08] dark:hover:bg-white/10 border border-black/15 dark:border-white/15 text-[#141414] dark:text-white text-[0.82rem] font-bold cursor-pointer transition-all">
                           Start over
                         </button>
                         <button v-if="lesson.id < lessons.length" type="button" @click="goToNextLesson(lesson)"
@@ -457,9 +459,9 @@ const lessons = [
                   </div>
 
                   <!-- Escalation -->
-                  <div class="bg-white/5 rounded-xl p-5 border border-white/5">
-                    <p class="text-[0.88rem] text-white/60 leading-relaxed">
-                      <strong class="text-white block mb-1 font-['Kanit']">If the fault is not resolved:</strong>
+                  <div class="bg-black/[0.04] dark:bg-white/5 rounded-xl p-5 border border-black/5 dark:border-white/5">
+                    <p class="text-[0.88rem] text-[#141414]/70 dark:text-white/60 leading-relaxed">
+                      <strong class="text-[#141414] dark:text-white block mb-1 font-['Kanit']">If the fault is not resolved:</strong>
                       {{ lesson.escalate }}
                     </p>
                   </div>

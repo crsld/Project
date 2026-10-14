@@ -1,5 +1,8 @@
 <script setup>
-import { isLight } from './theme'
+import { useTheme } from './theme'
+
+// Starts the live time-of-day theme switching for the whole app.
+const { isLight } = useTheme()
 </script>
 
 <template>
